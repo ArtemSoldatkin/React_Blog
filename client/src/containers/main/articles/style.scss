@@ -1,0 +1,10 @@
+.articles {    
+    padding: 50px;
+    display: grid;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid: column 1fr / auto;
+   
+    
+}

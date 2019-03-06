@@ -17,7 +17,7 @@ module.exports = makeExecutableSchema({
             user: User
             title: String
             description: String        
-            vote: Vote
+            vote: [Vote]
             #review
             created: String
             isEdited: Boolean
@@ -36,12 +36,12 @@ module.exports = makeExecutableSchema({
         type ArticleResponse {
             status: Boolean!
             message: String
-            article: Article
+            articles: Article
         }
         type ArticlesResponse {
             status: Boolean!
             message: String
-            article: [Article]
+            articles: [Article]
         }
     `
 })

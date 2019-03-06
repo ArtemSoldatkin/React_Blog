@@ -23,18 +23,25 @@ module.exports = {
         },
         getArticles: async(_, args)  => {
             try {
-                const search = args.search ? new RegExp(search.trim(), 'i') : new RegExp('', 'i')
-                const user = args.user ? new RegExp(user, 'i') : new RegExp('', 'i')
-                const articles = await Article.find(
+                //console.log('ok')
+                //const search = args.search ? new RegExp(search.trim(), 'i') : new RegExp('', 'i')
+                //const user = args.user ? new RegExp(user, 'i') : new RegExp('', 'i')
+                const articles = await Article.find()
+                /*const articles = await Article.find(
                     {$and: [
-                        {user}, {$or: [
+                        {user}, 
+                        {$or: [
                             {title: search},
                             {description: search}                            
                         ]}
                     ]}
-                )
+                )*/
+                
                 if(!articles) return response(404)
-                return response(null, articles)
+                const res = response(null, articles)
+                //console.log('asd', res)
+                return res
+                //return response(null, articles)
             } catch (err) { return response(500)}
         },
         getMyArticles: async(_, args, userID)  => {

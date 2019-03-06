@@ -6,7 +6,7 @@ module.exports = makeExecutableSchema({
         type User {
             login: String            
             avatar: String            
-        }
+        }       
         type Mutation {
             addUser(login: String!, password: String!, avatar: String): UserResponse!
             editUser(login: String, password: String, avatar: String): UserResponse!
@@ -14,7 +14,7 @@ module.exports = makeExecutableSchema({
         }
         type UserResponse {
             status: Boolean
-            massage: String
+            message: String
             user: User
             token: String
         }

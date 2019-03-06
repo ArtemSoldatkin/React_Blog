@@ -17,6 +17,7 @@ const response = (errorCode, user = null, token = null) => {
 }
 
 module.exports = {
+    
     Mutation: {
         addUser: async(_, args) => {
             try {                              
@@ -36,7 +37,7 @@ module.exports = {
         editUser: async(_, args, {userID}) => {
             try {    
                 if(!userID) return response(401)
-                const user = User.findByIdAndUpdate(userID, args, {new: true})
+                const user = await User.findByIdAndUpdate(userID, args, {new: true})
                 if(!user) return response(404)
                 const {login, avatar} = user
                 return response(null, {login, avatar})          

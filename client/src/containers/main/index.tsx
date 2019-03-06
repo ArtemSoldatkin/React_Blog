@@ -5,7 +5,7 @@ import Articles from './articles'
 import Article from './article'
 import Cabinet from './cabinet'
 
-export default memo(() => (
+export default () => (
     <div className="main">
         <Switch>
             <Route exact path="/" component={Articles}/>
@@ -14,4 +14,4 @@ export default memo(() => (
             <Route path="/user/:id" component={Articles}/>
         </Switch>
     </div>
-))
+)
