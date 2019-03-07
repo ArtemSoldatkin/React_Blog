@@ -3,10 +3,18 @@ a,
 a:visited,
 a:hover,
 a:active,
-a:focus {
+a:focus,
+.btn-link,
+.btn-link:visited,
+.btn-link:hover,
+.btn-link:active,
+.btn-link:focus
+{
   text-decoration: none;
   color: inherit;
 }
+
+
 //paragraphs
 p {
   display: inline;
@@ -17,6 +25,14 @@ i {
   color: inherit;
 }
 
-#root {
+#root { 
   height: 100%;
+  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
 }

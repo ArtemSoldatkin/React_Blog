@@ -8,3 +8,92 @@
    
     
 }
+
+.card-header {
+    padding: 5px;
+}
+
+.articles-article {
+    &__header {
+        display: flex;
+        flex-direction: column;        
+        .user {
+            display: flex;
+            flex-direction: row;
+            &__avatar {
+                max-height: 40px;
+                max-width: 40px;
+                height: 40px;
+                width: 40px;
+                margin-right: 5px;
+            }
+            &__login {
+                font-size: 18px;
+                font-weight: 500;
+                vertical-align: bottom;
+            }
+        }
+        .title {
+            &__text {
+                font-size: 22px;
+                font-weight: 600;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }           
+        }
+    }
+    &__body {
+        .description {
+            &__text {
+                height: 200px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical; 
+                line-height: 20px;
+                font-size: 18px;
+            }            
+        }
+    }
+    &__footer {        
+        display: flex;
+        flex-direction: row;
+        .info {  
+            align-self: flex-start;         
+            &__thumbs {
+                margin-right: 5px;
+            }
+            .thumbs {
+                &-like {
+                    color: green;
+                }
+                &-dislike {
+                    color: red;
+                }
+            }
+            &__text {
+                font-weight: 600;
+                margin-right: 5px;
+            }
+            .text {
+                &-like {
+                    color: green;
+                }
+                &-dislike {
+                    color: red;
+                }
+            }
+        }
+        .date {
+            align-self: flex-end;
+            text-align: right;
+            margin: auto 0 auto auto;
+            font-weight: 500;
+            font-size: 14px;
+            &__text {                
+                margin-right: 5px;
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+@import '../../theme.scss';
+
+.logout {
+    
+    display: flex;
+    flex-direction: column;
+    color: $on-primary-color;
+    .user {
+        background: $surface-color;
+        color: $on-surface-color;
+        border-radius: $border-radius;
+        padding: $component-padding;
+        &__avatar {
+            max-width: 50px;
+            max-height: 50px;
+            height: 50px;
+            width: 50px;
+            margin-right: 5px;
+        }
+        &__login {
+            font-size: 28px;
+            font-weight: 600;
+            vertical-align: bottom;
+        }
+    }
+    .button {
+        margin: 0;
+        padding: 0;
+        text-align: right;        
+    }
+}

@@ -7,7 +7,7 @@ import ArticleA from './article'
 import gql from 'graphql-tag';
 const GET_ARTICLES = gql`
     query getArticles {
-        getArticles(user: null, search: "hello"){
+        getArticles(user: null, search: null){
             status
             message
             articles { 

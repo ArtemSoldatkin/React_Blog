@@ -1,0 +1,18 @@
+@import '../../theme.scss';
+
+.footer {    
+    display: flex;
+
+    flex: 0 0 auto;
+    background: $footer-color;
+    color: $on-footer-color;
+    padding: $global-padding;
+    .content {
+        padding: 5px 0;
+        align-self: flex-end;
+        margin-left: auto;
+        &__text {
+            margin-left: 5px;
+        }
+    }
+}

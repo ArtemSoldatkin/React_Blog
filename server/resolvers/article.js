@@ -26,7 +26,8 @@ module.exports = {
                 //console.log('ok')
                 //const search = args.search ? new RegExp(search.trim(), 'i') : new RegExp('', 'i')
                 //const user = args.user ? new RegExp(user, 'i') : new RegExp('', 'i')
-                const articles = await Article.find()
+                const articles = await Article.find().populate('user', ['_id', 'login', 'avatar'])
+               
                 /*const articles = await Article.find(
                     {$and: [
                         {user}, 
@@ -42,7 +43,8 @@ module.exports = {
                 //console.log('asd', res)
                 return res
                 //return response(null, articles)
-            } catch (err) { return response(500)}
+            } catch (err) {                 
+                return response(500)}
         },
         getMyArticles: async(_, args, userID)  => {
             try {
@@ -54,10 +56,11 @@ module.exports = {
         }
     },
     Mutation: {
-        addArticle: async(_, args, userID)  => {
+        addArticle: async(_, args, {userID})  => {
             try {
                 if(!userID) return response(401)
-                if(!args) return response(400)
+                if(!args) return response(400)                
+                args.user = userID                
                 const article = await Article.create(args)
                 if(!article) return response(500)
                 return response(null, article)    
