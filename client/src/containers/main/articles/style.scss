@@ -1,22 +1,22 @@
+$like-color: #4CAF50;
+$dislike-color: #F44336;
+
 .articles {    
     padding: 50px;
     display: grid;
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid: column 1fr / auto;
    
     
 }
 
-.card-header {
-    padding: 5px;
-}
-
 .articles-article {
+     box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.1);
     &__header {
         display: flex;
-        flex-direction: column;        
+        flex-direction: column;  
         .user {
             display: flex;
             flex-direction: row;
@@ -58,18 +58,18 @@
     }
     &__footer {        
         display: flex;
-        flex-direction: row;
+        flex-direction: row;        
         .info {  
-            align-self: flex-start;         
+            align-self: flex-start; 
             &__thumbs {
                 margin-right: 5px;
             }
             .thumbs {
                 &-like {
-                    color: green;
+                    color: $like-color;
                 }
                 &-dislike {
-                    color: red;
+                    color: $dislike-color;
                 }
             }
             &__text {
@@ -78,10 +78,10 @@
             }
             .text {
                 &-like {
-                    color: green;
+                    color: $like-color;
                 }
                 &-dislike {
-                    color: red;
+                    color: $dislike-color;
                 }
             }
         }

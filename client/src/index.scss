@@ -1,3 +1,4 @@
+@import './theme.scss';
 //links
 a,
 a:visited,
@@ -35,4 +36,5 @@ i {
 html, body {
   height: 100%;
   width: 100%;
+  background: $background-color;   
 }

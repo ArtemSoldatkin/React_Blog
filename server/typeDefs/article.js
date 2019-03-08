@@ -23,7 +23,7 @@ module.exports = makeExecutableSchema({
             isEdited: Boolean
         }
         type Query {
-            getArticle(id: ID!): ArticleResponse!
+            getArticle(id: String!): ArticleResponse!
             getArticles(search: String, user: String): ArticlesResponse!
             getMyArticles: ArticlesResponse!
         }

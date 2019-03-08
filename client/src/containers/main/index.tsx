@@ -3,7 +3,8 @@ import { Switch, Route } from 'react-router-dom'
 import './style.scss'
 
 import Articles from './articles'
-import Article from './article'
+//import Article from './article'
+import Article from './article-temp'
 import Cabinet from './cabinet'
 
 export default () => (

@@ -1,0 +1,43 @@
+@import '../../../theme.scss';
+
+.action {
+    &__actions {
+        .button {
+            border: $border;
+            background: $surface-color;
+            color: $on-surface-color;
+            border-radius: $border-radius;
+            cursor: pointer;
+            &:hover {
+                background: $secondary-color;
+                color: $on-secondary-color;
+            }
+            padding: 5px;
+            &__icon {
+                margin-right: 5px;
+            }
+            &__text {
+                font-weight: 500;
+            }            
+        }
+        
+    }
+}
+
+.popover-body {  
+
+    .button {
+        border-radius: $border-radius;
+        color: white;
+        margin: 3px;
+        min-width: 16px;
+        padding: 3px;
+        cursor: pointer;
+        &-ok {
+            background: green;
+        }
+        &-cancel {
+            background: red;
+        }
+    }           
+}

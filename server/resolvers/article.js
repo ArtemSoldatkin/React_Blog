@@ -16,7 +16,11 @@ module.exports = {
     Query: {
         getArticle: async(_, args)  => {
             try {
-                const article = await Article.findById(args)
+                console.log('args', args)
+                const {id} = args
+                console.log('id', id)
+                //if(!id) response(400)
+                const article = await Article.findById(id).populate('user', ['_id', 'login', 'avatar'])
                 if(!article) return response(404)
                 return response(null, article)
             } catch (err) { return response(500)}
