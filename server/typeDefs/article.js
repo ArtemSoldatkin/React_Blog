@@ -16,7 +16,8 @@ module.exports = makeExecutableSchema({
             id: ID!
             user: User
             title: String
-            description: String        
+            description: String      
+            body: String  
             vote: [Vote]
             #review
             created: String
@@ -28,7 +29,7 @@ module.exports = makeExecutableSchema({
             getMyArticles: ArticlesResponse!
         }
         type Mutation {
-            addArticle(title: String!, description: String!): ArticleResponse!
+            addArticle(title: String!, description: String!, body: String): ArticleResponse!
             editArticle(id: ID!, title: String, description: String): ArticleResponse!
             removeArticle(id: ID!): ArticleResponse!
             setVoteArticle(id: ID!, vote: Boolean!): ArticleResponse!

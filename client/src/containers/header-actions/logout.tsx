@@ -4,12 +4,10 @@ import { ApolloConsumer } from 'react-apollo';
 import {Link} from  'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import {User} from '../../types'
 
 interface CmpProps {
-    user: {
-        login: string
-        avatar: string
-    }    
+    user: User
 }
 
 export default memo(({user}: CmpProps) => (

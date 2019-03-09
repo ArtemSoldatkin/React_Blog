@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { Form } from "react-bootstrap";
 import { isString } from "../../types";
-//add initialStates
 
 interface CmpProps {
   type: "text" | "password";

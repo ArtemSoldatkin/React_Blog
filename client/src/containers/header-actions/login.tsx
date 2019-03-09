@@ -1,16 +1,14 @@
 import React, { PureComponent} from 'react'
 import {Form, Button} from 'react-bootstrap'
 import TextFormControl from './text-form-control'
-import {isString} from '../../types'
 import gql from 'graphql-tag';
 import { Mutation, ApolloConsumer } from 'react-apollo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import Registration from './registration'
+import {isString} from '../../types'
 
-interface CmpProps {
-  
-}
+interface CmpProps {}
 
 interface CmpStates {   
     loading: boolean   
@@ -23,7 +21,7 @@ const LOGIN_USER = gql`
     mutation login($login: String!, $password: String!) {
       login(login: $login, password: $password) {
         token
-        user { login avatar }
+        user { id login avatar }
       }   
     }
 `;
@@ -40,8 +38,7 @@ export default class Login extends PureComponent<CmpProps, CmpStates> {
         e.stopPropagation()        
         const {login, password} = this.state
         if(!isString(login) || !isString(password))return this.setState({validated: false})
-        this.setState({loading: true})
-        //this.props.login({ variables: { login, password } })
+        return this.setState({loading: true})       
     }    
     render () {
         const { loading, validated} = this.state
@@ -83,51 +80,3 @@ export default class Login extends PureComponent<CmpProps, CmpStates> {
         )
     }   
 }
-
-
-
-
-/*import React from 'react';
-import { Mutation, ApolloConsumer } from 'react-apollo';
-import gql from 'graphql-tag';
-
-import LoginForm from './login-form';
-
-export const LOGIN_USER = gql`  
-    mutation login($login: String!, $password: String!) {
-      login(login: $login, password: $password) {
-        token
-        user { login avatar }
-      }
-   
-}
-`;
-
-export default function Login() {
-  return (
-    <ApolloConsumer>
-      {client => (
-        <Mutation
-          mutation={LOGIN_USER}
-          onCompleted={({ login }) => {           
-            localStorage.setItem('token', login.token);          
-            localStorage.setItem('user', JSON.stringify(login.user))          
-            client.writeData({ data: { 
-              isLoggedIn: login.token ? true : false , 
-              user: login.user ? JSON.stringify(login.user) : null
-            } });
-          }}
-        >
-          {(login, { data, loading, error }) => {
-            // this loading state will probably never show, but it's helpful to
-            // have for testing
-            if (loading) return <p>Loading...</p>;
-            if (error) return <p>An error occurred</p>  
-            return <LoginForm login={login} />
-          }}
-        </Mutation>
-      )}
-    </ApolloConsumer>
-  );
-}
-*/

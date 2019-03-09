@@ -24,13 +24,14 @@ const GET_ARTICLES = gql`
 `;
 
 export interface Article {
-    id: String,
-    user: {id: String, login: String, avatar: String}
-    title: String
-    description: String
-    vote: [{userID: String, value: Boolean}]
-    created: Date
-    isEdited: Boolean
+    id: string,
+    user: {id: string, login: string, avatar: string}
+    title: string
+    description: string
+    vote: [{userID: string, value: boolean}]
+    body: string
+    created: string
+    isEdited: boolean
 }
 
 type Articles = Article[]

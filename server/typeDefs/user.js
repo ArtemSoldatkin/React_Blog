@@ -4,6 +4,7 @@ const {gql} = require('apollo-server-express')
 module.exports = makeExecutableSchema({
     typeDefs: gql`
         type User {
+            id: String
             login: String            
             avatar: String            
         }       

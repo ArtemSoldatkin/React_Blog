@@ -15,6 +15,10 @@ const articleSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    body: {
+        type: String,
+        required: true
+    },
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review"

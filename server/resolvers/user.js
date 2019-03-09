@@ -53,8 +53,8 @@ module.exports = {
                 if(!res) return response(400) 
                 const token = await jwt.sign({ id: user._id }, secret, { expiresIn: 86400 });               
                 if(!token) return response(500)
-                const {login, avatar} = user                
-                return response(null, {login, avatar}, token)
+                const {_id: id, login, avatar} = user                
+                return response(null, {id, login, avatar}, token)
             } catch (err) {
                 return response(500) 
             }
