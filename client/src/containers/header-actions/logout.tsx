@@ -5,6 +5,7 @@ import {Link} from  'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import {User} from '../../types'
+import UserAvatar from '../../components/user-avatar'
 
 interface CmpProps {
     user: User
@@ -19,7 +20,7 @@ export default memo(({user}: CmpProps) => (
                 overlay={<Tooltip id="tooltip-cabinet">В кабинет</Tooltip>}>
                     <div className="user">                        
                         <Link to='/cabinet'>
-                            <Image className="user__avatar" src={user.avatar} rounded  />
+                            <UserAvatar user={user}/>                           
                             <p className="user__login">{user.login}</p>
                         </Link>                        
                     </div>
@@ -27,8 +28,8 @@ export default memo(({user}: CmpProps) => (
                 <Button className="button"
                     variant="link"
                     onClick={() => {
-                    client.writeData({ data: { isLoggedIn: false } });
-                    localStorage.clear();
+                        client.writeData({ data: { user: null } });
+                        localStorage.clear();
                     }}
                 >   <FontAwesomeIcon icon={faSignOutAlt} />        
                     <p>Выйти</p>

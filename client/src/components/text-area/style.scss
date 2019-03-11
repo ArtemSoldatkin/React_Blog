@@ -1,0 +1,35 @@
+@import '../../theme.scss';
+
+.custom-textarea {
+    display: flex;
+    flex-direction: column;    
+    color: inherit;
+    background: inherit;
+    width: 100%;
+    .label {
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .textarea {
+        border: none;
+        border-radius: $border-radius;
+        background: none;
+        margin: 0;
+        &-isInvalid { border:1px solid $error-color; }
+        &-isValid { border:1px solid green; }
+    }
+    .counter {
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+        &-isInvalid { color:  $error-color; }
+        &-isValid { color: green; }
+    }
+    .error {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: $error-color;
+    }
+
+}

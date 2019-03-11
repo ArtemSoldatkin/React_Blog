@@ -1,0 +1,24 @@
+@import '../../../theme.scss';
+
+$like-color: #4CAF50;
+$dislike-color: #F44336;
+
+.votes {   
+    .vote {
+        margin-right: 5px;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        user-select: none;
+        &-like {
+            color: $like-color;
+            &-my { color: green; }
+        }
+        &-dislike {
+            color: $dislike-color;
+            &-my { color: red; }
+        }
+        &__icon {margin-right: 3px;}
+        &__text {}
+    } 
+}

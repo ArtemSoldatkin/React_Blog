@@ -1,67 +1,52 @@
 import React, { PureComponent} from 'react'
 import {Form, Button} from 'react-bootstrap'
-import TextFormControl from './text-form-control'
-import gql from 'graphql-tag';
-import { Mutation, ApolloConsumer } from 'react-apollo';
+import { Mutation, ApolloConsumer, MutationFn } from 'react-apollo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
-import Registration from './registration'
+import {LOGIN_USER} from '../../queries/user'
 import {isString} from '../../types'
+import TextFormControl from './text-form-control'
+import Registration from './registration'
 
 interface CmpProps {}
 
-interface CmpStates {   
-    loading: boolean   
+interface CmpStates {      
     validated: boolean | undefined
     login: string | undefined
     password: string | undefined
 }
 
-const LOGIN_USER = gql`  
-    mutation login($login: String!, $password: String!) {
-      login(login: $login, password: $password) {
-        token
-        user { id login avatar }
-      }   
-    }
-`;
-
 export default class Login extends PureComponent<CmpProps, CmpStates> {
     constructor(props: CmpProps) {
         super(props)
-        this.state = {loading: false, 
+        this.state = {
             validated: undefined, login: undefined, password: undefined
         }
     }
-    private handleSubmit = async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault()
-        e.stopPropagation()        
+    private handleSubmit = async(e: React.FormEvent<HTMLFormElement>, callback: MutationFn): Promise<void> => {
+        e.preventDefault()        
         const {login, password} = this.state
-        if(!isString(login) || !isString(password))return this.setState({validated: false})
-        return this.setState({loading: true})       
+        if(!isString(login) || !isString(password)) return this.setState({validated: false})
+        callback({variables:{login, password}})     
     }    
     render () {
-        const { loading, validated} = this.state
+        const { validated} = this.state
         return (
           <ApolloConsumer>
           {client => (
             <Mutation
               mutation={LOGIN_USER}
-              onCompleted={({ login }) => {           
-                localStorage.setItem('token', login.token);          
-                localStorage.setItem('user', JSON.stringify(login.user))          
-                client.writeData({ data: { 
-                  isLoggedIn: login.token ? true : false , 
-                  user: login.user ? JSON.stringify(login.user) : null
-                } });
+              onCompleted={({ login }) => { 
+                const token = login && login.token ? login.token : null
+                const user = login && login.user ? JSON.stringify(login.user) : null
+                token && localStorage.setItem('token', token)
+                user && localStorage.setItem('user', user)           
+                client.writeData({ data: { user } });
               }}
             >
               {(login, { data, loading, error }) => (
                   <div className="login">
-                    <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                      this.handleSubmit(e)
-                      login({ variables: { login: this.state.login, password: this.state.login } })
-                    }} inline>
+                    <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.handleSubmit(e, login)} inline>
                         <TextFormControl type="text" placeholder="Логин..." 
                         loading={loading} onChange={login => this.setState({login})} validated={validated}/>
                         <TextFormControl type="password" placeholder="Пароль..." 
@@ -71,7 +56,7 @@ export default class Login extends PureComponent<CmpProps, CmpStates> {
                           <p>Войти</p>
                         </Button>
                     </Form>
-                    <Registration loading={loading}/>
+                    <Registration />
                   </div> 
                 )}
               </Mutation>

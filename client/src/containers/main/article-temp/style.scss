@@ -1,7 +1,6 @@
 @import '../../../theme.scss';
 
-$like-color: #4CAF50;
-$dislike-color: #F44336;
+
 
 .article {
     margin: 50px;    
@@ -82,19 +81,7 @@ $dislike-color: #F44336;
         }
 
         &__footer {
-            .votes {
-                .vote {
-                    margin-right: 5px;
-                    font-size: 18px;
-                    font-weight: 500;
-                    cursor: pointer;
-                    user-select: none;
-                    &-like {color: $like-color}
-                    &-dislike {color: $dislike-color}
-                    &__icon {margin-right: 3px;}
-                    &__text {}
-                }
-            }
+            
         }
     }
 }

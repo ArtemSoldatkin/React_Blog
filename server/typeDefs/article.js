@@ -30,9 +30,9 @@ module.exports = makeExecutableSchema({
         }
         type Mutation {
             addArticle(title: String!, description: String!, body: String): ArticleResponse!
-            editArticle(id: ID!, title: String, description: String): ArticleResponse!
-            removeArticle(id: ID!): ArticleResponse!
-            setVoteArticle(id: ID!, vote: Boolean!): ArticleResponse!
+            editArticle(id: String!, title: String, description: String): ArticleResponse!
+            removeArticle(id: String!): ArticleResponse!
+            setVoteArticle(id: String!, vote: Boolean!): ArticleVoteResponse!
         }
         type ArticleResponse {
             status: Boolean!
@@ -44,5 +44,11 @@ module.exports = makeExecutableSchema({
             message: String
             articles: [Article]
         }
+        type ArticleVoteResponse {
+            status: Boolean
+            message: String
+            votes: [Vote]
+        }
+
     `
 })

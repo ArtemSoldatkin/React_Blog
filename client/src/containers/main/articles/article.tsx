@@ -1,32 +1,32 @@
 import React, {memo} from 'react'
-import {Card, Image} from 'react-bootstrap'
+import {Card} from 'react-bootstrap'
 import Moment from 'react-moment';
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-import {Article} from './index'
+import {Article} from '../../../types'
+import UserAvatar from '../../../components/user-avatar'
 
 interface CmpProps {
     article: Article
 }
 
 export default memo(({article}: CmpProps) => {
-    const likes = article.vote ? article.vote.filter(vote => vote.value) : []
-    const dislikes = article.vote ? article.vote.filter(vote => !vote.value) : []    
+    const likes = article && article.vote ? article.vote.filter(vote => vote.value) : []
+    const dislikes = article && article.vote ? article.vote.filter(vote => !vote.value) : []    
     const likesCount = likes.length > 1000 ? '999+' : `${likes.length}`
-    const dislikesCount = dislikes.length > 1000 ? '999+' : `${likes.length}`
-   
-return (    
+    const dislikesCount = dislikes.length > 1000 ? '999+' : `${likes.length}`   
+    return (    
         <Card className="articles-article">
             <Card.Header className="articles-article__header" style={{padding: "5px"}}>
                 <div className="user">
                     <Link to={`/user/${article.user.id}`}>
-                        <Image className="user__avatar" src={String(article.user.avatar)} rounded  />
+                        <UserAvatar user={article.user} />
                         <p className="user__login">{article.user.login}</p>   
                     </Link>            
                 </div>
                 <div className="title">
-                    <Link to={`/article/${/*article.id*/5}`}>
+                    <Link to={`/article/${article.id}`}>
                         <div className="title__text">{article.title}</div>
                     </Link>
                 </div>
@@ -51,5 +51,5 @@ return (
                 </div>
             </Card.Footer>
         </Card>    
-)
+    )
 })

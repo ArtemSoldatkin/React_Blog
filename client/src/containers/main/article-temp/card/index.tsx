@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react'
 
-import {Article} from '../../articles/index'
+import {Article} from '../../../../types'
 
 
 

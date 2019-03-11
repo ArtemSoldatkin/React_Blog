@@ -27,8 +27,8 @@ module.exports = {
                 if(!user) return response(500)
                 const token = await jwt.sign({ id: user._id }, secret, { expiresIn: 86400 }); 
                 if(!token) response(500)
-                const {login, avatar} = user                
-                return response(null, {login, avatar}, token) 
+                const {_id: id, login, avatar} = user
+                return response(null, {id, login, avatar}, token)    
             } catch (err) { 
                 if(err && err.name === "ValidationError") return response(409)
                 return response(500)
@@ -39,8 +39,8 @@ module.exports = {
                 if(!userID) return response(401)
                 const user = await User.findByIdAndUpdate(userID, args, {new: true})
                 if(!user) return response(404)
-                const {login, avatar} = user
-                return response(null, {login, avatar})          
+                const {_id: id, login, avatar} = user
+                return response(null, {id, login, avatar})          
             } catch (err) { 
                 return response(500) 
             }

@@ -24,6 +24,7 @@ export interface Article {
     isEdited: boolean
 }
 
+export type Articles = Article[]
 
 //Type Checking
 

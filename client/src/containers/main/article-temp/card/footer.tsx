@@ -1,5 +1,5 @@
 import React, {memo} from 'react'
-import Votes from '../votes'
+import Votes from '../../votes'
 
 interface Vote {
     userID: string

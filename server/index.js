@@ -26,6 +26,15 @@ const server = new ApolloServer({
 
 const app = express();
 server.applyMiddleware({ app });
+/*
+app.use('*', (req, res, next) => {
+    const query = req.query.query || req.body.query || '';
+    if (query.length > 100000) {
+      throw new Error('Query too large');
+    }
+    next();
+  });
+*/
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
