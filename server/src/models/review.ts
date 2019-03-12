@@ -1,20 +1,21 @@
-const mongoose = require("mongoose")
+import mongoose from 'mongoose';
+import {Review} from '../types/review'
 
 const reviewSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    description: {
+    body: {
         type: String,
         required: true
     },
-    attitude: [{
-        user: {
+    votes: [{
+        userID: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        decision: Boolean
+        value: Boolean
     }],
     created: {
         type: Date,
@@ -26,4 +27,5 @@ const reviewSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('review', reviewSchema)
+interface ReviewModel extends Review, mongoose.Document {}
+export default mongoose.model<ReviewModel>('review', reviewSchema)

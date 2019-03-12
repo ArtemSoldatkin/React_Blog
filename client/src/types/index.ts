@@ -26,6 +26,12 @@ export interface Article {
 
 export type Articles = Article[]
 
+export interface NewArticle {
+    title: string
+    description: string
+    body: string
+}
+
 //Type Checking
 
 

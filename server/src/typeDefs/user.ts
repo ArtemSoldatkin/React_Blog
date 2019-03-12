@@ -1,7 +1,7 @@
-const {makeExecutableSchema} = require('graphql-tools')
-const {gql} = require('apollo-server-express')
+import {makeExecutableSchema} from 'graphql-tools'
+import {gql} from 'apollo-server-express'
 
-module.exports = makeExecutableSchema({
+export default makeExecutableSchema({
     typeDefs: gql`
         type User {
             id: String
@@ -10,7 +10,7 @@ module.exports = makeExecutableSchema({
         }       
         type Mutation {
             addUser(login: String!, password: String!, avatar: String): UserResponse!
-            editUser(avatar: String): UserResponse!
+            editUser(avatar: String!): UserOperationsResponse!
             login(login: String!, password: String!): UserResponse!
         }
         type UserResponse {
@@ -18,6 +18,11 @@ module.exports = makeExecutableSchema({
             message: String
             user: User
             token: String
+        }
+        type UserOperationsResponse {
+            status: Boolean
+            message: String
+            user: User
         }
     `
 })

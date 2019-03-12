@@ -10,13 +10,12 @@ interface CmpProps {
     created: string
     description: string
     handleDescription: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
-    maxDescriptionLength: number
-    contentEditable: React.RefObject<HTMLElement>
+    maxDescriptionLength: number  
     body: string
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default memo(({isEditing, user, isEdited, created, description, handleDescription,maxDescriptionLength, contentEditable, body, handleChange}: CmpProps) => (
+export default memo(({isEditing, user, isEdited, created, description, handleDescription,maxDescriptionLength, body, handleChange}: CmpProps) => (
     <div className="article-card__body">
         <div className="info">
             <div className="info__unchanged">
@@ -26,7 +25,7 @@ export default memo(({isEditing, user, isEdited, created, description, handleDes
                 </div>
                 <div className="date">
                     <p className="date__text">{isEdited ? "Отредактирована:" : "Создана:"}</p>
-                    <Moment format="DD.MM.YYYY HH:mm" date={new Date(created)} />
+                    <Moment format="DD.MM.YYYY HH:mm" date={Number(created)} />
                 </div>
             </div>
             {isEditing ? 
@@ -39,8 +38,7 @@ export default memo(({isEditing, user, isEdited, created, description, handleDes
              }    
         </div>                    
         <div className="main">
-            <ContentEditable
-                innerRef={contentEditable}
+            <ContentEditable               
                 html={body} 
                 disabled={!isEditing}     
                 onChange={handleChange} 

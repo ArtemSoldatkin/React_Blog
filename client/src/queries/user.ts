@@ -27,7 +27,7 @@ export const REGISTRY_USER = gql`
 `;
 
 export const EDIT_USER = gql`
-  mutation EditUser($avatar: String) {
+  mutation EditUser($avatar: String!) {
     editUser(avatar: $avatar) {
       status
       message

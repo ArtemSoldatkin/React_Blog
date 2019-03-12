@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
+import {Article} from '../types/article'
 
 const articleSchema = new mongoose.Schema({
     user: {
@@ -23,7 +24,7 @@ const articleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Review"
     }],
-    vote: [{
+    votes: [{
         userID: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
@@ -40,4 +41,5 @@ const articleSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Article', articleSchema)
+interface ArticleModel extends Article, mongoose.Document {}
+export default mongoose.model<ArticleModel>('Article', articleSchema)

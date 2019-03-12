@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const GET_ARTICLES = gql`
-    query getArticles($user: String, $search: String) {
-        getArticles(user: $user, search: $search){
+    query getArticles($user: String) {
+        getArticles(user: $user){
             status
             message
             articles { 
@@ -44,6 +44,24 @@ export const ADD_ARTICLE = gql`
         }
     }   
 `;
+
+export const EDIT_ARTICLE = gql`
+    mutation EditArticle($id: String!, $title: String, $description: String, $body: String){
+        editArticle(id: $id, title: $title, description: $description, body: $body ){
+            status
+            message
+        }
+    }
+`
+
+export const REMOVE_ARTICLE = gql`
+    mutation RemoveArticle($id: String!){
+        removeArticle(id: $id){
+            status
+            message
+        }
+    }
+`
 
 export const SET_VOTE_ARTICLE = gql`
     mutation SetVoteArticle($id: String!, $vote: Boolean!){
