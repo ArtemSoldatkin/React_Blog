@@ -24,8 +24,8 @@ export default makeExecutableSchema({
             title: String
             description: String      
             body: String  
-            vote: [Vote]
-            review: [Review]
+            votes: [Vote]
+            reviews: [Review]
             created: String
             isEdited: Boolean
         }

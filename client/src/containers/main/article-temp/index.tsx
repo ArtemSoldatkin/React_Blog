@@ -31,7 +31,7 @@ export default withRouter(class cArticle extends PureComponent<CmpProps, CmpStat
         {({ data, loading, error }) => {               
           if (loading) return <p>Loading...</p>;
           if (error) return <p>ERROR</p>;
-          const article: Article = data && data.getArticle && data.getArticle.articles               
+          const article: Article = data && data.getArticle && data.getArticle.article              
           if(!article) return <p>Not Found</p>
             return (                  
               <Query query={IS_LOGGED_IN}>
@@ -41,7 +41,7 @@ export default withRouter(class cArticle extends PureComponent<CmpProps, CmpStat
                     <div className="article">
                       {user && user.id === article.user.id && <Actions article={newArticle} isEditing={isEditing} setEdited={this.setEdited} id={article.id}/>}
                       <Card isEditing={isEditing} article={article} onChange={this.handleChange}/>  
-                      <Review user={user} /*reviews={article.review}*//>
+                      <Review id={article.id} user={user} reviews={article.reviews} />
                     </div>
                   )
                 }}

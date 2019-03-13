@@ -12,7 +12,7 @@ export const GET_ARTICLES = gql`
             description, 
             created, 
             isEdited, 
-            vote { userID, value } 
+            votes { userID, value } 
             }
         }
     }
@@ -23,21 +23,22 @@ export const GET_ARTICLE = gql`
     getArticle(id:$id) {        
       status
             message
-            articles { 
+            article { 
             id, 
             user {id, login, avatar}
             title,
             description, 
+            reviews {id user {id login avatar} body created isEdited votes { userID, value }}
             created, 
             isEdited, 
-            vote { userID, value } 
+            votes { userID, value } 
             }
     }
   }
 `;
 
 export const ADD_ARTICLE = gql`  
-    mutation AddArticle($title: String!, $description: String!, $body: String) {
+    mutation AddArticle($title: String!, $description: String!, $body: String!) {
         addArticle(title: $title, description: $description, body: $body) {
             status
             message           

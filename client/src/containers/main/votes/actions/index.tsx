@@ -1,13 +1,16 @@
 import React, {PureComponent} from 'react'
 
-import {Votes} from '../../../types'
+import {Votes} from '../../../../types'
 import { Mutation, MutationFn } from 'react-apollo';
-import {SET_VOTE_ARTICLE} from '../../../queries/article'
+import {SET_VOTE_ARTICLE} from '../../../../queries/article'
 
-import VoteForm from './form'
+import VoteForm from '../form'
 
+import ActionsArticle from './article'
+import ActionsReview from './review'
 
 interface CmpProps {
+    actionType: 'article' | 'review'
     id: string
     votes: Votes
     disabled?: boolean  
@@ -24,10 +27,10 @@ export default class ComponentVotes extends PureComponent<CmpProps, CmpStates> {
         super(props)
         this.state = {likes: this.filteredVotes(true), dislikes: this.filteredVotes(false), my: this.findMy() }
     } 
-    private filteredVotes = (value: boolean): Votes => this.props.votes.filter(vote => vote.value === value)
+    private filteredVotes = (value: boolean): Votes => this.props.votes ? this.props.votes.filter(vote => vote.value === value) : []
     private findMy = (): boolean | undefined => {
         const {votes, userID} = this.props
-        const tempVote = votes.find(vote => vote.userID === userID)
+        const tempVote = votes && votes.find(vote => vote.userID === userID)
         return tempVote ? tempVote.value : undefined       
     } 
 
@@ -40,32 +43,34 @@ export default class ComponentVotes extends PureComponent<CmpProps, CmpStates> {
         if(number >= 1000000 && number < 1000000000) return `${Math.trunc(number / 1000000)} млн.`
         return `${number}`
     }    
+    private updateVotes = (likes: Votes, dislikes: Votes, my: boolean | undefined) => this.setState({likes, dislikes, my})
     render (){
-        const { disabled, userID } = this.props      
+        const { disabled, userID, actionType } = this.props      
         const {likes, dislikes, my} = this.state      
-        return (   
-            <Mutation mutation={SET_VOTE_ARTICLE}
-            onCompleted={({setVoteArticle}) => {                
-                const votes: Votes = setVoteArticle && setVoteArticle.votes
-                const myVote = votes && votes.find(vote => vote.userID === userID)                
-                votes && this.setState({
-                    likes: votes ? votes.filter(vote => vote.value) : [],
-                    dislikes: votes ? votes.filter(vote => !vote.value): [],
-                    my: myVote ? myVote.value : undefined
-                })
-             }}>
-                {(setVoteArticle, { data, loading, error }) => {                
-                    return <VoteForm 
-                        setVote={(vote) => this.setVote(vote, setVoteArticle)}
+        return (
+            <div>
+                {actionType === 'article' ? 
+                    <ActionsArticle
+                        userID={userID}
+                        updateVotes={this.updateVotes}
+                        setVote={this.setVote}
                         likesCount={this.stylizedVote(likes.length)}
                         dislikesCount={this.stylizedVote(dislikes.length)}
-                        disabled={disabled || loading}
+                        disabled={disabled}
                         my={my}
+                    /> 
+                : 
+                    <ActionsReview 
+                    userID={userID}
+                    updateVotes={this.updateVotes}
+                    setVote={this.setVote}
+                    likesCount={this.stylizedVote(likes.length)}
+                    dislikesCount={this.stylizedVote(dislikes.length)}
+                    disabled={disabled}
+                    my={my}
                     />
-                }}
-            </Mutation>
-            
-                     
-        )
+                }
+            </div>
+            )
     }
 }

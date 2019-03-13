@@ -10,16 +10,18 @@ type PathParamsType = {
     id: string;
   };
   type CmpProps = RouteComponentProps<PathParamsType> & {   
-    vote: Votes
+    votes: Votes
     disabled?: boolean   
+    actionType: 'article' | 'review'
+    id?: string
 }
 
-export default withRouter(memo( ({match, vote, disabled}:CmpProps) => (
+export default withRouter(memo( ({match, votes, disabled, actionType, id}:CmpProps) => (
             <Query query={IS_LOGGED_IN}>
             {({ data }) => {
                 const user: User = data && data.user && JSON.parse(data.user)   
                 const userID = user && user.id            
-                return <Actions id={match.params.id} votes={vote} disabled={disabled} userID={userID}/>
+                return <Actions id={id ? id : match.params.id} votes={votes} disabled={disabled} userID={userID} actionType={actionType}/>
             }}
             </Query>
         )

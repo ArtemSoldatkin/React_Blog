@@ -2,20 +2,14 @@ import React, {memo} from 'react'
 import {Card} from 'react-bootstrap'
 import Moment from 'react-moment';
 import {Link} from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 import {Article} from '../../../types'
 import UserAvatar from '../../../components/user-avatar'
-
+import Votes from '../votes'
 interface CmpProps {
     article: Article
 }
 
-export default memo(({article}: CmpProps) => {
-    const likes = article && article.vote ? article.vote.filter(vote => vote.value) : []
-    const dislikes = article && article.vote ? article.vote.filter(vote => !vote.value) : []    
-    const likesCount = likes.length > 1000 ? '999+' : `${likes.length}`
-    const dislikesCount = dislikes.length > 1000 ? '999+' : `${likes.length}`   
+export default memo(({article}: CmpProps) => { 
     return (    
         <Card className="articles-article">
             <Card.Header className="articles-article__header" style={{padding: "5px"}}>
@@ -40,10 +34,7 @@ export default memo(({article}: CmpProps) => {
             </Card.Body> 
             <Card.Footer className="articles-article__footer" style={{padding: "5px"}}>
                 <div className="info">
-                    <FontAwesomeIcon icon={faThumbsUp} className="info__thumbs thumbs-like"/>
-                    <p className="info__text text-like">{likesCount}</p>
-                    <FontAwesomeIcon icon={faThumbsDown} className="info__thumbs thumbs-dislike"/>
-                    <p className="info__text text-dislike">{dislikesCount}</p>
+                    <Votes votes={article.votes} disabled actionType="article"/>
                 </div>
                 <div className="date">
                     <p className="date__text">{article.isEdited ? "Отредактирована:" : "Создана:"}</p>

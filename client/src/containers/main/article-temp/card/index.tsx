@@ -49,7 +49,7 @@ export default class Card extends PureComponent<CmpProps, CmpStates> {
     };
     render(){
         const {isEditing} = this.props
-        const {vote, user, created, isEdited} = this.props.article
+        const {votes, user, created, isEdited} = this.props.article
         const {title, description, body} = this.state
         return (
             <div className="article-card">
@@ -58,7 +58,7 @@ export default class Card extends PureComponent<CmpProps, CmpStates> {
                 handleDescription={this.handleDescription} maxDescriptionLength={maxDescriptionLength}
                 body={body} handleChange={this.handleChange}
                 />
-                <Footer vote={vote}/>                
+                <Footer votes={votes}/>                
             </div>
         )
     }

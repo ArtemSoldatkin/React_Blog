@@ -12,14 +12,24 @@ export interface Vote {
 
 export type Votes = Vote[]
 
+export interface Review {
+    id: string
+    user:User
+    body: string
+    created: string
+    isEdited: boolean
+    votes: Votes
+}
+export type Reviews = Review[]
+
 export interface Article {
     id: string
     user: User
     title: string
     description: string
     body: string
-    vote: Votes
-    //review: 
+    votes: Votes
+    reviews: Review[]
     created: string
     isEdited: boolean
 }

@@ -27,8 +27,7 @@ const userOperationsResponse = (errorCode: number | null, user: _u.ResponseUser 
 }
 
 
-export default ({
-    
+export default ({    
     Mutation: {
         addUser: async(_: any, args: _u.AddUser) => {
             try {     

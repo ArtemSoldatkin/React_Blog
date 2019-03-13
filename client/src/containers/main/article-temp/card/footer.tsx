@@ -7,11 +7,11 @@ interface Vote {
 }
 
 interface CmpProps {
-    vote: Vote[]
+    votes: Vote[]
 }
 
-export default memo(({vote}: CmpProps) => (
+export default memo(({votes}: CmpProps) => (
     <div className="article-card__footer">
-        <Votes vote={vote}/>
+        <Votes votes={votes} actionType='article'/>
     </div>
 ))

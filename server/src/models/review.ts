@@ -28,4 +28,4 @@ const reviewSchema = new mongoose.Schema({
 })
 
 interface ReviewModel extends Review, mongoose.Document {}
-export default mongoose.model<ReviewModel>('review', reviewSchema)
+export default mongoose.model<ReviewModel>('Review', reviewSchema)

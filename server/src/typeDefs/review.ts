@@ -24,7 +24,7 @@ export default makeExecutableSchema({
             addReview(id: String!, body: String!): ReviewResponse!
             editReview(id: String!, body: String!): ReviewResponse!
             removeReview(id: String!): ReviewResponse!
-            setVoteReview(id: String!, value: Boolean!): ReviewVoteResponse!
+            setVoteReview(id: String!, vote: Boolean!): ReviewVoteResponse!
         }
         type ReviewResponse {
             status: Boolean

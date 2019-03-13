@@ -11,7 +11,10 @@ export interface Vote {
     userID: string
     value: boolean
 }
-
+export interface NewVote {
+    id: string
+    vote: boolean
+}
 //TYPE CHECKING
 export const isString = (data: any): data is string => (
     typeof (<string>data) === 'string' && (<string>data).trim().length > 0
@@ -21,4 +24,9 @@ export const isOptionalString = (data: any): data is OptionalString => (
     typeof (<OptionalString>data) === 'string'
     || (<OptionalString>data) == undefined 
     || (<OptionalString>data) === null
+)
+export const isNewVote = (data: any): data is NewVote =>  (
+    <NewVote>data instanceof Object &&
+    isString((<NewVote>data).id) &&
+    typeof (<NewVote>data).vote === 'boolean'
 )

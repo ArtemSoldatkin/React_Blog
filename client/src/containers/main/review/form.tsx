@@ -1,40 +1,45 @@
 import React, {PureComponent} from 'react'
 import { Mutation, MutationFn } from 'react-apollo';
 import {ADD_REVIEW} from '../../../queries/review'
-import { User } from '../../../types';
+import { User, Reviews } from '../../../types';
 import UserAvatar from '../../../components/user-avatar'
 
 interface CmpProps {
     user: User
+    id: string
+    updateReviews: (reviews: Reviews) => void
 }
 interface CmpStates {
-    review: string
+    body: string
 }
 
 export default class ReviewForm extends PureComponent<CmpProps, CmpStates> {
     constructor(props: CmpProps) {
         super(props)
-        this.state = {review: ''}
+        this.state = {body: ''}
     }
     private handleSubmit = (e: React.FormEvent<HTMLFormElement>, callback: MutationFn): void => {
         e.preventDefault()
-        const {review} = this.state
-        if(review.trim().length <= 0 ) return
-        callback({variables:{review}})
+        const {body} = this.state
+        const {id} = this.props
+        if(body.trim().length <= 0 ) return
+        callback({variables:{id, body}})
     }
-    private handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => this.setState({review: e.target.value})
+    private handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => this.setState({body: e.target.value})
     render () {
         const {user} = this.props
-        const {review} = this.state
+        const {body} = this.state
         return (
             <Mutation mutation={ADD_REVIEW}
-            onCompleted={({ addReview }) => { }}>
+            onCompleted={({ addReview }) => { 
+                if(addReview && addReview.reviews) this.props.updateReviews(addReview.reviews)
+            }}>
                 {(addReview, {data, loading, error}) => (
                     <div className="review-form">
                         <UserAvatar user={user} />
                         <form onSubmit={e => this.handleSubmit(e, addReview)}>
-                            <textarea value={review} onChange={this.handleChange} />
-                            <button type="submit" disabled={review.trim().length <= 0}>Отправить</button>
+                            <textarea value={body} onChange={this.handleChange} />
+                            <button type="submit" disabled={body.trim().length <= 0}>Отправить</button>
                         </form>
                     </div>
                 )}            
