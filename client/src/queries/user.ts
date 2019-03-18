@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 export const IS_LOGGED_IN = gql`
-   # query IsUserLoggedIn {
-      user1 @client
-    #}
+    query IsUserLoggedIn {
+      user @client { id login avatar}
+    }
 `;
 
 export const LOGIN_USER = gql`  

@@ -25,8 +25,8 @@ export default memo(() => (
             </Link>
         </div>
         <Query query={IS_LOGGED_IN}>
-            {({ data }) => {   
-            const user: User | undefined = data && data.user && JSON.parse(data.user)  
+            {({ data: {user} }) => {   
+            //const user: User | undefined = data && data.user && JSON.parse(data.user)  
             return <Articles user={user}/>
             }}
         </Query>        

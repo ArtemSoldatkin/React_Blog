@@ -24,11 +24,16 @@ const client = new ApolloClient({
   }),
 });
 
+const getUserInStore = () => {
+  const user = localStorage.getItem('user')
+  return user ? JSON.parse(user) : null
+}
 
 cache.writeData({
   data: { 
-    user1: null,  
-    user: localStorage.getItem('user')  
+   // user1: null,  
+    //user: localStorage.getItem('user')
+    user: getUserInStore()  
   },
 });
 

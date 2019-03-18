@@ -46,9 +46,9 @@ export default class Login extends PureComponent<CmpProps, CmpStates> {
                 //localStorage.clear()
                 token && localStorage.setItem('token', token)
                 user && localStorage.setItem('user', user) 
-                const data = { user: login.user, __typename: 'User' };          
-                client.writeData({data: {user}});
-                client.writeData({data: {user1: login}})
+              //  const data = { user: login.user, __typename: 'User' };          
+               // client.writeData({data: {user}});
+                login && login.user && client.writeData({data: {user: login.user}})
               }}
             >
               {(login, { data, loading, error }) => (

@@ -28,8 +28,8 @@ export default class Review extends PureComponent<CmpProps, CmpStates> {
         return (
             <div id="review">
             <Query query={IS_LOGGED_IN}>
-            {({ data }) => {   
-              const user: User | undefined = data && data.user && JSON.parse(data.user)
+            {({ data: {user} }) => {   
+              //const user: User | undefined = data && data.user && JSON.parse(data.user)
               if(!user) return <div></div>
               return <ReviewForm id={id} user={user} updateReviews={this.updateReviews}/>
             }}
