@@ -1,98 +1,92 @@
-$like-color: #4CAF50;
-$dislike-color: #F44336;
+@import '../../../theme.scss';
 
-.articles {    
-    padding: 50px;
-    display: grid;
-    grid-column-gap: 15px;
-    grid-row-gap: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid: column 1fr / auto;
-   
-    
+%multiline-text {
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.articles-article {
-     box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.1);
-    &__header {
-        display: flex;
-        flex-direction: column;  
-        .user {
+@mixin multiline-text($height, $line-count, $font-size, $font-weight ) {
+    height: $height;
+    @extend %multiline-text;                       
+    -webkit-line-clamp: $line-count;  
+    line-height: $font-size;
+    font-size: $font-size; 
+    font-weight: $font-weight;
+}
+
+#articles { 
+    display: grid;
+    grid-column-gap: $large-space;
+    grid-row-gap: $large-space;
+    grid-template-columns: repeat(auto-fit, minmax($article-card-width, 1fr));
+    grid: column 1fr / auto;
+    .article {   
+               
+        border: $border;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+        width: $article-card-width;
+        min-width: $article-card-width;
+        background: $surface-color;
+        header {
             display: flex;
-            flex-direction: row;
-            &__avatar {
-                max-height: 40px;
-                max-width: 40px;
-                height: 40px;
-                width: 40px;
-                margin-right: 5px;
-            }
-            &__login {
-                font-size: 18px;
-                font-weight: 500;
-                vertical-align: bottom;
-            }
-        }
-        .title {
-            &__text {
-                font-size: 22px;
-                font-weight: 600;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }           
-        }
-    }
-    &__body {
-        .description {
-            &__text {
-                height: 200px;
-                overflow: hidden;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical; 
-                line-height: 20px;
-                font-size: 18px;
-            }            
-        }
-    }
-    &__footer {        
-        display: flex;
-        flex-direction: row;        
-        .info {  
-            align-self: flex-start; 
-            &__thumbs {
-                margin-right: 5px;
-            }
-            .thumbs {
-                &-like {
-                    color: $like-color;
-                }
-                &-dislike {
-                    color: $dislike-color;
+            flex-direction: column;  
+            border-bottom: $border;
+            .user {
+                display: flex;
+                flex-direction: row;            
+                .login {
+                    font-size: $large-text-size;
+                    font-weight: $large-text-bold;
+                    margin-left: $medium-space;
+                    vertical-align: bottom;
                 }
             }
-            &__text {
-                font-weight: 600;
-                margin-right: 5px;
+            .title {
+                .text {
+                    word-break: break-all;  
+                    text-align: center;  
+                    @include multiline-text(
+                        $article-card-title-height,
+                        $article-card-title-line,
+                        $medium-text-size,
+                        $medium-text-bold
+                    );                  
+                }           
             }
+        }
+        article {
+            border-bottom: $border;
             .text {
-                &-like {
-                    color: $like-color;
-                }
-                &-dislike {
-                    color: $dislike-color;
-                }
+                word-break: break-all;  
+                padding: 0 $medium-space;
+                @include multiline-text(
+                        $article-card-description-height,
+                        $article-card-description-line,
+                        $medium-text-size,
+                        $medium-text-thin
+                );                    
             }
         }
-        .date {
-            align-self: flex-end;
-            text-align: right;
-            margin: auto 0 auto auto;
-            font-weight: 500;
-            font-size: 14px;
-            &__text {                
-                margin-right: 5px;
+        footer {            
+            display: flex;
+            flex-direction: column; 
+            background: darken($surface-color, 10%);       
+            .info {  
+                align-self: flex-start;
+            }
+            .date {
+                align-self: flex-end;
+                text-align: right;
+                margin: auto 0 auto auto;
+                font-weight: $small-text-bold;
+                font-size:  $small-text-size;
+                .text {                
+                    margin-right: $small-space;
+                }
             }
         }
     }

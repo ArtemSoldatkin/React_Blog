@@ -1,0 +1,49 @@
+@import '../../../theme.scss';
+
+%button-type {
+    cursor: pointer;
+    user-select: none;
+}
+
+@mixin setColor($color, $on-color) {
+    background: $color;
+    color: $on-color;
+    &:hover {
+        background: $on-color;
+        color: $color;
+    }
+}
+
+.main_actions {
+    @extend %button-type;
+    &__popover_content {
+        background: $surface-color;
+        color: $on-surface-color;
+        font-size: $small-text-size;
+        font-weight: $small-text-bold;
+        .button {
+            @extend %button-type;
+            &:hover { color: $primary-color; }
+            .text { margin-left: $small-space; }
+        }
+    }
+    &__popover_confirm {
+        background: $surface-color;        
+        @extend %button-type;  
+        .popover-body {
+            text-align: center;
+            .button {
+                display: inline-block;
+                border-radius: $border-radius; 
+                margin: 2px;  
+                padding: 2px; 
+                font-size: $small-text-size;
+                font-weight: $small-text-bold;
+                width: ($small-text-size * 3 + 4);        
+                @extend %button-type;
+                &-ok {@include setColor($success-color, $on-success-color);}
+                &-cancel {@include setColor($error-color, $on-error-color);}
+            }
+        } 
+    }
+}

@@ -1,28 +1,101 @@
-//Fill colors
+//MULTIPLIER
+$small-multiplier: 0.7;
+$large-multiplier: 1.3;
+
+//FILL - COLORS
 $primary-color: #2196F3;
-$secondary-color: #FFEE58;
-$accent-color: #0D47A1;
-$background-color:#E3F2FD;
 $surface-color: white;
-$error-color: #D50000;
-$footer-color: #90CAF9;
+$error-color: #F44336 ;
+$success-color: #4CAF50;
+$secondary-color: complement($primary-color);
+$accent-color: saturate($primary-color, 50%);
+$background-color:lighten($primary-color, 40%);
+$footer-color: desaturate($primary-color, 50%);
 
-//Typography 
+//TYPOGRAPHY - COLORS
 $on-primary-color: white;
-$on-secondary-color: black;
 $on-surface-color: black;
-$on-error-color: white;
-$on-footer-color: black;
+$on-error-color: white ;
+$on-success-color: white;
+$on-secondary-color: complement($on-primary-color);
+$on-accent-color: saturate($on-primary-color, 50%);
+$on-background-color:lighten($on-primary-color, 40%);
+$on-footer-color: desaturate($on-primary-color, 50%);
 
-//Paddings
+//TYPOGRAPHY - SIZE
+$medium-text-size: 18px;
+$medium-text-bold: 500;
+$medium-text-thin: 400;
+$small-text-size: $medium-text-size * $small-multiplier;
+$small-text-bold: $medium-text-bold * $small-multiplier;
+$small-text-thin: $medium-text-thin * $small-multiplier;
+$large-text-size: $medium-text-size * $large-multiplier;
+$large-text-bold: $medium-text-bold * $large-multiplier;
+$large-text-thin: $medium-text-thin * $large-multiplier;
+$logo-text-size:  $medium-text-size * 2;
+$logo-text-weight: $large-text-bold;
+
+//PADDING
 $global-padding: 0 50px;
-$component-padding: 5px;
 
-//Borders
+//SPACE
+$medium-space: 10px;
+$small-space: $medium-space * $small-multiplier;
+$large-space: $medium-space * $large-multiplier;
+
+//BORDER
 $border-radius: 3px;
 $border: 1px solid #d3d3f5;
 
-//Shadow
+//SHADOW
 $box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.1);  
 
+//LINES
+$article-card-title-line: 3;
+$article-card-description-line: 10;
+//WIDTH
+$article-card-width: 300px;
 
+
+
+//HEIGHT
+$avatar-height: 50px;
+$header-height: $small-space * 5 + $small-text-size + $avatar-height;
+$input-height: 36px;
+$article-card-description-height: $medium-text-size * $article-card-description-line;
+$article-card-title-height: $medium-text-size * $article-card-title-line;
+
+
+
+
+//Avatar
+
+$avatar-width: 50px;
+$avatar-text-size: 25px;
+$avatar-text-weight: 600;
+
+
+//CARD
+%main-card {
+    border: $border;
+    border: $border;
+    border-radius: $border-radius;
+    color: $on-surface-color;
+    background: $surface-color;
+    box-shadow: $box-shadow;
+}
+
+//BUTTON
+%main-button {
+    height: $input-height;
+    border: $border;
+    border-radius: $border-radius;
+    color: $on-primary-color;
+    background: $primary-color;
+    cursor: pointer;
+    user-select: none;
+    &:hover {
+        color: $on-secondary-color;
+        background: $secondary-color;
+    }
+}

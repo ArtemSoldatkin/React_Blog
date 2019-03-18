@@ -1,3 +1,6 @@
-.main {
+@import '../../theme.scss';
+
+#main {
     flex: 1 0 auto;   
+    padding: $global-padding;
 }

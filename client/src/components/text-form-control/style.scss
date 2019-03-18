@@ -1,0 +1,47 @@
+@import '../../theme.scss';
+
+@mixin setColor($color) {    
+    color: $color;
+    border-color: $color;
+}
+
+#custom_text_form_control {
+    display: flex;
+    flex-direction: column;
+    .form_label {
+        font-size: $medium-text-size;
+        font-weight: $medium-text-bold;
+        margin: $medium-space 0;
+    }
+    .form_input {
+        display: flex;
+        flex-direction: row; 
+        height: $input-height;
+        width: inherit;
+        background: $surface-color; 
+        color: $on-surface-color;  
+        border: $border;      
+        border-radius: $border-radius;                         
+        &-invalid {
+            @include setColor($error-color);          
+        }
+        &-valid { 
+            @include setColor($success-color);          
+        }
+        .text_field {
+            height: 100%; 
+            width: 100%;  
+            background: none;
+            padding: $small-space;
+            margin: 0;
+            border: none;
+            border-radius: $border-radius; 
+        }
+    }
+    .form_feedback {
+        font-size: $small-text-size;
+        font-weight: $small-text-bold;
+        color: $error-color;
+        margin: 0;
+    }
+}

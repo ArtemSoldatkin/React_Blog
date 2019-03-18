@@ -4,6 +4,7 @@ import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Mutation, MutationFn} from 'react-apollo'
 import {REMOVE_ARTICLE} from '../../../../queries/article'
 import {withRouter, RouteComponentProps} from 'react-router-dom'
+import {Article, Reviews } from "../../../../types";
 type PathParamsType = {
     id: string;
   };
@@ -11,6 +12,7 @@ type PathParamsType = {
 interface CmpProps extends RouteComponentProps<PathParamsType> {
     id: string
     handleConfirm: (target: EventTarget, callback: MutationFn, variables: any) => void
+    onChange?: (data: Reviews ) => void 
 }
 interface CmpStates {}
 
@@ -36,8 +38,8 @@ export default withRouter(class ActionRemove extends PureComponent<CmpProps, Cmp
                         className="button"
                         onClick={e => this.handleConfirm(e, removeArticle)}
                     >
-                        <FontAwesomeIcon icon={faTrash} className="button__icon" />
-                        <p className="button__text">Удалить</p>
+                        <FontAwesomeIcon icon={faTrash} className="icon" />
+                        <p className="text">Удалить</p>
                   </span>
                 )}            
             </Mutation>

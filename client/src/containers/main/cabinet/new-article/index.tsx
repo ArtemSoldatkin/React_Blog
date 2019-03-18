@@ -2,10 +2,13 @@ import React, {PureComponent} from 'react'
 import ContentEditable from 'react-contenteditable'
 import { Mutation, MutationFn } from 'react-apollo';
 import {withRouter, RouteComponentProps} from 'react-router-dom'
+import {isString} from '../../../../types'
 import {ADD_ARTICLE} from '../../../../queries/article'
 import {maxTitleLength, maxDescriptionLength} from '../../../../constants'
-
+import Loading from '../../../../components/loading'
+import Info from '../../../../components/info'
 import CustomTextArea from '../../../../components/text-area'
+import './style.scss'
 
 type PathParamsType = {
     id: string;
@@ -24,14 +27,13 @@ export default withRouter(class NewArticle extends PureComponent<CmpProps, CmpSt
         super(props)
         this.state = {title: '', description: '', body: '', isValid: undefined}
     }
-    private handleChangeTitle = (title: string): void => this.setState({title})   
-    private handleChangeDescription = (description: string): void => this.setState({description})
-    private handleChangeBody = (e: React.ChangeEvent<HTMLInputElement>): void => this.setState({body: e.target.value})    
-    private handleSubmit = (callback: MutationFn): void => {
+    private setTitle = (title: string) => this.setState({title})   
+    private setDescription = (description: string) => this.setState({description})
+    private setBody = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({body: e.target.value})    
+    private handleSubmit = (callback: MutationFn) => {
         const {title, description, body} = this.state        
-        if(title.trim().length <= 0 &&  description.trim().length <= 0)return this.setState({isValid: false})
-        this.setState({isValid: true})
-        callback({variables: {title, description, body}})   
+        if(!isString(title) &&  !isString(title))return this.setState({isValid: false})
+        this.setState({isValid: true}, () => callback({variables: {title, description, body}}))   
     }
     render () {
         const {body, isValid} = this.state
@@ -41,37 +43,42 @@ export default withRouter(class NewArticle extends PureComponent<CmpProps, CmpSt
                 if(addArticle && addArticle.status) return this.props.history.push("/cabinet")
              }}>
             {(addArticle, { data, loading, error }) => {                
-                return (
-                <div className="cabinet__new-article">
-                    <header>                    
-                        <CustomTextArea name="Заголовок" loading={loading}
-                        maxLength={maxTitleLength} onChange={this.handleChangeTitle} isValid={isValid} />
-                    </header>
-                    <article>
-                        <div className="description">
-                            <CustomTextArea name="Описание" loading={loading}
-                            maxLength={maxDescriptionLength} onChange={this.handleChangeDescription} isValid={isValid} />                           
-                        </div>
-                        <div className="body">
-                            <p>Статья</p>
-                            <ContentEditable                     
-                            html={body} 
-                            disabled={loading}      
-                            onChange={this.handleChangeBody} 
-                            tagName='article' 
-                            />
-                        </div>
-                    </article>
-                    <footer>
-                        <button onClick={() => this.handleSubmit(addArticle)} disabled={loading}>
-                            Сохранить
-                        </button>                        
-                        {error && <p>Ошибка</p>}
-                    </footer>
-                </div>
+                return (                    
+                        <div id="cabinet__new_article">
+                            <Loading loading={loading}>
+                                <article>                   
+                                    <CustomTextArea name="Заголовок" loading={loading}
+                                    maxLength={maxTitleLength} onChange={this.setTitle} isValid={isValid} />  
+                                    <CustomTextArea name="Описание" loading={loading}
+                                    maxLength={maxDescriptionLength} onChange={this.setDescription} isValid={isValid} />                           
+                                    <div className="body">
+                                        <p className="label">Статья</p>
+                                        <ContentEditable                     
+                                        html={body} 
+                                        disabled={loading}      
+                                        onChange={this.setBody} 
+                                        tagName='article' 
+                                        />
+                                    </div>
+                                </article>
+                            </Loading>
+                            <footer>
+                                <button onClick={() => this.handleSubmit(addArticle)} disabled={loading}>
+                                    Сохранить
+                                </button>
+                            </footer>                        
+                            {data && data.addArticle ? (
+                                data.addArticle.status ? 
+                                <Info type="success" message={data.addArticle.message}/> 
+                                : 
+                                <Info type="error" message={data.addArticle.message}/>
+                            ) 
+                            : 
+                            (error && <Info type="error" />)}
+                        </div>                  
                 )
             }}
             </Mutation>
         )
-    }
+        }
 })

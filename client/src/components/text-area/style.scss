@@ -1,35 +1,41 @@
 @import '../../theme.scss';
 
-.custom-textarea {
+@mixin setBorder($color) {
+    border:1px solid $color;
+}
+@mixin setColor($color) {
+    color:  $color;
+}
+
+#custom_textarea {
     display: flex;
     flex-direction: column;    
     color: inherit;
     background: inherit;
     width: 100%;
     .label {
-        font-size: 18px;
-        font-weight: 500;
+        font-size: $medium-text-size;
+        font-weight: $medium-text-bold;
     }
     .textarea {
         border: none;
         border-radius: $border-radius;
         background: none;
         margin: 0;
-        &-isInvalid { border:1px solid $error-color; }
-        &-isValid { border:1px solid green; }
+        &-isInvalid { @include setBorder($error-color); }
+        &-isValid { @include setBorder($success-color); }
     }
     .counter {
-        font-size: 14px;
-        font-weight: 500;
+        font-size: $small-text-size;
+        font-weight: $small-text-bold;
         margin: 0;
-        &-isInvalid { color:  $error-color; }
-        &-isValid { color: green; }
+        &-isInvalid {  @include setColor($error-color); }
+        &-isValid {@include setColor($success-color); }
     }
     .error {
         margin: 0;
-        font-size: 16px;
-        font-weight: 500;
+        font-size: $small-text-size;
+        font-weight: $small-text-bold;
         color: $error-color;
     }
-
 }

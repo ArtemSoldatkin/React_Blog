@@ -1,31 +1,56 @@
 @import '../../theme.scss';
 
-.logout {
-    
-    display: flex;
-    flex-direction: column;
-    color: $on-primary-color;
-    .user {
-        background: $surface-color;
-        color: $on-surface-color;
-        border-radius: $border-radius;
-        padding: $component-padding;
-        &__avatar {
-            max-width: 50px;
-            max-height: 50px;
-            height: 50px;
-            width: 50px;
-            margin-right: 5px;
-        }
-        &__login {
-            font-size: 28px;
-            font-weight: 600;
-            vertical-align: bottom;
+#header_actions {
+    .login {
+        .button_submit {
+            @extend %main-button;
         }
     }
-    .button {
-        margin: 0;
-        padding: 0;
-        text-align: right;        
+    .logout {        
+        display: flex;
+        flex-direction: column;
+        color: $on-primary-color;
+        .user {
+            background: $surface-color;
+            color: $on-surface-color;
+            border-radius: $border-radius;
+            padding: $small-space;           
+            .login {
+                font-size: $large-text-size;
+                font-weight: $large-text-bold;
+                vertical-align: bottom;
+                margin-left: $medium-space;
+            }
+        }
+        .button_submit {            
+            text-align: right; 
+            margin: 0;
+            padding: 0;  
+            user-select: none;
+            cursor: pointer;
+            font-size: $small-text-size;
+            font-weight: $small-text-bold;   
+            .text {
+                margin-left: $small-space;
+            }  
+        }
+    }
+    .registration {
+        .show_modal {
+            border: none;
+            padding: 0;
+            margin: 0;
+            background: none;
+            color: $on-primary-color;
+            font-size: $medium-text-size;
+            font-weight: $medium-text-bold;           
+        }        
+    }
+}
+#registryForm {          
+    .show_password {
+        border: none;
+        height: 100%;
+        background: none;
     }
 }

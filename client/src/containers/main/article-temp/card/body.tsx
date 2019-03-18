@@ -1,7 +1,9 @@
 import React, {memo} from 'react'
-import {Image} from 'react-bootstrap'
 import Moment from 'react-moment'
 import ContentEditable from 'react-contenteditable'
+import UserAvatar from '../../../../components/user-avatar'
+import {maxDescriptionLength} from '../../../../constants'
+import { NewArticle } from '../../../../types';
 
 interface CmpProps {
     isEditing: boolean
@@ -9,29 +11,31 @@ interface CmpProps {
     isEdited: boolean
     created: string
     description: string
-    handleDescription: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
-    maxDescriptionLength: number  
+    setDescription: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+    newArticle: NewArticle
     body: string
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    setBody: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default memo(({isEditing, user, isEdited, created, description, handleDescription,maxDescriptionLength, body, handleChange}: CmpProps) => (
-    <div className="article-card__body">
+export default memo(({isEditing, user, isEdited, created, description, setDescription, body, setBody, newArticle}: CmpProps) => (
+    <article>
         <div className="info">
-            <div className="info__unchanged">
-                <div className="user">
-                    <Image className="user__avatar" src={user.avatar} rounded />
-                    <p className="user__login">{user.login}</p>
-                </div>
-                <div className="date">
-                    <p className="date__text">{isEdited ? "Отредактирована:" : "Создана:"}</p>
-                    <Moment format="DD.MM.YYYY HH:mm" date={Number(created)} />
-                </div>
+            <div className="user-info">
+                <UserAvatar user={user} />  
+                <div className="login-date">
+                    <p className="login">{user.login}</p>
+                    <div className="date">
+                        <p className="date__text">{isEdited ? "Отредактирована:" : "Создана:"}</p>
+                        <Moment format="DD.MM.YYYY HH:mm" date={Number(created)} />
+                    </div>
+                </div>   
             </div>
             {isEditing ? 
                 <div className="description">
-                    <textarea className="article-card__textarea description__text" value={description} onChange={handleDescription}/>
-                    <p className="description__counter">Символов: {description.length} из {maxDescriptionLength}</p>
+                    <textarea className="article-card__textarea description__text" 
+                    value={newArticle.description ? newArticle.description : description} 
+                    onChange={setDescription}/>
+                    <p className="description__counter">Символов: {newArticle.description ? newArticle.description.length : description.length} из {maxDescriptionLength}</p>
                 </div>                        
             :
                 <p className="description">{description}</p>
@@ -39,11 +43,11 @@ export default memo(({isEditing, user, isEdited, created, description, handleDes
         </div>                    
         <div className="main">
             <ContentEditable               
-                html={body} 
+                html={newArticle.body ? newArticle.body : body} 
                 disabled={!isEditing}     
-                onChange={handleChange} 
+                onChange={setBody} 
                 tagName='article' 
             />
         </div>
-    </div>
+    </article>
 ))

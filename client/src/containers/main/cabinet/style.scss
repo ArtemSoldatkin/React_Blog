@@ -1,0 +1,22 @@
+@import '../../../theme.scss';
+
+#cabinet {
+    .actions {
+        @extend %main-card;
+        margin-bottom: $large-space;
+        display: flex;
+        flex-direction: row;
+        padding: $medium-space;
+        .tab {
+            margin-right: $large-space;
+            font-size: $large-text-size;
+            font-weight: $large-text-bold;  
+            &:hover {
+                color: $primary-color;
+            }          
+            .text {
+                margin-left: $small-space;                
+            }
+        }
+    }    
+}

@@ -1,27 +1,24 @@
 @import '../../theme.scss';
 
-.user-avatar {
+%block-size {
+    height: $avatar-height;
+    width: $avatar-width;
+    max-height: $avatar-height;
+    max-width: $avatar-width;
+    border-radius: $border-radius; 
+}
+
+#user-avatar {
     display: inline-block;
-    height: 50px;
-    width: 50px;
-    max-height: 50px;
-    max-width: 50px;
-    border: $border;
-    border-radius: $border-radius;
+    @extend %block-size;
     background: $primary-color;
-    color: $on-primary-color;   
-    margin: 0;
-    padding: 0;
-    font-size: 25px;
-    font-weight: 600;
+    color: $on-primary-color;    
+    font-size: $avatar-text-size;
+    font-weight: $avatar-text-weight;
     .avatar {
-        width: 100%;
-        height: 100%;
-        max-width: inherit;
-        max-height: inherit;
-        border-radius: $border-radius;
+        @extend %block-size;        
         display: flex;
-        &__text {
+        .text {
             margin: auto;
             user-select: none;
         }

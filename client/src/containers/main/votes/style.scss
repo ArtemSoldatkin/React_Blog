@@ -1,24 +1,27 @@
 @import '../../../theme.scss';
 
-$like-color: #4CAF50;
-$dislike-color: #F44336;
+@mixin setColor ($color) {
+    color: desaturate($color, 20%);
+    &-my { color: $color; }
+}
 
-.votes {   
+#votes {   
     .vote {
-        margin-right: 5px;
-        font-size: 18px;
-        font-weight: 500;
+        border: none;
+        background: none;  
+        margin-right: $small-space;
+        font-size: $medium-text-size;
+        font-weight: $medium-text-bold;
         cursor: pointer;
         user-select: none;
-        &-like {
-            color: $like-color;
-            &-my { color: green; }
+        &__like {
+            @include setColor($success-color);           
         }
-        &-dislike {
-            color: $dislike-color;
-            &-my { color: red; }
+        &__dislike {
+            @include setColor($error-color);          
+        }     
+        .text {
+            margin-left: $small-space;
         }
-        &__icon {margin-right: 3px;}
-        &__text {}
     } 
 }

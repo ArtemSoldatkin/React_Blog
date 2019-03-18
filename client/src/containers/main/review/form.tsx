@@ -35,9 +35,9 @@ export default class ReviewForm extends PureComponent<CmpProps, CmpStates> {
                 if(addReview && addReview.reviews) this.props.updateReviews(addReview.reviews)
             }}>
                 {(addReview, {data, loading, error}) => (
-                    <div className="review-form">
+                    <div className="new-review">
                         <UserAvatar user={user} />
-                        <form onSubmit={e => this.handleSubmit(e, addReview)}>
+                        <form className="form-review" onSubmit={e => this.handleSubmit(e, addReview)} >
                             <textarea value={body} onChange={this.handleChange} />
                             <button type="submit" disabled={body.trim().length <= 0}>Отправить</button>
                         </form>

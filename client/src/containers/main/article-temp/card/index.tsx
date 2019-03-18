@@ -6,59 +6,72 @@ import Body from './body'
 import Footer from './footer'
 
 interface CmpProps {
-    isEditing: boolean
+   // isEditing: boolean
     article: Article
-    onChange?: (article: NewArticle) => void
+    //onChange?: (article: NewArticle) => void
 }
-interface CmpStates {
-    title: string
-    description: string
-    body: string
+interface CmpStates {  
+    title: string | undefined
+    description: string | undefined
+    body: string | undefined    
+    isEdited: boolean | undefined
+    isEditing: boolean
 }
 
 export default class Card extends PureComponent<CmpProps, CmpStates> {
     constructor(props: CmpProps){
         super(props)
         this.state = { 
-            title: this.props.article.title, 
-            description: this.props.article.description, 
-            body: this.props.article.description
+            title: undefined, 
+            description: undefined, 
+            body: undefined,                
+            isEdited: undefined,
+            isEditing: false
         }
-    }
-    private handleTitle = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    }    
+    private setTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let title: string = e.target.value
-        if(title.length > maxTitleLength) title = title.substr(0, maxTitleLength)
-        this.setState({title}, () => {
-            const {title, description, body} = this.state
-            this.props.onChange && this.props.onChange({title, description, body})
-        })
+        if(title.length > maxTitleLength) title = title.substr(0, maxTitleLength)       
+        this.setState({title})
     }
-    private handleDescription = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        let description: string = e.target.value        
-        if(description.length > maxDescriptionLength) description = description.substr(0, maxDescriptionLength)
-        this.setState({description}, () => {
-            const {title, description, body} = this.state
-            this.props.onChange && this.props.onChange({title, description, body})
-        })
-    }   
-    handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({body: e.target.value}, () => {
-            const {title, description, body} = this.state
-            this.props.onChange && this.props.onChange({title, description, body})
-        })
-    };
-    render(){
-        const {isEditing} = this.props
-        const {votes, user, created, isEdited} = this.props.article
-        const {title, description, body} = this.state
+    private setDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        let description: string = e.target.value
+        if(description.length > maxDescriptionLength) description = description.substr(0, maxDescriptionLength)       
+        this.setState({description})
+    }
+    private setBody = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({body: e.target.value})
+    private clear = () => this.setState({
+        title: undefined,
+        description: undefined,
+        body: undefined,
+        isEdited: undefined
+    })
+    private setEdited = (isEdited: boolean) => this.setState({isEdited})  
+    private setEditing = (isEditing: boolean) => this.setState({isEditing})
+    render(){       
+        const {article} = this.props
+        const { isEditing, title, description, body, isEdited} = this.state
         return (
             <div className="article-card">
-                <Header isEditing={isEditing} title={title} maxTitleLength={maxTitleLength} handleTitle={this.handleTitle} />
-                <Body isEditing={isEditing} user={user} isEdited={isEdited} created={created} description={description} 
-                handleDescription={this.handleDescription} maxDescriptionLength={maxDescriptionLength}
-                body={body} handleChange={this.handleChange}
+                <Header isEditing={isEditing} title={article.title}  
+                setTitle={this.setTitle} 
+                id={article.id}
+                newArticle={{title, description, body}}               
+                userID={article.user.id}
+                clear={this.clear}
+                setEditing={this.setEditing}            
                 />
-                <Footer votes={votes}/>                
+                <Body isEditing={isEditing} 
+                user={article.user} 
+                isEdited={article.isEdited} 
+                created={article.created} 
+                description={article.description} 
+                setDescription={this.setDescription}                 
+                body={article.body} 
+                setBody={this.setBody}
+                newArticle={{title, description, body}}
+                />
+                <Footer votes={article.votes}/>                
             </div>
         )
     }

@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss'
 
 //Apollo
+import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
@@ -23,14 +24,15 @@ const client = new ApolloClient({
   }),
 });
 
+
 cache.writeData({
-  data: {   
-    user: localStorage.getItem('user')   
+  data: { 
+    user1: null,  
+    user: localStorage.getItem('user')  
   },
 });
 
-  import { ApolloProvider } from 'react-apollo';
-//end Apollo
+  
 
 
 

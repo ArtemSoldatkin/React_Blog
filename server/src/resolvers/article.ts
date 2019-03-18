@@ -25,11 +25,12 @@ const articlesResponse = (errorCode: number | null, articles: _a.Article[] | nul
 const articleOperationsResponse = (errorCode: number | null) => {
     const status = errorCode ? false : true
     const message = msg(errorCode)
+    console.log(message, status )
     return {status, message}
 }
 const articleVoteResponse = (errorCode: number | null, votes: Vote[] | null = null) => {
     const status = errorCode ? false : true
-    const message = msg(errorCode)
+    const message = msg(errorCode)    
     return {status, message, votes}
 }
 
@@ -83,7 +84,14 @@ export default ({
                 if(!_a.isEditArticle(args)) return articleOperationsResponse(400)
                 if(!userID) return articleOperationsResponse(401)               
                 const {id, title, description, body} = args
-                const data = {title, description, body, created: Date.now(), isEdited: true}
+                //WARN
+                interface EditData {title?: string, description?: string, body?: string, created: number, isEdited: boolean}
+                let data: EditData = {created: Date.now(), isEdited: true}
+                console.log('data1', data)
+                for(let i in args) {                   
+                    if(i === 'title' || i === 'description' || i === 'body') data[i] = args[i]                   
+                }               
+                console.log('data', data)
                 const article = await Article.findByIdAndUpdate(id, data)
                 if(!article) return articleOperationsResponse(404)
                 return articleOperationsResponse(null)

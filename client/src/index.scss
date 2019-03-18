@@ -15,6 +15,13 @@ a:focus,
   color: inherit;
 }
 
+button,
+button:visited,
+button:hover,
+button:active,
+button:focus {
+  outline: none;
+}
 
 //paragraphs
 p {

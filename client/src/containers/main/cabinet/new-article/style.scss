@@ -1,0 +1,22 @@
+@import '../../../../theme.scss';
+
+#cabinet__new_article {
+    @extend %main-card;
+    padding: $medium-space;   
+    article {
+        margin-bottom: $medium-space;
+        .body {
+            display: flex;
+            flex-direction: column;
+            .label {
+                font-size: $medium-text-size;
+                font-weight: $medium-text-bold;
+            }
+        }
+    }
+    footer {
+        button {
+            @extend %main-button;
+        }
+    }
+}

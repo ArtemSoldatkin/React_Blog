@@ -3,7 +3,7 @@ import {Votes, User} from '../../../types'
 import { Query } from 'react-apollo';
 import {IS_LOGGED_IN} from '../../../queries/user'
 import Actions from './actions'
-import {Link, withRouter,RouteComponentProps} from 'react-router-dom'
+import {withRouter,RouteComponentProps} from 'react-router-dom'
 import './style.scss'
 
 type PathParamsType = {
@@ -18,8 +18,8 @@ type PathParamsType = {
 
 export default withRouter(memo( ({match, votes, disabled, actionType, id}:CmpProps) => (
             <Query query={IS_LOGGED_IN}>
-            {({ data }) => {
-                const user: User = data && data.user && JSON.parse(data.user)   
+            {({ data: {user} }) => {
+                //const user: User = data && data.user && JSON.parse(data.user)   
                 const userID = user && user.id            
                 return <Actions id={id ? id : match.params.id} votes={votes} disabled={disabled} userID={userID} actionType={actionType}/>
             }}

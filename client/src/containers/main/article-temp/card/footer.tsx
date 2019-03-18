@@ -11,7 +11,7 @@ interface CmpProps {
 }
 
 export default memo(({votes}: CmpProps) => (
-    <div className="article-card__footer">
+    <footer>
         <Votes votes={votes} actionType='article'/>
-    </div>
+    </footer>
 ))

@@ -1,16 +1,14 @@
-import React,{memo} from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import './style.scss'
-
 import Articles from './articles'
-//import Article from './article'
 import Article from './article-temp'
 import Cabinet from './cabinet'
 import NewArticle from './cabinet/new-article'
 import UserInfo from './cabinet/info'
+import './style.scss'
 
 export default () => (
-    <div className="main">
+    <div id="main">
         <Switch>
             <Route exact path="/" component={Articles}/>
             <Route exact path="/cabinet" component={Cabinet}/>

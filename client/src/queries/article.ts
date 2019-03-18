@@ -28,6 +28,7 @@ export const GET_ARTICLE = gql`
             user {id, login, avatar}
             title,
             description, 
+            body,
             reviews {id user {id login avatar} body created isEdited votes { userID, value }}
             created, 
             isEdited, 

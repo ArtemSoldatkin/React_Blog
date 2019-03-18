@@ -1,10 +1,11 @@
 import React , {PureComponent} from 'react'
-import {User} from '../../../../types'
-import UserAvatar from '../../../../components/user-avatar'
-import {IS_LOGGED_IN} from '../../../../queries/user'
 import { Query } from 'react-apollo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import {User} from '../../../../types'
+import UserAvatar from '../../../../components/user-avatar'
+import {IS_LOGGED_IN} from '../../../../queries/user'
+import {maxFileSize} from '../../../../constants'
 
 interface CmpProps {
    loading?: boolean
@@ -15,7 +16,7 @@ interface CmpStates {
     errors: string  | undefined
 }
 
-export  default class AvatarLoader extends PureComponent<CmpProps, CmpStates> {
+export default class AvatarLoader extends PureComponent<CmpProps, CmpStates> {
     constructor(props: CmpProps){
         super(props)
         this.state = {avatar: undefined, errors: undefined}
@@ -28,16 +29,15 @@ export  default class AvatarLoader extends PureComponent<CmpProps, CmpStates> {
           reader.readAsDataURL(file);
         })
       } 
-      private handleChangeFile = async(e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+      private handleChangeFile = async(e: React.ChangeEvent<HTMLInputElement>) => {
         try {
           const file = e.target && e.target.files && e.target.files[0]
           if(!file) return this.setState({errors: 'Файл не выбран!'})
-          if(file.size > 100000) return this.setState({errors:'Файл слишком большой!'})      
+          if(file.size > maxFileSize) return this.setState({errors:'Файл слишком большой!'})      
           let newImage = await this.readFileAsync(file);
           if(!newImage) return this.setState({errors:'Ошибка, попробуйте снова!'}) 
-          this.setState({errors: undefined})  
-          this.setState({avatar: newImage})
-          this.props.onChange && this.props.onChange(newImage)
+          this.setState({errors: undefined, avatar: newImage})         
+          this.props.onChange && this.props.onChange(newImage)  
         } catch(err) {
             return this.setState({errors:'Ошибка, попробуйте снова!'})
         }      
@@ -48,21 +48,22 @@ export  default class AvatarLoader extends PureComponent<CmpProps, CmpStates> {
         return (
             <Query query={IS_LOGGED_IN}>
                 {({ data }) => {           
-                  let user:User = data && data.user && JSON.parse(data.user)       
+                  let user:User = data && data.user  ?  JSON.parse(data.user)  : undefined     
                   if(avatar)user.avatar = avatar           
                   return (
-                    <div className="avatar-loader">     
-                        <p className="title">Аватар</p>               
+                    <div className="avatar_loader">     
+                        <p className="title">Аватар</p> 
                         <div className={`upload ${errors && 'upload-error'}`}>                        
                             <UserAvatar user={user} /> 
                             <div className="actions">
-                                <p className="actions__icon">
+                                <p className="icon">
                                     <FontAwesomeIcon icon={faPlus} />
                                 </p>
                             </div> 
                             <input className="input" type="file" accept=".png, .jpg, .jpeg" 
                             draggable onChange={this.handleChangeFile} disabled={loading}/>                        
                         </div>
+                        <p className="warning">Максимальный размер: {Math.trunc(maxFileSize / 1024)} KB</p>  
                         {errors && <p className="errors">{errors}</p>}
                     </div>
                   )

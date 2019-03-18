@@ -1,11 +1,6 @@
 import React, {PureComponent} from 'react'
-
+import {  MutationFn } from 'react-apollo';
 import {Votes} from '../../../../types'
-import { Mutation, MutationFn } from 'react-apollo';
-import {SET_VOTE_ARTICLE} from '../../../../queries/article'
-
-import VoteForm from '../form'
-
 import ActionsArticle from './article'
 import ActionsReview from './review'
 
@@ -33,8 +28,7 @@ export default class ComponentVotes extends PureComponent<CmpProps, CmpStates> {
         const tempVote = votes && votes.find(vote => vote.userID === userID)
         return tempVote ? tempVote.value : undefined       
     } 
-
-    private setVote = (vote: boolean, callback: MutationFn): void => {
+    private setVote = (vote: boolean, callback: MutationFn) => {
         const {id} = this.props      
         callback({variables: {id, vote}})
     }
@@ -44,7 +38,7 @@ export default class ComponentVotes extends PureComponent<CmpProps, CmpStates> {
         return `${number}`
     }    
     private updateVotes = (likes: Votes, dislikes: Votes, my: boolean | undefined) => this.setState({likes, dislikes, my})
-    render (){
+    render () {
         const { disabled, userID, actionType } = this.props      
         const {likes, dislikes, my} = this.state      
         return (

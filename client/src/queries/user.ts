@@ -1,14 +1,16 @@
 import gql from 'graphql-tag';
 
 export const IS_LOGGED_IN = gql`
-    query IsUserLoggedIn {      
-      user @client 
-    }
+   # query IsUserLoggedIn {
+      user1 @client
+    #}
 `;
 
 export const LOGIN_USER = gql`  
 mutation login($login: String!, $password: String!) {
   login(login: $login, password: $password) {
+    status
+            message
     token
     user { id login avatar }
   }   

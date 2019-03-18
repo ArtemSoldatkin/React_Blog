@@ -1,19 +1,17 @@
 import React, {memo} from 'react'
-
-import {Votes} from '../../../../types'
 import { Mutation,MutationFn } from 'react-apollo';
+import {Votes} from '../../../../types'
 import {SET_VOTE_REVIEW} from '../../../../queries/review'
-
 import VoteForm from '../form'
 
 interface CmpProps {
-    userID: string | undefined
-    updateVotes: (likes: Votes, dislikes: Votes, my: boolean | undefined) => void
-    setVote: (vote: boolean, callback: MutationFn) => void
+    userID: string | undefined    
     likesCount: string
     dislikesCount: string
     disabled: boolean | undefined
     my: boolean | undefined
+    updateVotes: (likes: Votes, dislikes: Votes, my: boolean | undefined) => void
+    setVote: (vote: boolean, callback: MutationFn) => void
 }
 
 export default memo(({userID, updateVotes, setVote,

@@ -1,24 +1,25 @@
 @import '../../theme.scss';
 
-.header {    
+#header {    
     display: flex;   
     background: $primary-color;    
     color: $on-primary-color;
     padding: $global-padding;
-    min-height: 90px;
+    min-height: $header-height;
+    margin-bottom: $large-space;
     .logo {
         display: flex;
         align-self: flex-start;      
-        padding: 5px 0;        
-        font-size: 45px;
-        font-weight: 600;
-        &__text {
-            margin-left: 5px;
+        padding: $medium-space 0;        
+        font-size: $logo-text-size;
+        font-weight: $logo-text-weight;        
+        .text {
+            margin-left: $medium-space;  
         }
     }
     .actions {
         margin: auto 0 auto auto;
         align-self: flex-end;   
-        padding: 5px 0;   
+        padding: $medium-space 0;   
     }
 }

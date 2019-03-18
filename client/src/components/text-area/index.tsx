@@ -2,11 +2,11 @@ import React, {PureComponent} from 'react'
 import './style.scss'
 
 interface CmpProps {
-    name: string
-    onChange?: (value: string) => void  
+    name: string      
     maxLength?: number
     loading?: boolean
     isValid?: boolean 
+    onChange?: (value: string) => void
 }
 interface CmpStates {
     value: string
@@ -22,34 +22,27 @@ export default class CustomTextArea extends PureComponent<CmpProps, CmpStates> {
         if(prevProps.isValid !== this.props.isValid && 
             this.props.isValid !== undefined && this.state.isValid === undefined)this.setState({isValid: this.props.isValid})
     }
-    private handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-        const {maxLength} = this.props
-        let value: string = e.target.value
-        if(maxLength && value.length > maxLength) value = value.substr(0, maxLength) 
-        this.setState({value})
-        this.props.onChange && this.props.onChange(value)
+    private handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const {maxLength, onChange} = this.props
+        let value = e.target.value
+        if(value && maxLength && value.length > maxLength) value = value.substr(0, maxLength) 
+        this.setState({value}, () => onChange && onChange(value))
     }
-    private handleBlur = (): void => {
-        const {value} = this.state      
-        const isValid = value.trim().length > 0
-        this.setState({isValid}) 
-    }
+    private handleBlur = () => this.setState(({value}) => ({isValid: value.trim().length > 0}))       
     render () {
         const {value, isValid} = this.state
         const {maxLength, name, loading} = this.props
         return (
-            <div className="custom-textarea">
+            <div id="custom_textarea">
                 <p className="label">{name}</p>
-                <textarea className={`textarea 
-                    ${isValid !== undefined && isValid && 'textarea-isValid' }
-                    ${isValid !== undefined && !isValid && 'textarea-isInvalid' }
-                `}
+                <textarea className={`textarea textarea-${isValid !== undefined && 
+                    (isValid ? 'isValid' : 'isInvalid')}
+                `}                
                 placeholder={`${name}...`}
                 disabled={loading}
                 value={value} onChange={this.handleChange} onBlur={this.handleBlur} />
-                {maxLength && <p className={`counter 
-                    ${isValid !== undefined && isValid && 'counter-isValid' }
-                    ${isValid !== undefined && !isValid && 'counter-isInvalid' }
+                {maxLength && <p className={`counter counter-${isValid !== undefined && 
+                    (isValid ? 'isValid' : 'isInvalid')}
                 `}>Символов: {value.length} из {maxLength}</p>}
                 {isValid !== undefined && !isValid && <p className="error">Заполните "{name}"!</p>}
             </div>
