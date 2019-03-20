@@ -7,10 +7,10 @@ interface CmpProps {
 }
 
 export default memo(({loading, children}: CmpProps) => (
-    <div id="loading">        
+    <div className="components_loading">        
         {children}
-        {loading && <div className="substrate">
-            <div className="loading"></div>            
+        {loading && <div className="components_loading__substrate">
+            <div className="components_loading__loading"></div>            
         </div>}
     </div>
 ))

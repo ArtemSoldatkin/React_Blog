@@ -52,7 +52,7 @@ export default class Login extends PureComponent<CmpProps, CmpStates> {
               }}
             >
               {(login, { data, loading, error }) => (
-                  <div className="login">
+                  <div className="login_form">
                     <Loading loading={loading}>
                       <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.handleSubmit(e, login)} inline>
                           <TextFormControl type="text" placeholder="Логин..." 

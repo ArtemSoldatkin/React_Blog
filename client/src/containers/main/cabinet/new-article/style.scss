@@ -3,7 +3,7 @@
 #cabinet__new_article {
     @extend %main-card;
     padding: $medium-space;   
-    article {
+    form {
         margin-bottom: $medium-space;
         .body {
             display: flex;
@@ -13,10 +13,8 @@
                 font-weight: $medium-text-bold;
             }
         }
-    }
-    footer {
         button {
             @extend %main-button;
         }
-    }
+    }  
 }

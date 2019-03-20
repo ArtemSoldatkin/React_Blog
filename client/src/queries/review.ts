@@ -53,7 +53,7 @@ export const REMOVE_REVIEW = gql`
 
 export const SET_VOTE_REVIEW = gql`
     mutation SetVoteReview($id: String!, $vote: Boolean!){
-        setVoteReview(id: $id, vote: $vote) {
+        setVoteReview(id: $id, vote: $vote) {       
             status
             message
             votes {userID value}

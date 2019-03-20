@@ -1,6 +1,6 @@
 @import '../../../theme.scss';
 
-#article {    
+//#article {    
    .article-card {
         @extend %main-card;
         padding: $medium-space;
@@ -66,4 +66,4 @@
             }
         }
     }
-}
+//}

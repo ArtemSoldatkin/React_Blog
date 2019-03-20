@@ -1,49 +1,27 @@
-import React, {PureComponent} from 'react'
-import { Mutation, MutationFn } from 'react-apollo';
-import {ADD_REVIEW} from '../../../queries/review'
-import { User, Reviews } from '../../../types';
+import React, {memo, useState} from 'react'
+import {Query, Mutation, MutationFn} from 'react-apollo'
 import UserAvatar from '../../../components/user-avatar'
+import { Reviews, User } from '../../../types';
 
 interface CmpProps {
+    articleID: string
     user: User
-    id: string
-    updateReviews: (reviews: Reviews) => void
+    loading: boolean
+    mtn: MutationFn
 }
-interface CmpStates {
-    body: string
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>, mtn: MutationFn,id: string, body: string) => {
+    e.preventDefault()
+    mtn({variables:{id, body}})
 }
-
-export default class ReviewForm extends PureComponent<CmpProps, CmpStates> {
-    constructor(props: CmpProps) {
-        super(props)
-        this.state = {body: ''}
-    }
-    private handleSubmit = (e: React.FormEvent<HTMLFormElement>, callback: MutationFn): void => {
-        e.preventDefault()
-        const {body} = this.state
-        const {id} = this.props
-        if(body.trim().length <= 0 ) return
-        callback({variables:{id, body}})
-    }
-    private handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => this.setState({body: e.target.value})
-    render () {
-        const {user} = this.props
-        const {body} = this.state
-        return (
-            <Mutation mutation={ADD_REVIEW}
-            onCompleted={({ addReview }) => { 
-                if(addReview && addReview.reviews) this.props.updateReviews(addReview.reviews)
-            }}>
-                {(addReview, {data, loading, error}) => (
-                    <div className="new-review">
-                        <UserAvatar user={user} />
-                        <form className="form-review" onSubmit={e => this.handleSubmit(e, addReview)} >
-                            <textarea value={body} onChange={this.handleChange} />
-                            <button type="submit" disabled={body.trim().length <= 0}>Отправить</button>
-                        </form>
-                    </div>
-                )}            
-            </Mutation>            
-        )
-    }
-}
+export default memo(({articleID, user, loading, mtn}: CmpProps) => {
+    const [body, setBody] = useState('')
+    return (
+        <div className="new-review">
+            <UserAvatar user={user} />
+            <form className="form-review" onSubmit={(e) => handleSubmit(e, mtn, articleID, body)} >
+                <textarea value={body} onChange={(e) => setBody(e.target.value)} />
+                <button type="submit" disabled={body.trim().length <= 0 || loading}>Отправить</button>
+            </form>
+        </div>
+    )
+})

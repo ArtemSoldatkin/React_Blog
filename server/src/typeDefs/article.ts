@@ -52,6 +52,7 @@ export default makeExecutableSchema({
         type ArticleOperationsResponse {
             status: Boolean
             message: String
+            article: Article
         }
         type ArticleVoteResponse {
             status: Boolean

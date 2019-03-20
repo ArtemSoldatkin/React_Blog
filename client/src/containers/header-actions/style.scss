@@ -1,7 +1,7 @@
 @import '../../theme.scss';
 
 #header_actions {
-    .login {
+    .login_form {
         .button_submit {
             @extend %main-button;
         }

@@ -22,8 +22,8 @@ interface CmpProps {
 export default memo(({id, data: inputData ,isEditing, typeAction, userID, setEdited, onChange,clear}: CmpProps) => (
         
           <Query query={IS_LOGGED_IN}>
-            {({ data }) => {   
-              const user: User | undefined = data && data.user && JSON.parse(data.user)
+            {({ data: {user} }) => {   
+              //const user: User | undefined = data && data.user && JSON.parse(data.user)
               if(!user) return <div></div>
               if(user.id !== userID) return <div></div>
               return (

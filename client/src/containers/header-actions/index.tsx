@@ -10,7 +10,7 @@ export default memo(() => (
   <div id="header_actions">  
     <Query query={IS_LOGGED_IN}>
       {({ data: {user}}) => {   
-        console.log('data1', user)  
+       // console.log('data1', user)  
           
        // const user: IsLoggedIn = data && data.user && JSON.parse(data.user)  
         return user ? <Logout user={user}/> : <Login /> 

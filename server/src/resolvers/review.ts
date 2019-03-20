@@ -39,8 +39,9 @@ export default({
                     path: 'reviews', 
                     populate: ({path: 'user', select: ['_id', 'login', 'avatar'] })
                 })
+                
                 if(!article) return reviewResponse(404)                
-                return reviewResponse(null, article.reviews)
+                return reviewResponse(null, article.reviews )
             } catch(err) {
                 return reviewResponse(500)
             }

@@ -17,8 +17,11 @@
             width: 100%;
             textarea {
                 border: none;
+                border-bottom: $border;
+                
             }
             button {
+                margin-top: $small-space;
                 align-self: flex-end;
                 @extend %main-button;
             }

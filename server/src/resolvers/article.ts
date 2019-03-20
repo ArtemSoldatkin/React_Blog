@@ -22,11 +22,11 @@ const articlesResponse = (errorCode: number | null, articles: _a.Article[] | nul
     const message = msg(errorCode)
     return {status, message, articles}
 }
-const articleOperationsResponse = (errorCode: number | null) => {
+const articleOperationsResponse = (errorCode: number | null, article: _a.Article | null = null) => {
     const status = errorCode ? false : true
     const message = msg(errorCode)
     console.log(message, status )
-    return {status, message}
+    return {status, message, article}
 }
 const articleVoteResponse = (errorCode: number | null, votes: Vote[] | null = null) => {
     const status = errorCode ? false : true
@@ -58,7 +58,11 @@ export default ({
                 if(!_a.isGetArticles(args)) return articlesResponse(400)
                 const query = args.user ? {user: args.user} : {}
                 const articles = await Article.find(query)
-                .populate('user',['_id', 'login', 'avatar'])              
+                .populate('user',['_id', 'login', 'avatar'])
+                .populate({
+                    path: 'reviews', 
+                    populate: ({path: 'user', select: ['_id', 'login', 'avatar'] })
+                })              
                 if(!articles) return articlesResponse(404)
                 return articlesResponse(null, articles)
             } catch (err) {      
@@ -72,9 +76,15 @@ export default ({
                 if(!_a.isAddArticle(args)) return articleOperationsResponse(400)
                 if(!userID) return articleOperationsResponse(401)                           
                 const newArticle = {...args, user: userID}        
-                const article = await Article.create(newArticle)
+                const article = await Article.create(newArticle)                
                 if(!article) return articleOperationsResponse(500)
-                return articleOperationsResponse(null)    
+                const _article = await Article.findById(article._id).populate('user', ['_id', 'login', 'avatar'])
+                .populate({
+                    path: 'reviews', 
+                    populate: ({path: 'user', select: ['_id', 'login', 'avatar'] })
+                })
+                if(!_article) return articleOperationsResponse(500)
+                return articleOperationsResponse(null, _article)    
             } catch (err) {
                 return articleOperationsResponse(500)
             }
@@ -92,9 +102,9 @@ export default ({
                     if(i === 'title' || i === 'description' || i === 'body') data[i] = args[i]                   
                 }               
                 console.log('data', data)
-                const article = await Article.findByIdAndUpdate(id, data)
+                const article = await Article.findByIdAndUpdate(id, data, {new: true})
                 if(!article) return articleOperationsResponse(404)
-                return articleOperationsResponse(null)
+                return articleOperationsResponse(null, article)
             } catch (err) { 
                 return articleOperationsResponse(500)
             }
@@ -127,7 +137,8 @@ export default ({
                 const savedArticle = await article.save()                
                 if(!savedArticle) return articleVoteResponse(500)                
                 return articleVoteResponse(null, savedArticle.votes)   
-            } catch (err) {               
+            } catch (err) {     
+                console.error('setVoteArticle: ', err)          
                  return articleVoteResponse(500)
             }
         }

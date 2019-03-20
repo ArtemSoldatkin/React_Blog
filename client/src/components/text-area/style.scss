@@ -7,35 +7,36 @@
     color:  $color;
 }
 
-#custom_textarea {
+.cmp_cst_textarea {
     display: flex;
     flex-direction: column;    
     color: inherit;
     background: inherit;
     width: 100%;
-    .label {
+    &__label {
         font-size: $medium-text-size;
         font-weight: $medium-text-bold;
     }
-    .textarea {
+    &__input {
         border: none;
         border-radius: $border-radius;
         background: none;
-        margin: 0;
-        &-isInvalid { @include setBorder($error-color); }
-        &-isValid { @include setBorder($success-color); }
+        margin: 0;        
     }
-    .counter {
+    &__counter {
         font-size: $small-text-size;
         font-weight: $small-text-bold;
         margin: 0;
-        &-isInvalid {  @include setColor($error-color); }
-        &-isValid {@include setColor($success-color); }
+       
     }
-    .error {
+    &__error {
         margin: 0;
         font-size: $small-text-size;
         font-weight: $small-text-bold;
         color: $error-color;
     }
+    &-inp_inval { @include setBorder($error-color); }
+    &-inp_val { @include setBorder($success-color); }
+    &-cnt_inval {  @include setColor($error-color); }
+    &-cnt_val {@include setColor($success-color); }
 }

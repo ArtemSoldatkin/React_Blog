@@ -1,41 +1,55 @@
-import React, {PureComponent} from 'react'
-import {User} from '../../../types'
+import React,{memo} from 'react'
+import { Reviews, User } from '../../../types';
 import ReviewCard from './card'
-import ReviewForm from './form'
-import {Reviews} from '../../../types'
 import './style.scss'
-import {IS_LOGGED_IN} from '../../../queries/user'
-import { Query } from 'react-apollo';
+import {Query, Mutation, MutationFn} from 'react-apollo'
+import gql from 'graphql-tag'
+import ReviewForm from './form'
+import {ADD_REVIEW} from '../../../queries/review'
 
-interface CmpProps {
-   // user: User | undefined
-    reviews: Reviews
-    id: string
-}
-interface CmpStates {
-    reviews: Reviews
-}
+const GET_USER_ID = gql`
+  {
+    user @client {id login avatar}
+  }
+`;
 
-export default class Review extends PureComponent<CmpProps, CmpStates> {
-    constructor(props: CmpProps) {
-        super(props)        
-        this.state = { reviews: this.props.reviews };
-    } 
-    private updateReviews = (reviews: Reviews) => this.setState({reviews})
-    render () {
-        const { id} = this.props
-        const {reviews} = this.state
-        return (
-            <div id="review">
-            <Query query={IS_LOGGED_IN}>
-            {({ data: {user} }) => {   
-              //const user: User | undefined = data && data.user && JSON.parse(data.user)
-              if(!user) return <div></div>
-              return <ReviewForm id={id} user={user} updateReviews={this.updateReviews}/>
-            }}
-            </Query>
-                {reviews && reviews.map((review, index) => <ReviewCard key={`${Date.now()}${review.id}${index}`} review={review}/>)}               
-            </div>
-        )
+
+const fragment = gql`
+    fragment reviews on Articles {
+        reviews {
+            id
+            user {id login avatar}
+            body
+            isEdited
+            created            
+        }
     }
+`
+interface CmpProps {
+    articleID: string
 }
+
+
+export default memo(({articleID}:CmpProps) => (
+    <Mutation mutation={ADD_REVIEW}>
+        {(addReview, {data, loading, error, client}) => { 
+            const _user = client.readQuery({query: GET_USER_ID})
+            const user = _user && _user.user
+            const id = `Article:${articleID}`
+            const _reviews = client.readFragment({id, fragment})
+            let reviews: Reviews | null = _reviews && _reviews.reviews
+            if(data && data.addReview && data.addReview.reviews){
+                const _data = {..._reviews, reviews: data.addReview.reviews}
+                client.writeFragment({id, fragment, data: _data})
+                reviews = data.addReview.reviews
+            }
+            if(!reviews) return <div>WOROROR</div>
+            return (
+                <div id="review">
+                    {user && <ReviewForm articleID={articleID} user={user} loading={loading} mtn={addReview}/>}
+                    {reviews.length > 0 && reviews.map((review, index) => <ReviewCard key={`${Date.now()}${review.id}${index}`} review={review}/>)} 
+                </div>
+            ) 
+        }}
+    </Mutation>
+)) 

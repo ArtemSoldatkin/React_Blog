@@ -7,8 +7,8 @@ interface CmpProps {
 }
 
 export default memo(({type, message}: CmpProps) =>(
-    <div id="info">
-        <div className={`info info-${type}`}>
+    <div className="components_info">
+        <div className={`components_info__message components_info-${type}`}>
             {message ? message : 'Проблемы с сервером, попробуйте позже!'}
         </div>        
     </div>

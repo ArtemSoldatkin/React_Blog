@@ -47,8 +47,8 @@ export default class AvatarLoader extends PureComponent<CmpProps, CmpStates> {
         const {loading} = this.props
         return (
             <Query query={IS_LOGGED_IN}>
-                {({ data }) => {           
-                  let user:User = data && data.user  ?  JSON.parse(data.user)  : undefined     
+                {({ data: {user} }) => {           
+                  //let user:User = data && data.user  ?  JSON.parse(data.user)  : undefined     
                   if(avatar)user.avatar = avatar           
                   return (
                     <div className="avatar_loader">     

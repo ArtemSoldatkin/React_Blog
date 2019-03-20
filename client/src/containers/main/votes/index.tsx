@@ -1,28 +1,43 @@
 import React, {memo} from 'react'
-import {Votes, User} from '../../../types'
-import { Query } from 'react-apollo';
-import {IS_LOGGED_IN} from '../../../queries/user'
-import Actions from './actions'
-import {withRouter,RouteComponentProps} from 'react-router-dom'
+import { Mutation} from 'react-apollo';
+import gql from 'graphql-tag'
+import {SET_VOTE_ARTICLE} from '../../../queries/article'
+import {SET_VOTE_REVIEW} from '../../../queries/review'
+import {Vote} from '../../../types'
+import VoteCard from './card'
 import './style.scss'
 
-type PathParamsType = {
-    id: string;
-  };
-  type CmpProps = RouteComponentProps<PathParamsType> & {   
-    votes: Votes
-    disabled?: boolean   
-    actionType: 'article' | 'review'
-    id?: string
+const createID = (id: string, type: string) => `${type}:${id}`
+const ArticleFragment = gql`
+fragment Votes on Articles {
+    votes {userID, value}
+}            
+` 
+const ReviewFragment = gql`
+fragment Votes on Articles {
+    votes {userID, value}
+}            
+`
+
+interface CmpProps {
+    id: string
+    type: 'Review' | 'Article'
 }
 
-export default withRouter(memo( ({match, votes, disabled, actionType, id}:CmpProps) => (
-            <Query query={IS_LOGGED_IN}>
-            {({ data: {user} }) => {
-                //const user: User = data && data.user && JSON.parse(data.user)   
-                const userID = user && user.id            
-                return <Actions id={id ? id : match.params.id} votes={votes} disabled={disabled} userID={userID} actionType={actionType}/>
-            }}
-            </Query>
-        )
-  ))
+export default memo(({id: _id, type}: CmpProps) => (
+    <Mutation mutation={type === 'Article' ? SET_VOTE_ARTICLE : SET_VOTE_REVIEW} >
+        {(fnc, { data, loading, error, client}) => {           
+            const id = createID(_id, type)
+            const fragment = type === 'Article' ? ArticleFragment : ReviewFragment
+            const _t = client.readFragment({id, fragment})
+            let votes = _t.votes           
+            if(data && data[`setVote${type}`] && data[`setVote${type}`].votes) { 
+                const _votes = data[`setVote${type}`].votes.map((vote: Vote) => ({...vote, __typename:'Vote'}))
+                const _data = { ..._t, votes: _votes };
+                client.writeFragment({id, fragment, data: _data})    
+                votes =  _votes       
+            }                          
+            return <VoteCard votes={votes} mtn={fnc} id={_id}/>                       
+        }}   
+    </Mutation>
+))

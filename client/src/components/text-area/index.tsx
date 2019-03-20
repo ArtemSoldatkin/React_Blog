@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {memo, useState, useEffect} from 'react'
 import './style.scss'
 
 interface CmpProps {
@@ -8,44 +8,29 @@ interface CmpProps {
     isValid?: boolean 
     onChange?: (value: string) => void
 }
-interface CmpStates {
-    value: string
-    isValid: boolean | undefined
-}
 
-export default class CustomTextArea extends PureComponent<CmpProps, CmpStates> {
-    constructor(props: CmpProps){
-        super(props)
-        this.state = { value: '', isValid: undefined }
-    }
-    componentDidUpdate (prevProps: CmpProps) {
-        if(prevProps.isValid !== this.props.isValid && 
-            this.props.isValid !== undefined && this.state.isValid === undefined)this.setState({isValid: this.props.isValid})
-    }
-    private handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const {maxLength, onChange} = this.props
-        let value = e.target.value
-        if(value && maxLength && value.length > maxLength) value = value.substr(0, maxLength) 
-        this.setState({value}, () => onChange && onChange(value))
-    }
-    private handleBlur = () => this.setState(({value}) => ({isValid: value.trim().length > 0}))       
-    render () {
-        const {value, isValid} = this.state
-        const {maxLength, name, loading} = this.props
-        return (
-            <div id="custom_textarea">
-                <p className="label">{name}</p>
-                <textarea className={`textarea textarea-${isValid !== undefined && 
-                    (isValid ? 'isValid' : 'isInvalid')}
-                `}                
-                placeholder={`${name}...`}
-                disabled={loading}
-                value={value} onChange={this.handleChange} onBlur={this.handleBlur} />
-                {maxLength && <p className={`counter counter-${isValid !== undefined && 
-                    (isValid ? 'isValid' : 'isInvalid')}
-                `}>Символов: {value.length} из {maxLength}</p>}
-                {isValid !== undefined && !isValid && <p className="error">Заполните "{name}"!</p>}
-            </div>
-        )
-    }
-}
+const checkLength = (val: string, maxLength: number) => val.length > maxLength ? val.substr(0, maxLength) : val 
+
+export default memo((props: CmpProps) => {
+    const [value, setValue] = useState<string>('')
+    const [isValid, setIsValid] = useState<boolean | undefined>(undefined)
+    useEffect(() => {
+        if(props.isValid !== undefined && isValid === undefined) setIsValid(props.isValid)
+    },[props.isValid])
+    return (
+        <div className="cmp_cst_textarea">
+            <p className="cmp_cst_textarea__label">{props.name}</p>
+            <textarea 
+            className={`cmp_cst_textarea__input cmp_cst_textarea-${isValid !== undefined && (isValid ? 'inp_val' : 'inp_inval')}`}                
+            placeholder={`${props.name}...`}
+            disabled={props.loading}
+            value={value} 
+            onChange={e => setValue(props.maxLength ? checkLength(e.target.value, props.maxLength) : e.target.value)}             
+            onBlur={() => setIsValid(value.trim().length > 0)} />
+            {props.maxLength && <p className={`cmp_cst_textarea__counter cmp_cst_textarea-${isValid !== undefined && 
+                (isValid ? 'cnt_val' : 'cnt_inval')}
+            `}>Символов: {value.length} из {props.maxLength}</p>}
+            {isValid !== undefined && !isValid && <p className="cmp_cst_textarea__error">Заполните "{props.name}"!</p>}
+        </div>
+    )
+})

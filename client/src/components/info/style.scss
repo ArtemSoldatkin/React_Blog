@@ -5,17 +5,17 @@
     color: $on-color;
 }
 
-#info {
-    .info {
+.components_info {
+    &__info {
         padding: $small-space;
         font-size: $small-text-size;
         font-weight: $small-text-bold;
-        border-radius: $border-radius;  
-        &-success { 
-            @include setColor($success-color, $on-success-color)       
-        }
-        &-error {
-            @include setColor($error-color, $on-error-color)        
-        }
+        border-radius: $border-radius;
+    }  
+    &-success { 
+        @include setColor($success-color, $on-success-color)       
     }
+    &-error {
+        @include setColor($error-color, $on-error-color)        
+    }    
 }
