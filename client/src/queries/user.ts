@@ -1,9 +1,13 @@
 import gql from 'graphql-tag';
 
 export const IS_LOGGED_IN = gql`
-    query IsUserLoggedIn {
-      user @client { id login avatar}
+  query IsUserLoggedIn {
+    user @client(always: true) { 
+      id 
+      login 
+      avatar
     }
+  }
 `;
 
 export const LOGIN_USER = gql`  
@@ -22,7 +26,7 @@ export const REGISTRY_USER = gql`
         addUser(login: $login, password: $password) {
             status
             message
-                user {login avatar }
+                user {id login avatar }
             token
         }
     }   

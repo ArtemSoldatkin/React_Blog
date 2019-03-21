@@ -1,18 +1,18 @@
 @import '../../theme.scss';
 
-#footer {    
+.cnt_footer {    
     display: flex;
     flex: 0 0 auto;
     background: $footer-color;
     color: $on-footer-color;
     padding: $global-padding;
     margin-top: $large-space;
-    .content {
+    &__content {
         padding: $medium-space 0;
         align-self: flex-end;
         margin-left: auto;
-        .text {
-            margin-left: $medium-space;
-        }
+    }
+    &__text {
+        margin-left: $medium-space;        
     }
 }

@@ -8,6 +8,13 @@ import {IS_LOGGED_IN} from '../../../queries/user'
 import {User} from '../../../types'
 import './style.scss'
 
+// ---- TEMP
+interface T_IsLoggedIn {
+    user: null | User
+}
+class IsLoggedIn extends Query<T_IsLoggedIn>{}
+//--- / TEMP
+
 export default memo(() => (    
     <div id="cabinet">
         <div className="actions">
@@ -24,11 +31,11 @@ export default memo(() => (
                 </div>
             </Link>
         </div>
-        <Query query={IS_LOGGED_IN}>
-            {({ data: {user} }) => {   
-            //const user: User | undefined = data && data.user && JSON.parse(data.user)  
-            return <Articles user={user}/>
+        <IsLoggedIn query={IS_LOGGED_IN}>
+            {({ data }) => {
+                const user = data && data.user ? data.user : undefined
+                return <Articles user={user}/>
             }}
-        </Query>        
+        </IsLoggedIn>        
     </div>
 ))

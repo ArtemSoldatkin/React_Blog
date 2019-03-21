@@ -4,6 +4,7 @@ import {withRouter,RouteComponentProps} from 'react-router-dom'
 import {GET_ARTICLES} from '../../../queries/article'
 import {Articles, User} from '../../../types'
 import Loading from '../../../components/loading'
+import ErrorHandler from '../../../components/error-handler'
 import Info from '../../../components/info'
 import Article from './article'
 import './style.scss'
@@ -15,29 +16,31 @@ type PathParamsType = {
 type CmpProps = RouteComponentProps<PathParamsType> & {
   user?: User
 };
+//---TEMP
+interface T_GetArticles {
+  getArticles: {
+    status: boolean
+    message: string
+    articles: Articles | null
+  }
+}
+class GetArticles extends Query<T_GetArticles>{}
+//---/TEMP
 
 export default withRouter(memo((props: CmpProps) => (
-  <Query query={GET_ARTICLES} variables={{user: props.user && props.user.id ? props.user.id : props.match.params.id}} fetchPolicy="network-only">
-    {({ data, loading, error, client }) => {     
-      let articles: Articles = []
-      if(!loading && data && data.getArticles && data.getArticles.articles) {
-        articles = data.getArticles.articles        
-        client.writeData({data: {articles}})         
-      }      
-      return (        
-        <div >      
-          <Loading loading={loading}>
-            <div id="articles">
-              {articles.map((article, index) => <Article key={`${Date.now()}/${article.id}/${index}`} id={article.id} />)}
-            </div>            
-          </Loading>   
-          {data && data.getArticles && !data.getArticles.status           
-          ? 
-            (<Info type="error" message={data.getArticles.message}/>) 
-          : 
-            (error && <Info type="error" />)}
-        </div>
-      )
+  <GetArticles query={GET_ARTICLES} variables={{user: props.user && props.user.id ? props.user.id : props.match.params.id}} fetchPolicy="network-only">
+    {({ data, loading, error, client }) => {  
+      if(loading) return <Loading loading={loading}><div id="articles" /></Loading>
+      if(data && data.getArticles && data.getArticles.articles) {
+        const articles = data.getArticles.articles
+        client.writeData({data: {articles}})  
+        return (
+          <div id="articles">
+            {articles.map((article, index) => <Article key={`${Date.now()}/${article.id}/${index}`} id={article.id} />)}
+          </div>
+        )        
+      } 
+      return <ErrorHandler error={error} data={data} name="getArticles" />
     }}
-  </Query>
+  </GetArticles>
 )))

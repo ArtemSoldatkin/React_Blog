@@ -19,32 +19,37 @@ const formatVote = (votes: Votes, value: boolean): string => {
     if(votesCount > 1000000) formatedVote = `${Math.trunc(votesCount)} млн.`
     return formatedVote
 }
-
+//--- TEMP
 const GET_USER_ID = gql`
   {
     user @client {id}
   }
 `;
 
+interface T_GetUserID {
+    user: null | {id: string }
+}
+class GetUserID extends Query<T_GetUserID>{}
+//--- / TEMP
+
 export default memo(({votes, mtn, id}: CmpProps) => (
-    <Query query={GET_USER_ID}>
+    <GetUserID query={GET_USER_ID}>
         {({ data }) => {
             let disabled: boolean = false
             const user = data && data.user && data.user.id             
             if(!user) disabled = true
             const my = votes.find(vote => vote.userID === user)
-
-        return (
-            <div id="votes">
-                <button className={`vote vote__like ${my && my.value && 'vote__like-my'}`} onClick={() => action(mtn, true, id)} disabled={disabled}>
-                    <FontAwesomeIcon icon={faThumbsUp} className="icon"/>
-                    <p className="text">{formatVote(votes, true)}</p>
-                </button>
-                <button className={`vote vote__dislike ${my && !my.value && 'vote__dislike-my'}`} onClick={() => action(mtn, false, id)} disabled={disabled}>
-                    <FontAwesomeIcon icon={faThumbsDown} className="icon"/>
-                    <p className="text">{formatVote(votes, false)}</p>
-                </button>
-            </div>
+            return (
+                <div id="votes">
+                    <button className={`vote vote__like ${my && my.value && 'vote__like-my'}`} onClick={() => action(mtn, true, id)} disabled={disabled}>
+                        <FontAwesomeIcon icon={faThumbsUp} className="icon"/>
+                        <p className="text">{formatVote(votes, true)}</p>
+                    </button>
+                    <button className={`vote vote__dislike ${my && !my.value && 'vote__dislike-my'}`} onClick={() => action(mtn, false, id)} disabled={disabled}>
+                        <FontAwesomeIcon icon={faThumbsDown} className="icon"/>
+                        <p className="text">{formatVote(votes, false)}</p>
+                    </button>
+                </div>
         )}}
-    </Query>    
+    </GetUserID>    
 ))

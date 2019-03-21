@@ -1,20 +1,26 @@
 import React, {memo} from 'react'
-import { Query, ApolloProvider } from 'react-apollo';
+import { Query } from 'react-apollo';
 import {IS_LOGGED_IN} from '../../queries/user'
-import {IsLoggedIn} from '../../types'
 import Login from './login'
 import Logout from './logout'
 import './style.scss'
 
+//---TEMP
+import {User} from '../../types'
+interface Data {
+  user: User | null
+}
+class GetUser extends Query<Data>{}
+//---/TEMP
+
 export default memo(() => (
-  <div id="header_actions">  
-    <Query query={IS_LOGGED_IN}>
-      {({ data: {user}}) => {   
-       // console.log('data1', user)  
-          
-       // const user: IsLoggedIn = data && data.user && JSON.parse(data.user)  
-        return user ? <Logout user={user}/> : <Login /> 
+  <div className="cnt_header_actn">  
+    <GetUser query={IS_LOGGED_IN}>
+      {({ data, loading }) => { 
+        if(loading)return <></>        
+        if(data && data.user) return <Logout user={data.user}/>      
+        return <Login /> 
       }}
-    </Query>          
+    </GetUser>          
   </div>
 ))

@@ -12,8 +12,8 @@ import { ApolloError } from 'apollo-client';
 import gql from 'graphql-tag'
 import './style.scss'
 
-const handleSubmit = (mtn: MutationFn, title: string, description: string, body: string) => mtn({variables:{ title, description, body }})
-const checkParams = (title: string, description: string, body: string) => isString(title) &&  isString(description) && isString(body)
+
+
 
 
 interface eh_CmpProps {
@@ -34,10 +34,14 @@ const ErrorHandler = memo(({error, data, name}: eh_CmpProps) => {
 interface CmpProps extends RouteComponentProps { }
 
 export default memo((props: CmpProps) => {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
+    const [title, setTitle] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
     const [body, setBody] = useState<string>('')
     const [isValid, setIsValid] = useState<undefined | boolean>(undefined)
+
+    const checkParams = () => isString(title) && isString(description) && isString(body)    
+    const handleSubmit = (mtn: MutationFn) => mtn({variables:{ title, description, body }})
+
     return (
         <Mutation mutation={ADD_ARTICLE}>
             {(addArticle, { data, loading, error, client }) => { 
@@ -49,12 +53,13 @@ export default memo((props: CmpProps) => {
                         <Loading loading={loading}>
                             <form onSubmit={e => {
                                 e.preventDefault()
-                                checkParams(title, description, body) ? handleSubmit( addArticle, title, description, body) : setIsValid(false)                            
+                                
+                                checkParams() ? handleSubmit(addArticle) : setIsValid(false)                            
                             } }>
                                 <CustomTextArea name="Заголовок" loading={loading}
-                                maxLength={maxTitleLength} onChange={setTitle} isValid={isValid} />  
+                                maxLength={maxTitleLength} onChange={val => setTitle(val)} isValid={isValid} />  
                                 <CustomTextArea name="Описание" loading={loading}
-                                maxLength={maxDescriptionLength} onChange={setDescription} isValid={isValid} />                           
+                                maxLength={maxDescriptionLength} onChange={val => setDescription(val)} isValid={isValid} />                           
                                 <div className="body">
                                     <p className="label">Статья</p>
                                     <ContentEditable                     

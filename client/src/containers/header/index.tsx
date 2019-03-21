@@ -7,18 +7,18 @@ import HeaderActions from '../header-actions'
 import './style.scss'
 
 export default memo(() => (
-    <header id="header">        
-        <div className="logo">
+    <header className="cnt_header">        
+        <div className="cnt_header__logo">
             <OverlayTrigger           
             placement="bottom"
             overlay={<Tooltip id="tooltip_home">На главную</Tooltip>}>
                 <Link to="/">
                     <FontAwesomeIcon icon={faCoffee} />
-                    <p className="text">Блог</p>
+                    <p className="cnt_header__text">Блог</p>
                 </Link>
             </OverlayTrigger>
         </div>
-        <div className="actions">
+        <div className="cnt_header__actions">
             <HeaderActions />
         </div>        
     </header>

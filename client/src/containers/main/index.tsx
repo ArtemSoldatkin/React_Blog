@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Articles from './articles'
-//import Article from './article-temp'
 import Article from './article'
 import Cabinet from './cabinet'
 import NewArticle from './cabinet/new-article'

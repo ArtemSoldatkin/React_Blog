@@ -8,19 +8,19 @@
     border-radius: $border-radius; 
 }
 
-#user-avatar {
+.cmp_user_avatar {
     display: inline-block;
     @extend %block-size;
     background: $primary-color;
     color: $on-primary-color;    
     font-size: $avatar-text-size;
     font-weight: $avatar-text-weight;
-    .avatar {
+    &__avatar {
         @extend %block-size;        
-        display: flex;
-        .text {
-            margin: auto;
-            user-select: none;
-        }
+        display: flex;       
+    }
+    &__txt {
+        margin: auto;
+        user-select: none;
     }
 }

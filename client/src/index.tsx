@@ -13,15 +13,17 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 
+
 const cache = new InMemoryCache( /*{dataIdFromObject: object => object.__typename || null}*/);
 const client = new ApolloClient({
-  cache,
+  cache,  
   link: new HttpLink({
-    uri: 'http://localhost:8000/graphql',
+    uri: 'http://localhost:8000/graphql',    
     headers: {
-      authorization: localStorage.getItem('token'),
-    },
+      authorization: localStorage.getItem('token')    
+    },    
   }),
+  resolvers: {}
 });
 
 const getUserInStore = () => {
@@ -30,26 +32,12 @@ const getUserInStore = () => {
 }
 
 cache.writeData({
-  data: { 
-   // user1: null,  
-    //user: localStorage.getItem('user')
-    user: getUserInStore()  ,
-   // article: null,
-    articles: []
-    //reviews: null
-  },
+  data: {     
+    user: getUserInStore(),    
+    articles: []   
+  }
 });
-
   
-
-
-
-
-
-
-
-
-
 ReactDOM.render(
   <ApolloProvider client={client}>
   <BrowserRouter>

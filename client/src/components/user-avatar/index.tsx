@@ -5,12 +5,12 @@ import './style.scss'
 interface CmpProps {user?: User}
 
 export default memo(({user}: CmpProps) => (
-    <div id="user-avatar">
+    <div className="cmp_user_avatar">
         {user && user.avatar ?
-            <img className="avatar" src={user.avatar} />
+            <img className="cmp_user_avatar__avatar" src={user.avatar} />
         : user && user.login &&
-            <div className="avatar">            
-                <p className="text">{user.login[0].toUpperCase()}</p>
+            <div className="cmp_user_avatar__avatar">            
+                <p className="cmp_user_avatar__txt">{user.login[0].toUpperCase()}</p>
             </div>
         }
     </div>

@@ -5,15 +5,15 @@
     border-color: $color;
 }
 
-#custom_text_form_control {
+.cmp_txt_form_ctrl {
     display: flex;
     flex-direction: column;
-    .form_label {
+    &__label {
         font-size: $medium-text-size;
         font-weight: $medium-text-bold;
         margin: $medium-space 0;
     }
-    .form_input {
+    &__text_block {
         display: flex;
         flex-direction: row; 
         height: $input-height;
@@ -21,27 +21,27 @@
         background: $surface-color; 
         color: $on-surface-color;  
         border: $border;      
-        border-radius: $border-radius;                         
-        &-invalid {
-            @include setColor($error-color);          
-        }
-        &-valid { 
-            @include setColor($success-color);          
-        }
-        .text_field {
-            height: 100%; 
-            width: 100%;  
-            background: none;
-            padding: $small-space;
-            margin: 0;
-            border: none;
-            border-radius: $border-radius; 
-        }
+        border-radius: $border-radius; 
+    }   
+    &__input {
+        height: 100%; 
+        width: 100%;  
+        background: none;
+        padding: $small-space;
+        margin: 0;
+        border: none;
+        border-radius: $border-radius; 
     }
-    .form_feedback {
+    &__feedback {
         font-size: $small-text-size;
         font-weight: $small-text-bold;
         color: $error-color;
         margin: 0;
+    }
+    &-inval {
+        @include setColor($error-color);          
+    }
+    &-val { 
+        @include setColor($success-color);          
     }
 }

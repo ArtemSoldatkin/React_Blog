@@ -1,40 +1,43 @@
 @import '../../theme.scss';
 
-#header_actions {
-    .login_form {
-        .button_submit {
+.cnt_header_actn {
+    .hdr_act_login {
+        display: flex;
+        flex-direction: row;
+        &__btn_submit {
             @extend %main-button;
         }
-    }
-    .logout {        
+    }    
+    .hdr_act_logout {        
         display: flex;
         flex-direction: column;
         color: $on-primary-color;
-        .user {
+        &__user {
             background: $surface-color;
             color: $on-surface-color;
             border-radius: $border-radius;
-            padding: $small-space;           
-            .login {
-                font-size: $large-text-size;
-                font-weight: $large-text-bold;
-                vertical-align: bottom;
-                margin-left: $medium-space;
-            }
+            padding: $small-space;    
         }
-        .button_submit {            
+        &__login {
+            font-size: $large-text-size;
+            font-weight: $large-text-bold;
+            vertical-align: bottom;
+            margin-left: $medium-space;
+        }
+        &__btn_submit {            
             text-align: right; 
             margin: 0;
             padding: 0;  
             user-select: none;
             cursor: pointer;
             font-size: $small-text-size;
-            font-weight: $small-text-bold;   
-            .text {
-                margin-left: $small-space;
-            }  
+            font-weight: $small-text-bold; 
         }
+        &__btn_text {
+            margin-left: $small-space;
+        } 
     }
+    
     .registration {
         .show_modal {
             border: none;

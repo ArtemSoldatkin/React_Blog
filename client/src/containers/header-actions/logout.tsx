@@ -14,24 +14,24 @@ interface CmpProps {
 export default memo(({user}: CmpProps) => (
     <ApolloConsumer>
         {client => (
-            <div className="logout">
+            <div className="hdr_act_logout">
                 <OverlayTrigger           
                 placement="left"
                 overlay={<Tooltip id="tooltip_cabinet">В кабинет</Tooltip>}>
-                    <div className="user">                        
+                    <div className="hdr_act_logout__user">                        
                         <Link to='/cabinet'>
                             <UserAvatar user={user}/>                           
-                            <p className="login">{user.login}</p>
+                            <p className="hdr_act_logout__login">{user.login}</p>
                         </Link>                        
                     </div>
                 </OverlayTrigger>
-                <span className="button_submit"                    
+                <span className="hdr_act_logout__btn_submit"                    
                     onClick={() => {
                         client.writeData({ data: { user: null } });
                         localStorage.clear();
                     }}
                 >   <FontAwesomeIcon icon={faSignOutAlt} />        
-                    <p className="text">Выйти</p>
+                    <p className="hdr_act_logout__btn_text">Выйти</p>
                 </span>
             </div>
         )}

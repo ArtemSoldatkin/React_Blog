@@ -9,7 +9,7 @@ import gql from 'graphql-tag'
 interface CmpProps {
     id: string
 }
-
+//---Temp
 const fragment = gql`
     fragment article on Articles {
         id
@@ -21,16 +21,17 @@ const fragment = gql`
         votes {userID value}
     }
 `
+//---/Temp
 
 export default memo(({id: artID}: CmpProps) => (
     <ApolloConsumer>
         {client => {
             const id = `Article:${artID}`            
-            const article = client.readFragment({fragment, id})            
-            if(!article) return <div></div>
+            const article:Article | null = client.readFragment({fragment, id})            
+            if(!article) return <></>
             return(
                 <div className="article">
-                    <header style={{padding: "5px"}}>
+                    <header>
                         <div className="user">
                             <Link to={`/user/${article.user.id}`}>
                                 <UserAvatar user={article.user} />

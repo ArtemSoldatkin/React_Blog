@@ -16,7 +16,8 @@ export default memo((props: CmpProps) => {
     const [isValid, setIsValid] = useState<boolean | undefined>(undefined)
     useEffect(() => {
         if(props.isValid !== undefined && isValid === undefined) setIsValid(props.isValid)
-    },[props.isValid])
+        if(props.onChange) props.onChange(value)
+    },[props.isValid, props.onChange])
     return (
         <div className="cmp_cst_textarea">
             <p className="cmp_cst_textarea__label">{props.name}</p>
