@@ -13,25 +13,25 @@ const msg = (errorCode: number | null): string => {
 }
 
 const articleResponse = (errorCode: number | null, article: _a.Article | null = null) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)
-    return {status, message, article}
+    return {success, message, article}
 }
 const articlesResponse = (errorCode: number | null, articles: _a.Article[] | null = null) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)
-    return {status, message, articles}
+    return {success, message, articles}
 }
 const articleOperationsResponse = (errorCode: number | null, article: _a.Article | null = null) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)
-    console.log(message, status )
-    return {status, message, article}
+    console.log(message, success )
+    return {success, message, article}
 }
 const articleVoteResponse = (errorCode: number | null, votes: Vote[] | null = null) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)    
-    return {status, message, votes}
+    return {success, message, votes}
 }
 
 export default ({
@@ -102,7 +102,11 @@ export default ({
                     if(i === 'title' || i === 'description' || i === 'body') data[i] = args[i]                   
                 }               
                 console.log('data', data)
-                const article = await Article.findByIdAndUpdate(id, data, {new: true})
+                const article = await Article.findByIdAndUpdate(id, data, {new: true}).populate('user', ['_id', 'login', 'avatar'])
+                .populate({
+                    path: 'reviews', 
+                    populate: ({path: 'user', select: ['_id', 'login', 'avatar'] })
+                })
                 if(!article) return articleOperationsResponse(404)
                 return articleOperationsResponse(null, article)
             } catch (err) { 

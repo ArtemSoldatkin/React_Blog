@@ -1,3 +1,12 @@
+//--true
+export type DocType = 'Article' | 'Review'
+export interface InputData {
+    title?: string
+    description?: string
+    body?: string
+}
+
+
 //Type
 export interface User {
     id: string

@@ -10,7 +10,7 @@ interface CmpProps {
     loading: boolean
 }
 
-const checkVal = (log: string | undefined,pass: string | undefined,rePass: string | undefined) => (isString(log) && isString(pass) && isString(rePass) && rePass!== pass)
+const checkVal = (log: string | undefined,pass: string | undefined,rePass: string | undefined) => (isString(log) && isString(pass) && isString(rePass) && rePass === pass)
 
 export default memo(({addUser, loading}:CmpProps) => {
     const [passType, setPassType] = useState<'text' | 'password'>('password')

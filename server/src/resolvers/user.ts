@@ -1,3 +1,4 @@
+import {ApolloError} from 'apollo-server-express'
 import User from '../models/user'
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -16,14 +17,14 @@ const msg = (errorCode: number | null): string => {
     }
 }
 const userResponse = (errorCode: number | null, user: _u.ResponseUser | null = null, token: string | null = null ) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)
-    return {status, message, user, token}
+    return {success, message, user, token}
 }
 const userOperationsResponse = (errorCode: number | null, user: _u.ResponseUser | null = null) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)
-    return {status, message, user}
+    return {success, message, user}
 }
 
 
@@ -41,7 +42,8 @@ export default ({
                 const {_id: id, login, avatar} = user
                 return userResponse(null, {id, login, avatar}, token)    
             } catch (err) { 
-                if(err && err.name === "ValidationError") return userResponse(409)
+                if(err && err.name === "ValidationError") return new ApolloError("Логин занят", "409");
+                //userResponse(409)
                 return userResponse(500)
             }
         },

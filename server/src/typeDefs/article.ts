@@ -40,22 +40,22 @@ export default makeExecutableSchema({
             setVoteArticle(id: String!, vote: Boolean!): ArticleVoteResponse!
         }
         type ArticleResponse {
-            status: Boolean
+            success: Boolean
             message: String
             article: Article
         }
         type ArticlesResponse {
-            status: Boolean
+            success: Boolean
             message: String
             articles: [Article]
         }
         type ArticleOperationsResponse {
-            status: Boolean
+            success: Boolean
             message: String
             article: Article
         }
         type ArticleVoteResponse {
-            status: Boolean
+            success: Boolean
             message: String
             votes: [Vote]
         }  

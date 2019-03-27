@@ -27,12 +27,12 @@ export default makeExecutableSchema({
             setVoteReview(id: String!, vote: Boolean!): ReviewVoteResponse!
         }
         type ReviewResponse {
-            status: Boolean
+            success: Boolean
             message: String
             reviews: [Review]
         }
         type ReviewVoteResponse {
-            status: Boolean
+            success: Boolean
             message: String
             votes: [Vote]
         }

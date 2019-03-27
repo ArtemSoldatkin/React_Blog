@@ -1,4 +1,4 @@
-import React , {PureComponent} from 'react'
+import React, {memo, useState, useEffect} from 'react'
 import { Query } from 'react-apollo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -8,67 +8,70 @@ import {IS_LOGGED_IN} from '../../../../queries/user'
 import {maxFileSize} from '../../../../constants'
 
 interface CmpProps {
-   loading?: boolean
-   onChange?: (image: string) => void
+  loading?: boolean
+  onChange?: (image: string) => void
 }
-interface CmpStates {
-    avatar: string | undefined
-    errors: string  | undefined
+// --- TEMP
+interface T_IsLoggedIn {
+  user: null | {
+    id: string
+    login: string
+    avatar: string
+  }
 }
+class IsLoggedIn extends Query<T_IsLoggedIn>{}
+//--- / TEMP
 
-export default class AvatarLoader extends PureComponent<CmpProps, CmpStates> {
-    constructor(props: CmpProps){
-        super(props)
-        this.state = {avatar: undefined, errors: undefined}
-    }
-    private readFileAsync = (file: File): Promise<any> => {
-        return new Promise((resolve, reject) => {
-          let reader = new FileReader();      
-          reader.onload = () => resolve(reader.result) 
-          reader.onerror = reject;      
-          reader.readAsDataURL(file);
-        })
-      } 
-      private handleChangeFile = async(e: React.ChangeEvent<HTMLInputElement>) => {
-        try {
-          const file = e.target && e.target.files && e.target.files[0]
-          if(!file) return this.setState({errors: 'Файл не выбран!'})
-          if(file.size > maxFileSize) return this.setState({errors:'Файл слишком большой!'})      
-          let newImage = await this.readFileAsync(file);
-          if(!newImage) return this.setState({errors:'Ошибка, попробуйте снова!'}) 
-          this.setState({errors: undefined, avatar: newImage})         
-          this.props.onChange && this.props.onChange(newImage)  
-        } catch(err) {
-            return this.setState({errors:'Ошибка, попробуйте снова!'})
-        }      
-      }
-    render () {
-        const {avatar, errors} = this.state
-        const {loading} = this.props
+
+export default memo((props: CmpProps) => {
+  const [avatar, setAvatar] = useState<string | undefined>(undefined)
+  const [err, setErr] = useState<string | undefined>(undefined)
+  useEffect(() => {
+    if(props.onChange && avatar)props.onChange(avatar)
+  }, [avatar])
+  const readFileAsync = (file: File): Promise<any> => new Promise((resolve, reject) => {
+      const reader = new FileReader();      
+      reader.onload = () => resolve(reader.result) 
+      reader.onerror = reject;      
+      reader.readAsDataURL(file);
+  })
+
+  const handleChangeFile = async(e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = e.target && e.target.files && e.target.files[0]
+      if(!file) return setErr('Файл не выбран!')
+      if(file.size > maxFileSize) return setErr('Файл слишком большой!')      
+      let newImage = await readFileAsync(file);
+      if(!newImage) return setErr('Ошибка, попробуйте снова!') 
+      setErr(undefined)
+      setAvatar(newImage)     
+    } catch(err) {
+        return setErr('Ошибка, попробуйте снова!')
+    }      
+  }
+  return (
+    <IsLoggedIn query = {IS_LOGGED_IN}>
+      {({ data }) => {      
+        let user = data && data.user ? data.user : undefined   
+        if(!user) return <></>             
         return (
-            <Query query={IS_LOGGED_IN}>
-                {({ data: {user} }) => {           
-                  //let user:User = data && data.user  ?  JSON.parse(data.user)  : undefined     
-                  if(avatar)user.avatar = avatar           
-                  return (
                     <div className="avatar_loader">     
                         <p className="title">Аватар</p> 
-                        <div className={`upload ${errors && 'upload-error'}`}>                        
-                            <UserAvatar user={user} /> 
+                        <div className={`upload ${err && 'upload-error'}`}>                        
+                            <UserAvatar user={{id: user.id, login: user.login, avatar: avatar ? avatar : user.avatar}} /> 
                             <div className="actions">
                                 <p className="icon">
                                     <FontAwesomeIcon icon={faPlus} />
                                 </p>
                             </div> 
                             <input className="input" type="file" accept=".png, .jpg, .jpeg" 
-                            draggable onChange={this.handleChangeFile} disabled={loading}/>                        
+                            draggable onChange={handleChangeFile} disabled={props.loading}/>                        
                         </div>
                         <p className="warning">Максимальный размер: {Math.trunc(maxFileSize / 1024)} KB</p>  
-                        {errors && <p className="errors">{errors}</p>}
+                        {err && <p className="errors">{err}</p>}
                     </div>
-                  )
-                }}
-            </Query> 
-        )
-    }
-}
+          )
+        }}
+    </IsLoggedIn> 
+  )
+})

@@ -17,7 +17,7 @@ const server = new ApolloServer({
         } catch (err) {
             return {userID: null};
         }
-    },
+    },    
     schema:apolloConfig
 })
 

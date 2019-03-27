@@ -14,13 +14,13 @@ export default makeExecutableSchema({
             login(login: String!, password: String!): UserResponse!
         }
         type UserResponse {
-            status: Boolean
+            success: Boolean
             message: String
             user: User
             token: String
         }
         type UserOperationsResponse {
-            status: Boolean
+            success: Boolean
             message: String
             user: User
         }

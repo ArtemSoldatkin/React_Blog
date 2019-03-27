@@ -14,14 +14,14 @@ const msg = (errorCode: number | null): string => {
 }
 
 const reviewResponse = (errorCode: number | null, reviews: _r.Review[] | null = null) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)
-    return {status, message, reviews} 
+    return {success, message, reviews} 
 }
 const reviewVoteResponse = (errorCode: number | null, votes: Vote[] | null = null) => {
-    const status = errorCode ? false : true
+    const success = errorCode ? false : true
     const message = msg(errorCode)
-    return {status, message, votes}
+    return {success, message, votes}
 }
 
 export default({   

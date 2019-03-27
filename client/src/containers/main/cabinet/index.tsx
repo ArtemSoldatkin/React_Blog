@@ -34,7 +34,7 @@ export default memo(() => (
         <IsLoggedIn query={IS_LOGGED_IN}>
             {({ data }) => {
                 const user = data && data.user ? data.user : undefined
-                return <Articles user={user}/>
+                return <Articles user={user} />
             }}
         </IsLoggedIn>        
     </div>

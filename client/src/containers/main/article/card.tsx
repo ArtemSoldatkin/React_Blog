@@ -1,60 +1,77 @@
-import React, {memo} from 'react'
-import UserAvatar from '../../../components/user-avatar'
+import React, {memo, useState, useEffect} from 'react'
 import Moment from 'react-moment'
 import ContentEditable from 'react-contenteditable'
+import {Article, InputData} from '../../../types'
+import {maxTitleLength, maxDescriptionLength} from '../../../constants'
+import CustomTextArea from '../../../components/text-area'
+import UserAvatar from '../../../components/user-avatar'
+import ArticleActions from '../actions'
+import Review from '../review'
 import VotesForm from '../votes'
 
-import {Article, isArticle, Votes, Reviews} from '../../../types'
-import Review from '../review'
-
-interface ac_CmpProps {
-  id: string
-  user: {
-    id: string
-    login: string
-    avatar: string
-  }
-  title: string
-  description: string
-  body: string
-  isEdited: boolean
-  created: string
-  votes: Votes
-  reviews: Reviews
+interface CmpProps {
+  article: Article
 }
 
-export default memo(({id, user, title, description, body, isEdited, created, reviews, votes}:ac_CmpProps) => (
-  <div>
-  <div className="article-card">
-    <header>
-      <p className="title">{title}</p>
-    </header>
-    <article>
-      <div className="info">
-        <div className="user-info">
-          <UserAvatar user={user} />  
-          <div className="login-date">
-            <p className="login">{user.login}</p>
-            <div className="date">
-              <p className="date__text">{isEdited ? "Отредактирована:" : "Создана:"}</p>
-              <Moment format="DD.MM.YYYY HH:mm" date={Number(created)} />
-            </div>
+export default memo(({article}:CmpProps) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [data, setData] = useState<InputData>({})
+  useEffect(() => {
+    if(isEditing) setData({title: article.title, description: article.description, body: article.body})    
+  },[isEditing]) 
+return (
+  <>
+    <div className="article-card">
+      <header>
+        {isEditing ? 
+          <div className="title">
+            <CustomTextArea maxLength={maxTitleLength} onChange={title => setData({...data, title})} initialState={article.title}/>
+          </div>
+        : 
+          <p className="title">{article.title}</p>
+        } 
+        <ArticleActions 
+        id={article.id} 
+        type="Article" 
+        userID={article.user.id}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        inputData={data}
+        />
+      </header>
+      <article>
+        <div className="info">
+          <div className="user-info">
+            <UserAvatar user={article.user} />  
+            <div className="login-date">
+              <p className="login">{article.user.login}</p>
+              <div className="date">
+                <p className="date__text">{article.isEdited ? "Отредактирована:" : "Создана:"}</p>
+                <Moment format="DD.MM.YYYY HH:mm" date={Number(article.created)} />
+              </div>
+            </div>   
           </div>   
         </div>   
-      </div>   
-      <p className="description">{description}</p>
-      <div className="main">
-        <ContentEditable               
-        html={body} 
-        disabled={true}  
-        tagName='article' 
-        />
-      </div>
-    </article>
-    <footer>    
-      <VotesForm id={id} type="Article" />
-    </footer>
-  </div>
-  <Review articleID={id}  />
-  </div>
-))
+        {isEditing ? 
+          <div className="description">
+            <CustomTextArea maxLength={maxDescriptionLength} onChange={description => setData({...data, description})} initialState={article.description} />
+          </div>
+        : 
+          <p className="description">{article.description}</p>
+        } 
+        <div className="main">
+          <ContentEditable               
+          html={isEditing ? (data.body ? data.body : article.body ): article.body} 
+          disabled={!isEditing}  
+          tagName='article' 
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({...data, body: e.target.value})}          
+          />
+        </div>
+      </article>
+      <footer>    
+        <VotesForm id={article.id} type="Article" />
+      </footer>
+    </div>
+    <Review articleID={article.id} reviews={article.reviews} />
+  </>
+)})

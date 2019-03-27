@@ -1,46 +1,26 @@
-import React, {memo} from 'react'
-import { Query,Subscription } from 'react-apollo';
+import React,{memo} from 'react'
 import {withRouter,RouteComponentProps} from 'react-router-dom'
-import {GET_ARTICLES} from '../../../queries/article'
-import {Articles, User} from '../../../types'
-import Loading from '../../../components/loading'
-import ErrorHandler from '../../../components/error-handler'
-import Info from '../../../components/info'
+import {GetArticles, GET_ARTICLES} from '../../../queries/article'
+import { User} from '../../../types'
 import Article from './article'
 import './style.scss'
-import gql from 'graphql-tag'
 
-type PathParamsType = {
-  id: string;
-};
-type CmpProps = RouteComponentProps<PathParamsType> & {
+interface PathParamsType { id: string };
+interface CmpProps extends RouteComponentProps<PathParamsType>  {
   user?: User
-};
-//---TEMP
-interface T_GetArticles {
-  getArticles: {
-    status: boolean
-    message: string
-    articles: Articles | null
-  }
 }
-class GetArticles extends Query<T_GetArticles>{}
-//---/TEMP
 
 export default withRouter(memo((props: CmpProps) => (
-  <GetArticles query={GET_ARTICLES} variables={{user: props.user && props.user.id ? props.user.id : props.match.params.id}} fetchPolicy="network-only">
-    {({ data, loading, error, client }) => {  
-      if(loading) return <Loading loading={loading}><div id="articles" /></Loading>
-      if(data && data.getArticles && data.getArticles.articles) {
-        const articles = data.getArticles.articles
-        client.writeData({data: {articles}})  
-        return (
-          <div id="articles">
-            {articles.map((article, index) => <Article key={`${Date.now()}/${article.id}/${index}`} id={article.id} />)}
-          </div>
-        )        
-      } 
-      return <ErrorHandler error={error} data={data} name="getArticles" />
-    }}
-  </GetArticles>
+  <div id="articles">
+    <GetArticles query={GET_ARTICLES} variables={{user: props.user && props.user.id ? props.user.id : props.match.params.id}}
+    fetchPolicy="cache-and-network">
+      {({data, loading, error}) => {
+        if(!loading && data && data.getArticles && data.getArticles.articles) {
+          const {articles} = data.getArticles
+          return <>{articles.map((article, index) => <Article key={`${Date.now()}/${article.id}/${index}`} article={article} />)}</>
+        }
+        return <></>
+      }}
+    </GetArticles>
+  </div>
 )))
