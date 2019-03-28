@@ -1,63 +1,37 @@
 import React, {memo} from 'react'
-import { Mutation} from 'react-apollo';
-import gql from 'graphql-tag'
+import {createID, VotesFR as fragment, SetVote, T_SetVote} from '../../../queries'
 import {SET_VOTE_ARTICLE} from '../../../queries/article'
 import {SET_VOTE_REVIEW} from '../../../queries/review'
-import {Vote, Votes} from '../../../types'
+import { DocType, Votes } from '../../../types'
 import VoteCard from './card'
 import './style.scss'
 
-//---TEmp
-const createID = (id: string, type: string) => `${type}:${id}`
-const ArticleFragment = gql`
-fragment Votes on Articles {
-    votes {userID, value}
-}            
-` 
-const ReviewFragment = gql`
-fragment Votes on Articles {
-    votes {userID, value}
-}            
-`
-interface T_SetVote {
-    setVoteReview?: {
-        message: string
-        status: boolean
-        votes: Votes | null
-    }
-    setVoteArticle?: {
-        message: string
-        status: boolean
-        votes: Votes | null
-    }
-}
-
-class SetVote extends Mutation<T_SetVote> {}
-//---/ TEmp
-
 interface CmpProps {
     id: string
-    type: 'Review' | 'Article'
+    type: DocType
+    votes: Votes
 }
 
-export default memo(({id: _id, type}: CmpProps) => (
-    <SetVote mutation={type === 'Article' ? SET_VOTE_ARTICLE : SET_VOTE_REVIEW} >
-        {(fnc, { data, client}) => {           
-            const id = createID(_id, type)
-            const fragment = type === 'Article' ? ArticleFragment : ReviewFragment
-            const _t = client.readFragment({id, fragment})
-            let votes = _t.votes      
-            const _type = `setVote${type}`    
-            if(_type === 'setVoteReview' || _type === 'setVoteArticle') {
-                const p_votes = data && data[_type]
-                if(p_votes && p_votes.votes){ 
-                    const _votes = p_votes.votes.map((vote: Vote) => ({...vote, __typename:'Vote'}))
-                    const _data = { ..._t, votes: _votes };
-                    client.writeFragment({id, fragment, data: _data})    
-                    votes = _votes       
-                }                     
-            }                 
-            return <VoteCard votes={votes} mtn={fnc} id={_id}/>                       
-        }}   
+export default memo(({id: _id, type, votes}: CmpProps) => {
+    const getVotes = (data: T_SetVote | undefined ) => {
+        if(!data) return null
+        const _t = `setVote${type}`
+        if(_t === 'setVoteReview' || _t === 'setVoteArticle') {
+            const _v = data && data[_t]
+            if(_v && _v.votes) return _v.votes
+        }
+        return null
+    }
+return (
+    <SetVote mutation={type === 'Article' ? SET_VOTE_ARTICLE : SET_VOTE_REVIEW} 
+    update={(cache, {data}) => {
+        const _votes = getVotes(data)
+        if(_votes){
+            const id = createID(_id, type)           
+            const _f = cache.readFragment({id, fragment})   
+            cache.writeFragment({id, fragment, data: {_f, votes:_votes }}) 
+        }        
+    }} >
+        {(fnc) => <VoteCard votes={votes} mtn={fnc} id={_id}/>}   
     </SetVote>
-))
+)})

@@ -1,0 +1,14 @@
+//@include direct(row);
+@mixin direct ($type) {
+    display: flex;
+    flex-direction: $type;
+}
+//@include font(row);
+@mixin font ($size, $weight) {
+    font-size: $size;
+    font-weight: $weight;
+}
+@mixin voteColor ($color) {
+    color: desaturate($color, 20%);
+    &_my { color: $color; }
+}

@@ -1,7 +1,11 @@
 import gql from 'graphql-tag';
 import {Query, Mutation} from 'react-apollo'
-import {Review} from '../types'
+import {Review, Reviews} from '../types'
 
+interface T_AddReview {
+    addReview: {reviews: Reviews}
+}
+export class AddReview extends Mutation<T_AddReview>{}
 export const ADD_REVIEW = gql`
     mutation AddReview($id: String!, $body: String!) {
         addReview(id: $id, body: $body) {

@@ -1,4 +1,4 @@
-@import '../../../../theme.scss';
+@import '../../../../css/theme.scss';
 
 #cabinet__new_article {
     @extend %main-card;
@@ -12,9 +12,23 @@
                 font-size: $medium-text-size;
                 font-weight: $medium-text-bold;
             }
+            article {
+                padding: 2px;
+                min-height: 54px;
+                border-radius: $border-radius;
+            }
+            .error {
+                font-size: $small-text-size;
+                font-weight: $small-text-bold;
+                color: $error-color;
+                margin: 0;
+            }
         }
+
         button {
+            margin-top: $medium-space;
             @extend %main-button;
         }
+
     }  
 }

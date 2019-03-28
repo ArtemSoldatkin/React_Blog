@@ -1,6 +1,7 @@
 import React, {memo, useState, useEffect} from 'react'
 import Moment from 'react-moment'
 import ContentEditable from 'react-contenteditable'
+import {Link} from 'react-router-dom'
 import {Article, InputData} from '../../../types'
 import {maxTitleLength, maxDescriptionLength} from '../../../constants'
 import CustomTextArea from '../../../components/text-area'
@@ -41,7 +42,9 @@ return (
       </header>
       <article>
         <div className="info">
+        <Link to={`/user/${article.user.id}`}>
           <div className="user-info">
+          
             <UserAvatar user={article.user} />  
             <div className="login-date">
               <p className="login">{article.user.login}</p>
@@ -49,8 +52,10 @@ return (
                 <p className="date__text">{article.isEdited ? "Отредактирована:" : "Создана:"}</p>
                 <Moment format="DD.MM.YYYY HH:mm" date={Number(article.created)} />
               </div>
-            </div>   
-          </div>   
+            </div>
+            
+          </div>  
+          </Link> 
         </div>   
         {isEditing ? 
           <div className="description">
@@ -69,7 +74,7 @@ return (
         </div>
       </article>
       <footer>    
-        <VotesForm id={article.id} type="Article" />
+        <VotesForm id={article.id} type="Article" votes={article.votes}/>
       </footer>
     </div>
     <Review articleID={article.id} reviews={article.reviews} />

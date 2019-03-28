@@ -1,19 +1,10 @@
 import React, {memo} from 'react'
 import {Link} from 'react-router-dom'
-import { Query } from 'react-apollo';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUser, faFileSignature} from "@fortawesome/free-solid-svg-icons";
+import {IS_LOGGED_IN, IsLoggedIn} from '../../../queries/user'
 import Articles from '../articles'
-import {IS_LOGGED_IN} from '../../../queries/user'
-import {User} from '../../../types'
 import './style.scss'
-
-// ---- TEMP
-interface T_IsLoggedIn {
-    user: null | User
-}
-class IsLoggedIn extends Query<T_IsLoggedIn>{}
-//--- / TEMP
 
 export default memo(() => (    
     <div id="cabinet">

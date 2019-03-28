@@ -1,27 +1,14 @@
 import React, {memo, useState, useEffect} from 'react'
-import { Query } from 'react-apollo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import {User} from '../../../../types'
-import UserAvatar from '../../../../components/user-avatar'
-import {IS_LOGGED_IN} from '../../../../queries/user'
+import {IS_LOGGED_IN, IsLoggedIn} from '../../../../queries/user'
 import {maxFileSize} from '../../../../constants'
+import UserAvatar from '../../../../components/user-avatar'
 
 interface CmpProps {
   loading?: boolean
   onChange?: (image: string) => void
 }
-// --- TEMP
-interface T_IsLoggedIn {
-  user: null | {
-    id: string
-    login: string
-    avatar: string
-  }
-}
-class IsLoggedIn extends Query<T_IsLoggedIn>{}
-//--- / TEMP
-
 
 export default memo((props: CmpProps) => {
   const [avatar, setAvatar] = useState<string | undefined>(undefined)

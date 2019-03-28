@@ -1,59 +1,55 @@
-@import '../../theme.scss';
+@import '../../css/theme.scss';
+@import '../../css/mixins.scss';
+@import '../../css/extends.scss';
 
-.cnt_header_actn {
-    .hdr_act_login {
-        display: flex;
-        flex-direction: row;
-        &__btn_submit {
+.cnt_h_ac {
+    .h_ac_login {
+        @include direct(row);
+        &__btn {
             @extend %main-button;
         }
     }    
-    .hdr_act_logout {        
-        display: flex;
-        flex-direction: column;
+    .h_ac_logout {        
+        @include direct(column);
         color: $on-primary-color;
         &__user {
+            padding: $small-space; 
             background: $surface-color;
             color: $on-surface-color;
-            border-radius: $border-radius;
-            padding: $small-space;    
+            border-radius: $border-radius;               
         }
-        &__login {
-            font-size: $large-text-size;
-            font-weight: $large-text-bold;
-            vertical-align: bottom;
+        &__name {
             margin-left: $medium-space;
+            vertical-align: bottom;
+            @include font($large-text-size, $large-text-bold);             
         }
-        &__btn_submit {            
-            text-align: right; 
+        &__btn { 
             margin: 0;
-            padding: 0;  
-            user-select: none;
-            cursor: pointer;
-            font-size: $small-text-size;
-            font-weight: $small-text-bold; 
+            padding: 0;
+            text-align: right;
+            @include font($small-text-size, $small-text-bold);              
+            @extend %clickable;            
         }
-        &__btn_text {
+        &__btn_tx {
             margin-left: $small-space;
         } 
-    }
-    
-    .registration {
-        .show_modal {
-            border: none;
+    }    
+    .h_ac_reg {
+        &__btn {
             padding: 0;
             margin: 0;
             background: none;
-            color: $on-primary-color;
-            font-size: $medium-text-size;
-            font-weight: $medium-text-bold;           
+            color: $on-primary-color;            
+            border: none;
+            @include font($medium-text-size, $medium-text-bold);                  
         }        
     }
 }
-#registryForm {          
-    .show_password {
-        border: none;
+
+.reg_form {          
+    &__btn {
         height: 100%;
         background: none;
+        border: none; 
     }
 }

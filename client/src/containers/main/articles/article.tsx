@@ -31,7 +31,7 @@ export default memo(({article}: CmpProps) => (
                     </article> 
                     <footer>
                         <div className="info">
-                            <VotesForm id={article.id} type="Article" />
+                            <VotesForm id={article.id} type="Article" votes={article.votes}/>
                         </div>
                         <div className="date">
                             <p className="text">{article.isEdited ? "Отредактирована:" : "Создана:"}</p>

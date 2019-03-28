@@ -1,64 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.scss'
-
-//Apollo
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-
-
-
-
-
-//---
-import gql from 'graphql-tag'
-
-const fragment = gql`
-    fragment reviews on Articles {
-        reviews @client {id}
+import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import * as serviceWorker from './serviceWorker';
+import App from './App';
+import './index.scss'
+import { setContext } from 'apollo-link-context';
+import { createHttpLink } from 'apollo-link-http';
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token || "",
     }
-`
-import {Reviews} from './types'
-interface _t {
-  reviews: Reviews
-}
-//---
-
+  }
+});
+const httpLink = createHttpLink({
+  uri: 'http://localhost:8000/graphql',
+});
 const cache = new InMemoryCache( );
 const client = new ApolloClient({
   cache,  
-  link: new HttpLink({
-    uri: 'http://localhost:8000/graphql',    
-    headers: {
-      authorization: localStorage.getItem('token')    
-    },    
-  }), 
- 
-  resolvers: {
-    Mutation: {
-      addOrRemoveReview: (_, {id}, { cache:_cache }) => {  
-        
-        const {reviews}:_t = _cache.readFragment({fragment, id: `Article:${id}`})
-        console.log('_', reviews)
-        const data = {
-          reviews: reviews.includes(id)
-            ? reviews.filter(review => review.id !== id)
-            : [...reviews, id],
-        };
-        _cache.writeFragment({fragment, id: `Article:${id}`, data})
-        return data.reviews
-        //return reviews
-      },
-    }    
-  }
+  link: authLink.concat(httpLink),  
 });
+
+
 
 const getUserInStore = () => {
   const user = localStorage.getItem('user')
@@ -72,10 +45,6 @@ cache.writeData({
   }
 });
   
-
-
-
-
 ReactDOM.render(
   <ApolloProvider client={client}>
   <BrowserRouter>

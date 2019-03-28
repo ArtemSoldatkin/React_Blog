@@ -29,6 +29,7 @@ export default memo(({ id, type, inputData, complete}: CmpProps) => {
             {(mtn, {data, loading, error}) => {
             const save = () => {               
                 const {title, description, body} = inputData  
+                if(!title && !description && !body) return
                 mtn({variables:{id, title, description, body}})
             } 
             return <ButtonWithConfirm icon={faSave} text="Сохранить" fnc={save} />

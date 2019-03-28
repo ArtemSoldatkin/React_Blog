@@ -1,27 +1,22 @@
-@import '../../../theme.scss';
+@import '../../../css/theme.scss';
+@import '../../../css/mixins.scss';
+@import '../../../css/extends.scss';
 
-@mixin setColor ($color) {
-    color: desaturate($color, 20%);
-    &-my { color: $color; }
-}
-
-#votes {   
-    .vote {
-        border: none;
-        background: none;  
+.mn_votes {   
+    .mn_vote {
         margin-right: $small-space;
-        font-size: $medium-text-size;
-        font-weight: $medium-text-bold;
-        cursor: pointer;
-        user-select: none;
-        &__like {
-            @include setColor($success-color);           
-        }
-        &__dislike {
-            @include setColor($error-color);          
-        }     
-        .text {
+        background: none;          
+        border: none;
+        @include font($medium-text-size, $medium-text-bold);
+        @extend %clickable;
+        &__text {
             margin-left: $small-space;
         }
+        &-like {
+            @include voteColor($success-color);           
+        }
+        &-dislike {
+            @include voteColor($error-color);          
+        }   
     } 
 }

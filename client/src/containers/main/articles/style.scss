@@ -1,4 +1,4 @@
-@import '../../../theme.scss';
+@import '../../../css/theme.scss';
 
 %multiline-text {
     display: block;
@@ -48,7 +48,7 @@
             }
             .title {
                 .text {
-                    word-break: break-all;  
+                    word-break: break-word;  
                     text-align: center;  
                     @include multiline-text(
                         $article-card-title-height,
@@ -62,7 +62,7 @@
         article {
             border-bottom: $border;
             .text {
-                word-break: break-all;  
+                word-break: break-word;  
                 padding: 0 $medium-space;
                 @include multiline-text(
                         $article-card-description-height,

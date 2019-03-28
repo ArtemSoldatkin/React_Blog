@@ -5,7 +5,9 @@ export interface InputData {
     description?: string
     body?: string
 }
-
+export type InputType = 'text' | 'password'
+export type optStr = string | undefined
+export type optBool = boolean | undefined
 
 //Type
 export interface User {
@@ -60,12 +62,14 @@ export interface NewReview {
 //Type Checking
 
 
-
-
-
+// ++++
+export const isStr = (data: any): data is string => (
+    typeof (<string>data) === 'string' && (<string>data).trim().length > 0
+)
 export const isString = (data: any): data is string => (
     typeof (<string>data) === 'string' && (<string>data).trim().length > 0
 )
+//---
 
 export const isUser = (data: any): data is User => (
     (<User>data) instanceof Object &&

@@ -1,44 +1,13 @@
 import React, {memo, useState} from 'react'
-import {Query, Mutation, MutationFn} from 'react-apollo'
+import {MutationFn} from 'react-apollo'
+import {AddReview, ADD_REVIEW, ReviewsFR as fragment} from '../../../queries/review'
+import {  User } from '../../../types';
 import UserAvatar from '../../../components/user-avatar'
-import { Reviews, User } from '../../../types';
-import gql from 'graphql-tag'
 
 interface CmpProps {
     user: User
     articleID: string  
 }
-
-//---TEMP
-
-interface T_AddReview {
-    addReview: {reviews: Reviews}
-}
-class AddReview extends Mutation<T_AddReview>{}
-
-const ADD_REVIEW = gql`
-    mutation AddReview($id: String!, $body: String!) {
-        addReview(id: $id, body: $body) {    
-           # user @client {id login avatar}     
-            reviews {
-                id 
-                user {id login avatar} 
-                body 
-                votes{ userID value} 
-                created
-                isEdited
-            }
-        }
-    }
-`
-
-const fragment = gql`
-    fragment Reviews on Article {
-        reviews {id}
-    }
-`
-
-///--TEMP
 
 export default memo((props: CmpProps) => {
     const [body, setBody] = useState('')
@@ -53,10 +22,11 @@ export default memo((props: CmpProps) => {
                 const id = `Article:${props.articleID}`
                 const _r = cache.readFragment({fragment, id})
                 const {reviews} = data.addReview
-                cache.writeFragment({fragment, id, data: {_r, reviews}})           
+                cache.writeFragment({fragment, id, data: {_r, reviews}})     
+                setBody('')      
             }
         }}>
-            {(addReview, {data, loading, error, client}) => (
+            {(addReview, {data, loading, error}) => (
                 <div className="new-review">
                     <UserAvatar user={props.user} />
                     <form className="form-review" onSubmit={(e) => handleSubmit(e, addReview)} >

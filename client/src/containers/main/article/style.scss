@@ -1,4 +1,4 @@
-@import '../../../theme.scss';
+@import '../../../css/theme.scss';
 
 //#article {    
    .article-card {
@@ -14,7 +14,7 @@
             text-align: center;  
             width: 100%;
             .title {
-                word-break: break-all;  
+                word-break: break-word;  
                 width: 100%;
                 textarea {
                     width: 100%;
@@ -48,7 +48,7 @@
                     }
                 }
                 .description {
-                    word-break: break-all;  
+                    word-break: break-word;  
                     font-size: $medium-text-size;
                     font-weight: $medium-text-bold;
                     width: 100%;
@@ -62,7 +62,7 @@
             .main {
                 font-size: $medium-text-size;
                 font-weight: $medium-text-thin;
-                word-break: break-all;  
+                word-break: break-word;  
             }
         }
     }

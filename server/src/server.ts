@@ -9,7 +9,7 @@ import apolloConfig from './apolloConfig'
 const server = new ApolloServer({
     context: async({ req }: Req) => {
         try {            
-            const token = req.headers && req.headers.authorization             
+            const token = req.headers && req.headers.authorization  
             if (!token) return {userID: null};
             const res = await jwt.verify(token, secret)           
             if (!res) return {userID: null};

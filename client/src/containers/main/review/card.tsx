@@ -1,29 +1,20 @@
 import React, {memo, useState, useEffect} from 'react'
 import Moment from 'react-moment';
+import {Review, InputData} from '../../../types'
 import UserAvatar from '../../../components/user-avatar'
-import {Review} from '../../../types'
 import Info from '../../../components/info'
+import CustomTextArea from '../../../components/text-area'
 import VotesForm from '../votes'
 import ReviewActions from '../actions'
-import CustomTextArea from '../../../components/text-area'
-
 
 interface CmpProps {
     review: Review 
     articleID: string
 }
 
-//---TEMP
-interface NewArticle {
-    title?: string 
-    description?: string
-    body?: string
-  }
-  ///--TEMP
-
 export default memo(({review, articleID}: CmpProps) => {
     const [isEditing, setIsEditing] = useState<boolean>(false)
-    const [data, setData] = useState<NewArticle>({})
+    const [data, setData] = useState<InputData>({})
     useEffect(() => {
         if(isEditing) setData({body: review.body})    
     },[isEditing]) 
@@ -46,7 +37,7 @@ export default memo(({review, articleID}: CmpProps) => {
                 : 
                 <p className="description">{review.body}</p>
             } 
-            <VotesForm id={review.id} type="Review" />
+            <VotesForm id={review.id} type="Review" votes={review.votes} />
         </div>   
         <ReviewActions 
         id={review.id} 

@@ -1,26 +1,14 @@
 import React, {memo, useState} from 'react'
-import {Mutation,MutationFn} from 'react-apollo'
+import {MutationFn} from 'react-apollo'
 import {RouteComponentProps} from 'react-router-dom'
-import {ADD_ARTICLE} from '../../../../queries/article'
+import ContentEditable from 'react-contenteditable'
+import {ADD_ARTICLE, AddArticle} from '../../../../queries/article'
+import {maxTitleLength, maxDescriptionLength} from '../../../../constants'
+import {isString} from '../../../../types'
 import Loading from '../../../../components/loading'
 import ErrorHandler from '../../../../components/error-handler'
 import CustomTextArea from '../../../../components/text-area'
-import ContentEditable from 'react-contenteditable'
-import {maxTitleLength, maxDescriptionLength} from '../../../../constants'
-import {isString} from '../../../../types'
-import { ApolloError } from 'apollo-client';
-import gql from 'graphql-tag'
 import './style.scss'
-
-//---TEMP
-interface T_AddArticle {
-    addArticle: {
-        message: string
-        status: string
-    }   
-}
-class AddArticle extends Mutation<T_AddArticle>{}
-//--- / TEMP
 
 interface CmpProps extends RouteComponentProps { }
 
@@ -32,11 +20,11 @@ export default memo((props: CmpProps) => {
     const checkParams = () => isString(title) && isString(description) && isString(body)    
     const handleSubmit = (mtn: MutationFn) => mtn({variables:{ title, description, body }})
     return (
-        <AddArticle mutation={ADD_ARTICLE}>
+        <AddArticle mutation={ADD_ARTICLE}                  
+        onCompleted={data => data && data.addArticle && data.addArticle.success && props.history.push('/')}
+        >
             {(addArticle, { data, loading, error }) => { 
-                if(!loading && data && data.addArticle && data.addArticle.status) {                 
-                    props.history.push("/cabinet")
-                }
+              
                 return (                    
                     <div id="cabinet__new_article">
                         <Loading loading={loading}>
@@ -56,6 +44,7 @@ export default memo((props: CmpProps) => {
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBody(e.target.value)} 
                                     tagName='article' 
                                     />
+                                    {isValid === false && body.length <= 0 && <p className="error">Заполните "Cтатью"!</p>}
                                 </div>
                                 <button type="submit">Сохранить</button>                           
                             </form>                        

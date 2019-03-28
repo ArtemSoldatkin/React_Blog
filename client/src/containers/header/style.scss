@@ -1,25 +1,24 @@
-@import '../../theme.scss';
+@import '../../css/theme.scss';
+@import '../../css/mixins.scss';
 
-.cnt_header {    
-    display: flex;   
-    background: $primary-color;    
-    color: $on-primary-color;
-    padding: $global-padding;
+.cnt_h {    
+    @include direct(row);
     min-height: $header-height;
     margin-bottom: $large-space;
-    &__logo {
-        display: flex;
+    padding: $global-padding; 
+    background: $primary-color;    
+    color: $on-primary-color;    
+    &__logo {        
         align-self: flex-start;      
-        padding: $medium-space 0;        
-        font-size: $logo-text-size;
-        font-weight: $logo-text-weight;  
+        padding: $medium-space 0; 
+        @include font($logo-text-size, $logo-text-weight); 
     }
-    &__text {
+    &__tx {
         margin-left: $medium-space;  
     }
-    &__actions {
-        margin: auto 0 auto auto;
-        align-self: flex-end;   
+    &__ac {
+        align-self: flex-end; 
+        margin: auto 0 auto auto;          
         padding: $medium-space 0;   
     }
 }

@@ -1,35 +1,16 @@
 import React,{memo} from 'react'
-import { Reviews, User } from '../../../types';
+import {IsLoggedIn, IS_LOGGED_IN} from '../../../queries/user'
+import { Reviews } from '../../../types';
 import ReviewCard from './card'
-import './style.scss'
-import {Query, Mutation, MutationFn} from 'react-apollo'
-import gql from 'graphql-tag'
 import ReviewForm from './form'
-//import {ADD_REVIEW} from '../../../queries/review'
+import './style.scss'
 
-
-//--- TEMP
 interface CmpProps {
     articleID: string
     reviews: Reviews
 }
 
-
-const IS_LOGGED_IN = gql`
-    query isLoggedIn {
-        user @client {id login avatar}
-    }   
-`
-interface T_IsLoggedIn {
-    user: User
-}
-class IsLoggedIn extends Query<T_IsLoggedIn>{}
-
-///-- TEMP
-
-export default memo(({articleID, reviews}:CmpProps) => {   
-    //if(!reviews) return <div>WOROROR</div>
-    //if(reviews.length <= 0) return <></>
+export default memo(({articleID, reviews}:CmpProps) => {  
     return (
         <div id="review">   
             <IsLoggedIn query={IS_LOGGED_IN}>

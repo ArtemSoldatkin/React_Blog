@@ -48,6 +48,13 @@ export const GET_ARTICLE = gql`
   }
 `
 
+interface T_AddArticle {
+  addArticle: {
+      message: string
+      success: string
+  }   
+}
+export class AddArticle extends Mutation<T_AddArticle>{}
 export const ADD_ARTICLE = gql`  
     mutation AddArticle($title: String!, $description: String!, $body: String!) {
         addArticle(title: $title, description: $description, body: $body) {

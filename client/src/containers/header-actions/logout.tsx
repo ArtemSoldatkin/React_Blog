@@ -4,8 +4,8 @@ import { ApolloConsumer } from 'react-apollo';
 import {Link} from  'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import UserAvatar from '../../components/user-avatar'
 import {User} from '../../types'
+import UserAvatar from '../../components/user-avatar'
 
 interface CmpProps {
     user: User
@@ -14,24 +14,24 @@ interface CmpProps {
 export default memo(({user}: CmpProps) => (
     <ApolloConsumer>
         {client => (
-            <div className="hdr_act_logout">
+            <div className="h_ac_logout">
                 <OverlayTrigger           
                 placement="left"
                 overlay={<Tooltip id="tooltip_cabinet">В кабинет</Tooltip>}>
-                    <div className="hdr_act_logout__user">                        
+                    <div className="h_ac_logout__user">                        
                         <Link to='/cabinet'>
                             <UserAvatar user={user}/>                           
-                            <p className="hdr_act_logout__login">{user.login}</p>
+                            <p className="h_ac_logout__name">{user.login}</p>
                         </Link>                        
                     </div>
                 </OverlayTrigger>
-                <span className="hdr_act_logout__btn_submit"                    
+                <span className="h_ac_logout__btn"                    
                     onClick={() => {
-                        client.writeData({ data: { user: null } });
+                        client.writeData({ data: { user: null } });                       
                         localStorage.clear();
                     }}
                 >   <FontAwesomeIcon icon={faSignOutAlt} />        
-                    <p className="hdr_act_logout__btn_text">Выйти</p>
+                    <p className="h_ac_logout__btn_tx">Выйти</p>
                 </span>
             </div>
         )}

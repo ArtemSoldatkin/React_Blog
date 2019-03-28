@@ -1,18 +1,19 @@
-@import '../../theme.scss';
+@import '../../css/theme.scss';
+@import '../../css/mixins.scss';
 
-.cnt_footer {    
-    display: flex;
+.cnt_f {    
+    @include direct(row);
     flex: 0 0 auto;
-    background: $footer-color;
-    color: $on-footer-color;
     padding: $global-padding;
     margin-top: $large-space;
-    &__content {
-        padding: $medium-space 0;
+    background: $footer-color;
+    color: $on-footer-color;    
+    &__cnt {
         align-self: flex-end;
-        margin-left: auto;
+        padding: $medium-space 0;
+        margin-left: auto;  
     }
-    &__text {
+    &__tx {
         margin-left: $medium-space;        
     }
 }

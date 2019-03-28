@@ -50,8 +50,10 @@ export default ({
         editUser: async(_: any, args: _u.EditUser, {userID}: Context) => {
             try {    
                 if(!userID) return userOperationsResponse(401)
+                console.log(userID)
                 if(!_u.isEditUser(args)) return userOperationsResponse(400)
                 const user = await User.findByIdAndUpdate(userID, args, {new: true})
+                console.log('u', user && user.login)
                 if(!user) return userOperationsResponse(404)
                 const {_id: id, login, avatar} = user
                 return userOperationsResponse(null, {id, login, avatar})          
