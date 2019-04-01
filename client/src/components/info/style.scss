@@ -1,21 +1,18 @@
 @import '../../css/theme.scss';
+@import '../../css/mixins.scss';
 
-@mixin setColor($color, $on-color) {    
-    background: $color;
-    color: $on-color;
-}
-
-.components_info {
-    &__message {
+.info_block {
+    &__msg {
         padding: $small-space;
-        font-size: $small-text-size;
-        font-weight: $small-text-bold;
+        @include font($small-text-size,$small-text-bold);       
         border-radius: $border-radius;
     }  
     &-success { 
-        @include setColor($success-color, $on-success-color)       
+        background: $success-color;
+        color: $on-success-color;          
     }
     &-error {
-        @include setColor($error-color, $on-error-color)        
+        background: $error-color;
+        color: $on-error-color;                  
     }    
 }

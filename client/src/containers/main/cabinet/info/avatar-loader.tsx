@@ -43,19 +43,19 @@ export default memo((props: CmpProps) => {
         if(!user) return <></>             
         return (
                     <div className="avatar_loader">     
-                        <p className="title">Аватар</p> 
-                        <div className={`upload ${err && 'upload-error'}`}>                        
+                        <p className="avatar_loader__t">Аватар</p> 
+                        <div className={`avatar_loader__upload ${err && 'avatar_loader-err'}`}>                        
                             <UserAvatar user={{id: user.id, login: user.login, avatar: avatar ? avatar : user.avatar}} /> 
-                            <div className="actions">
-                                <p className="icon">
+                            <div className="avatar_loader__act">
+                                <p className="avatar_loader__icon">
                                     <FontAwesomeIcon icon={faPlus} />
                                 </p>
                             </div> 
-                            <input className="input" type="file" accept=".png, .jpg, .jpeg" 
+                            <input className="avatar_loader__file" type="file" accept=".png, .jpg, .jpeg" 
                             draggable onChange={handleChangeFile} disabled={props.loading}/>                        
                         </div>
-                        <p className="warning">Максимальный размер: {Math.trunc(maxFileSize / 1024)} KB</p>  
-                        {err && <p className="errors">{err}</p>}
+                        <p className="avatar_loader__warn">Максимальный размер: {Math.trunc(maxFileSize / 1024)} KB</p>  
+                        {err && <p className="avatar_loader__err">{err}</p>}
                     </div>
           )
         }}

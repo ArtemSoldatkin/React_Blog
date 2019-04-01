@@ -11,16 +11,17 @@ interface CmpProps {
 }
 
 export default memo(({articleID, reviews}:CmpProps) => {  
-    return (
-        <div id="review">   
-            <IsLoggedIn query={IS_LOGGED_IN}>
-                {({data}) => {
-                    const user = data && data.user
-                    if(!user) return <></>                   
-                    return <ReviewForm user={user} articleID={articleID}/>
-                }}               
-            </IsLoggedIn>                
-            {reviews.length > 0 && reviews.map((review, index) => <ReviewCard key={`${Date.now()}${review.id}${index}`} review={review} articleID={articleID}/>)} 
-        </div>
+    return (        
+        <IsLoggedIn query={IS_LOGGED_IN}>
+            {({data}) => {
+                const user = data && data.user
+                return (<>
+                    {(user || reviews.length > 0) && <div className="reviews">   
+                        {user && <ReviewForm user={user} articleID={articleID}/>}
+                        {reviews.length > 0 && reviews.map((review, index) => <ReviewCard key={`${Date.now()}${review.id}${index}`} review={review} articleID={articleID}/>)}
+                    </div>}
+                </>) 
+            }}               
+        </IsLoggedIn>    
     )
 })

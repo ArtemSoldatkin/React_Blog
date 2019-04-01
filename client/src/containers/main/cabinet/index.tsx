@@ -7,18 +7,18 @@ import Articles from '../articles'
 import './style.scss'
 
 export default memo(() => (    
-    <div id="cabinet">
-        <div className="actions">
+    <div className="cabinet">
+        <div className="cabinet__ac">
             <Link to='/cabinet/new-article'>
-                <div className="tab">
+                <div className="cabinet__tab">
                     <FontAwesomeIcon icon={faFileSignature} className="icon" />
-                    <p className="text">Новая статья</p>
+                    <p className="cabinet__tx">Новая статья</p>
                 </div>
             </Link>
             <Link to='/cabinet/info'>                
-                <div className="tab">
+                <div className="cabinet__tab">
                     <FontAwesomeIcon icon={faUser} className="icon" />
-                    <p className="text">Обо мне</p>
+                    <p className="cabinet__tx">Обо мне</p>
                 </div>
             </Link>
         </div>

@@ -23,8 +23,8 @@ export default memo(({loading: load}: CmpProps) => {
       }
     }}>
     {(addUser, { loading, error}) => (
-        <div className="h_ac_reg">         
-          <button  className="h_ac_reg__btn" onClick={() => setShow(true)} disabled={load}>Регистрация</button>
+        <div className="registration">         
+          <button  className="registration__btn" onClick={() => setShow(true)} disabled={load}>Регистрация</button>
           <Modal show={show} onHide={() => !loading && setShow(false)}>
             <Modal.Header closeButton>
                 <Modal.Title>Регистрация</Modal.Title>

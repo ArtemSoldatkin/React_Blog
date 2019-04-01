@@ -1,25 +1,18 @@
 @import '../../css/theme.scss';
+@import '../../css/extends.scss';
+@import '../../css/mixins.scss';
 
-%block-size {
-    height: $avatar-height;
-    width: $avatar-width;
-    max-height: $avatar-height;
-    max-width: $avatar-width;
-    border-radius: $border-radius; 
-}
-
-.cmp_user_avatar {
+.user_avatar {
     display: inline-block;
-    @extend %block-size;
+    @extend %avatar-size;
     background: $primary-color;
-    color: $on-primary-color;    
-    font-size: $avatar-text-size;
-    font-weight: $avatar-text-weight;
+    color: $on-primary-color; 
+    @include font($avatar-text-size, $avatar-text-weight);    
     &__avatar {
-        @extend %block-size;        
+        @extend %avatar-size;        
         display: flex;       
     }
-    &__txt {
+    &__tx {
         margin: auto;
         user-select: none;
     }

@@ -1,71 +1,55 @@
 @import '../../../css/theme.scss';
+@import '../../../css/mixins.scss';
+@import '../../../css/extends.scss';
 
-#review {
-    
-    padding: $medium-space;
+.reviews {  
     @extend %main-card;   
-    display: flex;
-    flex-direction: column;   
-    .new-review {
-        display: flex;
-        flex-direction: row;
-        margin-bottom: $large-space;
-        .form-review {
-            display: flex;
-            flex-direction: column;
-            margin-left: $medium-space;
-            width: 100%;
-            textarea {
-                border: none;
-                border-bottom: $border;
-                
-            }
-            button {
-                margin-top: $small-space;
-                align-self: flex-end;
-                @extend %main-button;
-            }
-        }
+    @include direct(column);
+    padding: $medium-space;  
+}
+
+.new_review {
+    @include direct(row);
+    margin-bottom: $large-space;
+    &__form{
+        @include direct(column);
+        width: 100%;
+        margin-left: $medium-space;            
+    }
+    &__itx {
+        @extend %bottom-border;               
+    }
+    &__btn {
+        align-self: flex-end;
+        margin-top: $small-space;                
+        @extend %main-button;
+    }        
+}  
+
+.review_card {        
+    @include direct(row);
+    margin-bottom: $large-space;
+    &__body {
+        @include direct(column);
+        width: 100%;
+        margin-left: $medium-space; 
+    }    
+    &__info {
+        @include direct(row);
+        height: $medium-text-size;
+        margin: 0;
+        padding: 0;
+        @include font ($medium-text-size, $medium-text-bold);               
     }   
-    .review-card {        
-        display: flex;
-        flex-direction: row;
-        margin-bottom: $large-space;
-        .review-body {
-            margin-left: $medium-space; 
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            
-            .info {
-                display: flex;
-                flex-direction: row;
-                margin: 0;
-                padding: 0;
-                height: $medium-text-size;
-                font-size: $medium-text-size;
-                    font-weight: $medium-text-bold;
-                    line-height: $medium-text-size;
-                .login {
-                    
-                    margin-right: $medium-space;
-                }
-                .date {
-                    font-size: $small-text-size;
-                    font-weight: $small-text-bold;
-                    color: desaturate($on-surface-color, 80%);
-                }
-            }
-            .description {
-                word-break: break-word;
-                font-size: $medium-text-size;
-                font-weight: $medium-text-thin;                
-                textarea {
-                    width: 100%;
-                    border: none;
-                    border-bottom: $border;
-                }
-            }            
-        }
-    } 
+    &__log {
+        margin-right: $medium-space;
+    }
+    &__date {                  
+        color: desaturate($on-surface-color, 80%);
+        @include font ($small-text-size, $small-text-bold);
+    }          
+    &__descr {
+        word-break: break-word;
+        @include font ($medium-text-size, $medium-text-thin); 
+    }            
 }

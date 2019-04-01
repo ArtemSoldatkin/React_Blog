@@ -1,43 +1,32 @@
 import React, {memo} from 'react'
-import Moment from 'react-moment';
 import {Link} from 'react-router-dom'
 import {Article} from '../../../types'
-import UserAvatar from '../../../components/user-avatar'
+import User from '../../../components/user-info'
+import CreatedDate from '../../../components/created-date'
 import VotesForm from '../votes'
 
 interface CmpProps {
     article: Article
 }
 
-export default memo(({article}: CmpProps) => (
-    <div className="article">
-                    <header>
-                        <div className="user">
-                            <Link to={`/user/${article.user.id}`}>
-                                <UserAvatar user={article.user} />
-                                <p className="login">{article.user.login}</p>   
-                            </Link>            
-                        </div>
-                        <div className="title">
-                            <Link to={`/article/${article.id}`}>
-                                <div className="text">{article.title}</div>
-                            </Link>
-                        </div>
-                    </header>
-                    <article>
-                        <Link to={`/article/${article.id}`}>
-                                <div className="text">{article.description}</div>
-                        </Link>         
-                    </article> 
-                    <footer>
-                        <div className="info">
-                            <VotesForm id={article.id} type="Article" votes={article.votes}/>
-                        </div>
-                        <div className="date">
-                            <p className="text">{article.isEdited ? "Отредактирована:" : "Создана:"}</p>
-                            <Moment format="DD.MM.YYYY HH:mm" date={Number(article.created)} />
-                        </div>
-                    </footer>
-    </div> 
-    
+export default memo(({article}: CmpProps) => (    
+    <div className="article_card">
+        <header className="article_card__h">
+            <User user={article.user} link name /> 
+            <Link to={`/article/${article.id}`}>
+                <div className="article_card__t">
+                    {article.title}                    
+                </div>
+            </Link>
+        </header>
+        <Link to={`/article/${article.id}`}>
+            <article className="article_card__b">            
+                {article.description}                  
+            </article> 
+        </Link>   
+        <footer className="article_card__f">
+            <VotesForm id={article.id} type="Article" votes={article.votes}/>            
+            <CreatedDate isEdited={article.isEdited} created={article.created}/>
+        </footer>
+    </div>     
 ))

@@ -1,10 +1,10 @@
 import React, {memo, useState, useEffect} from 'react'
-import Moment from 'react-moment'
 import ContentEditable from 'react-contenteditable'
 import {Link} from 'react-router-dom'
 import {Article, InputData} from '../../../types'
 import {maxTitleLength, maxDescriptionLength} from '../../../constants'
-import CustomTextArea from '../../../components/text-area'
+import CustomTextArea from '../../../components/textarea'
+import CreatedDate from '../../../components/created-date'
 import UserAvatar from '../../../components/user-avatar'
 import ArticleActions from '../actions'
 import Review from '../review'
@@ -22,14 +22,14 @@ export default memo(({article}:CmpProps) => {
   },[isEditing]) 
 return (
   <>
-    <div className="article-card">
-      <header>
+    <div className="article">
+      <header className="article__h">
         {isEditing ? 
-          <div className="title">
+          <div className="article__t">
             <CustomTextArea maxLength={maxTitleLength} onChange={title => setData({...data, title})} initialState={article.title}/>
           </div>
         : 
-          <p className="title">{article.title}</p>
+          <div className="article__t">{article.title}</div>
         } 
         <ArticleActions 
         id={article.id} 
@@ -40,31 +40,26 @@ return (
         inputData={data}
         />
       </header>
-      <article>
-        <div className="info">
+      <article className="article__b">
+        <div className="article__info">
         <Link to={`/user/${article.user.id}`}>
-          <div className="user-info">
-          
+          <div className="user_date">          
             <UserAvatar user={article.user} />  
-            <div className="login-date">
-              <p className="login">{article.user.login}</p>
-              <div className="date">
-                <p className="date__text">{article.isEdited ? "Отредактирована:" : "Создана:"}</p>
-                <Moment format="DD.MM.YYYY HH:mm" date={Number(article.created)} />
-              </div>
-            </div>
-            
+            <div className="user_date__tx">
+              <p className="user_date__login">{article.user.login}</p>
+              <CreatedDate created={article.created} isEdited={article.isEdited} />
+            </div>            
           </div>  
           </Link> 
         </div>   
         {isEditing ? 
-          <div className="description">
+          <div className="article__descr">
             <CustomTextArea maxLength={maxDescriptionLength} onChange={description => setData({...data, description})} initialState={article.description} />
           </div>
         : 
-          <p className="description">{article.description}</p>
+          <div className="article__descr">{article.description}</div>
         } 
-        <div className="main">
+        <div className="article__main">
           <ContentEditable               
           html={isEditing ? (data.body ? data.body : article.body ): article.body} 
           disabled={!isEditing}  
@@ -73,7 +68,7 @@ return (
           />
         </div>
       </article>
-      <footer>    
+      <footer className="article__f">    
         <VotesForm id={article.id} type="Article" votes={article.votes}/>
       </footer>
     </div>

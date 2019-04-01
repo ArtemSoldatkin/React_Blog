@@ -1,3 +1,4 @@
+import {ApolloError} from 'apollo-server-express'
 import Article from '../models/article'
 import Review from '../models/review'
 import * as _r from '../types/review'
@@ -16,11 +17,13 @@ const msg = (errorCode: number | null): string => {
 const reviewResponse = (errorCode: number | null, reviews: _r.Review[] | null = null) => {
     const success = errorCode ? false : true
     const message = msg(errorCode)
+    if(!success) return new ApolloError(message, `${errorCode}`); 
     return {success, message, reviews} 
 }
 const reviewVoteResponse = (errorCode: number | null, votes: Vote[] | null = null) => {
     const success = errorCode ? false : true
     const message = msg(errorCode)
+    if(!success) return new ApolloError(message, `${errorCode}`); 
     return {success, message, votes}
 }
 

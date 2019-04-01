@@ -1,34 +1,32 @@
 @import '../../../../css/theme.scss';
+@import '../../../../css/extends.scss';
+@import '../../../../css/mixins.scss';
 
-#cabinet__new_article {
+.new_article {
     @extend %main-card;
-    padding: $medium-space;   
-    form {
+    padding: $medium-space; 
+    &__form {
         margin-bottom: $medium-space;
-        .body {
-            display: flex;
-            flex-direction: column;
-            .label {
-                font-size: $medium-text-size;
-                font-weight: $medium-text-bold;
-            }
-            article {
-                padding: 2px;
-                min-height: 54px;
-                border-radius: $border-radius;
-            }
-            .error {
-                font-size: $small-text-size;
-                font-weight: $small-text-bold;
-                color: $error-color;
-                margin: 0;
-            }
-        }
-
-        button {
-            margin-top: $medium-space;
-            @extend %main-button;
-        }
-
-    }  
+    }
+    &__b {
+        @include direct(column);
+    }
+    &__lbl {
+        @include font($medium-text-size, $medium-text-bold);
+    }
+    &__itx {
+        min-height: $large-text-size * 2 + 6px;
+        padding: 3px;
+        @extend %bottom-border;
+        border-radius: $border-radius;
+    }
+    &__err {
+        margin: 0;
+        color: $error-color;
+        @include font($small-text-size, $small-text-bold);                  
+    }
+    &__btn {
+        margin-top: $medium-space;
+        @extend %main-button;
+    }
 }

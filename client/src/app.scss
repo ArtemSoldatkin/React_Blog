@@ -1,8 +1,8 @@
 @import './css/theme.scss';
+@import './css/mixins.scss';
 
 .app {
-    display: flex;
-    flex-direction: column;    
+    @include direct(column);    
     height: 100%;
     width: 100%;
     min-height: 100%;

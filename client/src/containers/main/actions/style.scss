@@ -1,4 +1,36 @@
 @import '../../../css/theme.scss';
+@import '../../../css/mixins.scss';
+@import '../../../css/extends.scss';
+//---
+.acts {
+    @extend %button-type;
+    &__btn {
+        padding: 0 $medium-space;
+    }    
+}
+//---
+
+.acts_pop {
+    &__cnt {
+        @include direct(column);        
+        background: $surface-color;
+        color: $on-surface-color;
+        @include font ($small-text-size, $small-text-size);
+        @extend %clickable;
+    }
+    &__btn {
+        margin-bottom: $small-space;
+        &:hover {
+            color: $primary-color;
+        }
+    }
+    &__tx {
+        margin-left: $small-space;
+    }
+}
+
+
+
 
 %button-type {
     cursor: pointer;

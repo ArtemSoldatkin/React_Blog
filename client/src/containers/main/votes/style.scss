@@ -2,21 +2,19 @@
 @import '../../../css/mixins.scss';
 @import '../../../css/extends.scss';
 
-.mn_votes {   
-    .mn_vote {
-        margin-right: $small-space;
-        background: none;          
-        border: none;
-        @include font($medium-text-size, $medium-text-bold);
-        @extend %clickable;
-        &__text {
-            margin-left: $small-space;
-        }
-        &-like {
-            @include voteColor($success-color);           
-        }
-        &-dislike {
-            @include voteColor($error-color);          
-        }   
-    } 
-}
+.vote {
+    margin-right: $small-space;
+    background: none;          
+    border: none;
+    @include font($medium-text-size, $medium-text-bold);
+    @extend %clickable;
+    &__text {
+        margin-left: $small-space;
+    }
+    &-like {
+        @include voteColor($success-color);           
+    }
+    &-dislike {
+        @include voteColor($error-color);          
+    }   
+} 

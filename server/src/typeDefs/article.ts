@@ -1,24 +1,7 @@
-import {makeExecutableSchema} from 'graphql-tools'
 import {gql} from 'apollo-server-express'
 
-export default makeExecutableSchema({
-    typeDefs: gql`
-        type User {
-            id: String
-            login: String
-            avatar: String
-        }
-        type Vote {
-            userID: String
-            value: Boolean
-        }
-        type Review {
-            id: String
-            body: String
-            created: String
-            isEdited: Boolean
-        }
-        type Article {
+export default gql` 
+type Article {
             id: String
             user: User
             title: String
@@ -30,34 +13,28 @@ export default makeExecutableSchema({
             isEdited: Boolean
         }
         type Query {
-            getArticle(id: String!): ArticleResponse!
-            getArticles(user: String): ArticlesResponse!
+            getArticle(id: String!): ArticleRes!
+            getArticles(user: String): ArticlesRes!
         }
         type Mutation {
-            addArticle(title: String!, description: String!, body: String!): ArticleOperationsResponse!
-            editArticle(id: String!, title: String, description: String, body: String): ArticleOperationsResponse!
-            removeArticle(id: String!): ArticleOperationsResponse!
-            setVoteArticle(id: String!, vote: Boolean!): ArticleVoteResponse!
+            addArticle(title: String!, description: String!, body: String!): ArticleRes!
+            editArticle(id: String!, title: String, description: String, body: String): ArticleRes!
+            removeArticle(id: String!): ArticleRes!
+            setVoteArticle(id: String!, vote: Boolean!): ArticleVoteRes!
         }
-        type ArticleResponse {
+        type ArticleRes {
             success: Boolean
             message: String
             article: Article
         }
-        type ArticlesResponse {
+        type ArticlesRes {
             success: Boolean
             message: String
             articles: [Article]
         }
-        type ArticleOperationsResponse {
-            success: Boolean
-            message: String
-            article: Article
-        }
-        type ArticleVoteResponse {
+        type ArticleVoteRes {
             success: Boolean
             message: String
             votes: [Vote]
         }  
-    `
-})
+`; 

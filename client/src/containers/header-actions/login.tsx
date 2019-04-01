@@ -23,10 +23,11 @@ export default memo(() => {
         cache.writeData({data:{user}})
       }
     }}>
-    {(mtn, { loading, error}) => (
+    {(mtn, { loading, error}) => {      
+      return (
         <>
           <Loading loading={loading}>
-            <form className="h_ac_login"
+            <form className="login"
             onSubmit={e => {
               e.preventDefault()
               checkVal() ? mtn({variables:{login, password}}) : setValid(false)
@@ -35,7 +36,7 @@ export default memo(() => {
               loading={loading} onChange={val => setLogin(val)} validated={valid}/>
               <TextFormControl type="password" placeholder="Пароль..." 
               loading={loading} onChange={val => setPassword(val)} validated={valid}/>
-              <button className="h_ac_login__btn" type="submit" disabled={loading}>
+              <button className="login__btn" type="submit" disabled={loading}>
                 <FontAwesomeIcon icon={faSignInAlt} /> 
                 <p>Войти</p>
               </button>
@@ -44,7 +45,7 @@ export default memo(() => {
           <ErrorHandler error={error} />           
           <Registration loading={loading}/>
         </> 
-      )}
+      )}}
     </Login>
   )
 })

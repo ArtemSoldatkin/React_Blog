@@ -3,6 +3,8 @@ import {MutationFn} from 'react-apollo'
 import {AddReview, ADD_REVIEW, ReviewsFR as fragment} from '../../../queries/review'
 import {  User } from '../../../types';
 import UserAvatar from '../../../components/user-avatar'
+import Loading from '../../../components/loading'
+import ErrorHandler from '../../../components/error-handler'
 
 interface CmpProps {
     user: User
@@ -26,14 +28,19 @@ export default memo((props: CmpProps) => {
                 setBody('')      
             }
         }}>
-            {(addReview, {data, loading, error}) => (
-                <div className="new-review">
-                    <UserAvatar user={props.user} />
-                    <form className="form-review" onSubmit={(e) => handleSubmit(e, addReview)} >
-                        <textarea value={body} onChange={(e) => setBody(e.target.value)} />
-                        <button type="submit" disabled={body.trim().length <= 0 || loading}>Отправить</button>
-                    </form>
-                </div>
+            {(addReview, {loading, error}) => (
+                <Loading loading={loading}>
+                    <div className="new_review">                    
+                        <UserAvatar user={props.user} />
+                        <form className="new_review__form" onSubmit={(e) => handleSubmit(e, addReview)} >
+                            <textarea className="new_review__itx" value={body} onChange={(e) => setBody(e.target.value)} />
+                            <button className="new_review__btn" type="submit" disabled={body.trim().length <= 0 || loading}>
+                                Отправить
+                            </button>
+                            <ErrorHandler error={error} />
+                        </form>                    
+                    </div>
+                </Loading>
             )}
         </AddReview>
     )

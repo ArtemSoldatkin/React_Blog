@@ -1,13 +1,8 @@
 @import '../../css/theme.scss';
+@import '../../css/extends.scss';
+@import '../../css/mixins.scss';
 
-@mixin setBorder($color) {
-    border:1px solid $color;
-}
-@mixin setColor($color) {
-    color:  $color;
-}
-
-.cmp_cst_textarea {
+.cmp_itx {
     display: flex;
     flex-direction: column;    
     color: inherit;
@@ -17,11 +12,12 @@
         font-size: $medium-text-size;
         font-weight: $medium-text-bold;
     }
-    &__input {
-        border: none;
+    &__input {       
         border-radius: $border-radius;
         background: none;
-        margin: 0;        
+        margin: 0; 
+        width: 100%;
+        @extend %bottom-border;       
     }
     &__counter {
         font-size: $small-text-size;
@@ -29,7 +25,7 @@
         margin: 0;
        
     }
-    &__error {
+    &__err {
         margin: 0;
         font-size: $small-text-size;
         font-weight: $small-text-bold;
@@ -37,6 +33,6 @@
     }
     &-inp_inval { @include setBorder($error-color); }
     &-inp_val { @include setBorder($success-color); }
-    &-cnt_inval {  @include setColor($error-color); }
-    &-cnt_val {@include setColor($success-color); }
+    &-cnt_inval {  color: $error-color; }
+    &-cnt_val { color: $success-color; }
 }

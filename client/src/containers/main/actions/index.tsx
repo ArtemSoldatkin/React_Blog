@@ -22,12 +22,12 @@ export default memo((props: CmpProps) => (
     {({ data }) => {
       if(data && data.user && data.user.id === props.userID){
         return (
-        <div className="main_actions">
+        <div className="acts">
           <OverlayTrigger
           trigger="click"                  
           placement="left-start"
           overlay={
-            <Popover id={`${props.type}__${props.id}`} className="modal-block" placement="left-start">    
+            <Popover id={`${props.type}__${props.id}`} className="acts_pop" placement="left-start">    
               <ActionPopover type={props.type} id={props.id} isEditing={props.isEditing}
               setIsEditing={props.setIsEditing}
               inputData={props.inputData}
@@ -35,8 +35,8 @@ export default memo((props: CmpProps) => (
               />
             </Popover >
           }>
-            <span className="act-button">
-              <FontAwesomeIcon icon={faEllipsisV} className="button__icon" />           
+            <span className="acts__btn">
+              <FontAwesomeIcon icon={faEllipsisV} className="acts__icon" />           
             </span>
           </OverlayTrigger>
         </div>

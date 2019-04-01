@@ -18,16 +18,16 @@ interface CmpProps{
 export default memo(({type, id, isEditing, setIsEditing, inputData,articleID}: CmpProps) => {
   const complete = () => setIsEditing(false)  
   return (
-    <div className="main_actions__popover_content">
+    <div className="acts_pop__cnt">
       {isEditing ? (
         <>
           <ButtonWithConfirm icon={faUndo} text="Отменить" fnc={complete}/>
           <ActionEdit complete={complete} type={type} id={id} inputData={inputData}/>          
         </>
       ) : (
-        <span className="button" onClick={() => setIsEditing(true)}>
-          <FontAwesomeIcon icon={faEdit} className="icon" />
-          <p className="text">Редактировать</p>
+        <span className="acts_pop__btn" onClick={() => setIsEditing(true)}>
+          <FontAwesomeIcon icon={faEdit} className="acts_pop__icon" />
+          <p className="acts_pop__tx">Редактировать</p>
         </span>
       )}
       <ActionRemove id={id} type={type} articleID={articleID} />      

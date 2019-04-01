@@ -34,6 +34,8 @@ $large-text-bold: $medium-text-bold * $large-multiplier;
 $large-text-thin: $medium-text-thin * $large-multiplier;
 $logo-text-size:  $medium-text-size * 2;
 $logo-text-weight: $large-text-bold;
+$avatar-text-size: 25px;
+$avatar-text-weight: 600;
 
 //PADDING
 $global-padding: 0 50px;
@@ -53,10 +55,10 @@ $box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.1);
 //LINES
 $article-card-title-line: 3;
 $article-card-description-line: 10;
+
 //WIDTH
 $article-card-width: 300px;
-
-
+$avatar-width: 50px;
 
 //HEIGHT
 $avatar-height: 50px;
@@ -64,38 +66,3 @@ $header-height: $small-space * 5 + $small-text-size + $avatar-height;
 $input-height: 36px;
 $article-card-description-height: $medium-text-size * $article-card-description-line;
 $article-card-title-height: $medium-text-size * $article-card-title-line;
-
-
-
-
-//Avatar
-
-$avatar-width: 50px;
-$avatar-text-size: 25px;
-$avatar-text-weight: 600;
-
-
-//CARD
-%main-card {
-    border: $border;
-    border: $border;
-    border-radius: $border-radius;
-    color: $on-surface-color;
-    background: $surface-color;
-    box-shadow: $box-shadow;
-}
-
-//BUTTON
-%main-button {
-    height: $input-height;
-    border: $border;
-    border-radius: $border-radius;
-    color: $on-primary-color;
-    background: $primary-color;
-    cursor: pointer;
-    user-select: none;
-    &:hover {
-        color: $on-secondary-color;
-        background: $secondary-color;
-    }
-}

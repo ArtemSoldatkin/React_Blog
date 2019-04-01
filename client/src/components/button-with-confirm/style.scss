@@ -1,0 +1,35 @@
+@import '../../css/theme.scss';
+@import '../../css/mixins.scss';
+@import '../../css/extends.scss';
+
+.btn_w_conf {
+    margin-bottom: $small-space;
+    &:hover {
+        color: $primary-color;
+    }    
+    &__tx {
+        margin-left: $small-space;
+    }
+}
+
+.pop_conf {
+    background: $surface-color;
+    color: $on-surface-color;
+    &__btn {        
+        display: inline-block;;
+        width:  $small-text-size * 3;
+        padding: $small-space;  
+        margin: 0 $small-space / 2;
+        border-radius: $border-radius;
+        @include font($small-text-size, $small-text-bold);    
+        @extend %clickable;    
+    }
+    &__btn_ok {
+        background: $success-color;
+        color: $on-success-color;
+    }
+    &__btn_cancel {
+        background: $error-color;
+        color: $on-error-color;
+    }
+}

@@ -5,7 +5,7 @@ import {Link} from  'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import {User} from '../../types'
-import UserAvatar from '../../components/user-avatar'
+import UserInfo from '../../components/user-info'
 
 interface CmpProps {
     user: User
@@ -14,24 +14,23 @@ interface CmpProps {
 export default memo(({user}: CmpProps) => (
     <ApolloConsumer>
         {client => (
-            <div className="h_ac_logout">
+            <div className="logout">
                 <OverlayTrigger           
                 placement="left"
                 overlay={<Tooltip id="tooltip_cabinet">В кабинет</Tooltip>}>
-                    <div className="h_ac_logout__user">                        
+                    <div className="logout__user">
                         <Link to='/cabinet'>
-                            <UserAvatar user={user}/>                           
-                            <p className="h_ac_logout__name">{user.login}</p>
-                        </Link>                        
+                            <UserInfo user={user} name/>
+                        </Link>
                     </div>
                 </OverlayTrigger>
-                <span className="h_ac_logout__btn"                    
+                <span className="logout__btn"                    
                     onClick={() => {
                         client.writeData({ data: { user: null } });                       
                         localStorage.clear();
                     }}
                 >   <FontAwesomeIcon icon={faSignOutAlt} />        
-                    <p className="h_ac_logout__btn_tx">Выйти</p>
+                    <p className="logout__btn_tx">Выйти</p>
                 </span>
             </div>
         )}

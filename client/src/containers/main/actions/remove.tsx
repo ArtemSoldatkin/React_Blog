@@ -23,7 +23,7 @@ export default withRouter(memo((props: CmpProps) => {
             cache.writeFragment({fragment, id, data: {_r, reviews}})           
         }
     }}>
-        {(mtn, {data, loading, error}) => {
+        {(mtn) => {
           const remove = () => props.articleID && mtn({variables:{id: props.id}})
           return <ButtonWithConfirm icon={faTrash} text="Удалить" fnc={remove} />
         }}
@@ -33,7 +33,7 @@ export default withRouter(memo((props: CmpProps) => {
         <RemoveArticle mutation={REMOVE_ARTICLE}
         onCompleted={(data) => data && data.removeArticle && data.removeArticle.success && props.history.push('/')}
         >
-            {(mtn, {data, loading, error}) => {
+            {(mtn) => {
             const remove = () => mtn({variables:{id: props.id}})   
             return <ButtonWithConfirm icon={faTrash} text="Удалить" fnc={remove} />
             }}

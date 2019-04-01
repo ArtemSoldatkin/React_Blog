@@ -1,13 +1,14 @@
 import React, {memo, useState} from 'react'
 import { MutationFn } from 'react-apollo';
 import {EDIT_USER, EditUser} from '../../../../queries/user'
+import {optStr} from '../../../../types'
 import Loading from '../../../../components/loading'
-import Info from '../../../../components/info'
+import ErrorHandler from '../../../../components/error-handler'
 import AvatarLoader from './avatar-loader'
 import './style.scss'
 
 export default memo(() => {
-  const [avatar, setAvatar] = useState<string | undefined>(undefined)  
+  const [avatar, setAvatar] = useState<optStr>(undefined)  
   const handleSubmit = (callback: MutationFn) => {   
     if(!avatar) return
     callback({variables:{avatar}})
@@ -24,20 +25,12 @@ export default memo(() => {
     }}>
     {(editUser, { data, loading, error }) => {
     return (
-              <div id="cabinet__info">
+              <div className="cabinet_info">
                 <Loading loading={loading}>
                   <AvatarLoader onChange={val => setAvatar(val)} loading={loading}/>
                 </Loading>
-                <button onClick={() => handleSubmit(editUser)} disabled={loading || !avatar}>Отправить</button>
-                {data && data.editUser ? (
-                        data.editUser.success ? 
-                          <Info type="success" message={data.editUser.message}/> 
-                        : 
-                          <Info type="error" message={data.editUser.message}/>
-                      ) 
-                      : 
-                      (error && <Info type="error" />)}
-
+                <button className="cabinet_info__btn" onClick={() => handleSubmit(editUser)} disabled={loading || !avatar}>Отправить</button>
+                <ErrorHandler error={error} data={data} name="editUser" />
               </div>              
             )}}
           </EditUser>     

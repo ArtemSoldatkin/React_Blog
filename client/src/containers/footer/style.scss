@@ -1,7 +1,7 @@
 @import '../../css/theme.scss';
 @import '../../css/mixins.scss';
 
-.cnt_f {    
+.footer {    
     @include direct(row);
     flex: 0 0 auto;
     padding: $global-padding;

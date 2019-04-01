@@ -28,14 +28,14 @@ return(
             if(!user) disabled = true
             const my = votes.find(vote => vote.userID === user)
             return (
-                <div className="mn_votes">
-                    <button className={`mn_vote mn_vote-like ${my && my.value && 'mn_vote-like_my'}`} onClick={() => action(mtn, true, id)} disabled={disabled}>
-                        <FontAwesomeIcon icon={faThumbsUp} className="mn_vote__icon"/>
-                        <p className="mn_vote__text">{formatVote(votes, true)}</p>
+                <div>
+                    <button className={`vote vote-like ${my && my.value && 'vote-like_my'}`} onClick={() => action(mtn, true, id)} disabled={disabled}>
+                        <FontAwesomeIcon icon={faThumbsUp} className="vote__icon"/>
+                        <p className="vote__text">{formatVote(votes, true)}</p>
                     </button>
-                    <button className={`mn_vote mn_vote-dislike ${my && !my.value && 'mn_vote-dislike_my'}`} onClick={() => action(mtn, false, id)} disabled={disabled}>
-                        <FontAwesomeIcon icon={faThumbsDown} className="mn_vote__icon"/>
-                        <p className="mn_vote__text">{formatVote(votes, false)}</p>
+                    <button className={`vote vote-dislike ${my && !my.value && 'vote-dislike_my'}`} onClick={() => action(mtn, false, id)} disabled={disabled}>
+                        <FontAwesomeIcon icon={faThumbsDown} className="vote__icon"/>
+                        <p className="vote__text">{formatVote(votes, false)}</p>
                     </button>
                 </div>
         )}}

@@ -1,21 +1,14 @@
 @import '../../css/theme.scss';
+@import '../../css/mixins.scss';
 
-@mixin setColor($color) {    
-    color: $color;
-    border-color: $color;
-}
-
-.cmp_txt_form_ctrl {
-    display: flex;
-    flex-direction: column;
-    &__label {
-        font-size: $medium-text-size;
-        font-weight: $medium-text-bold;
+.tx_form_ctrl {
+    @include direct(column);
+    &__lbl {
         margin: $medium-space 0;
+        @include font($medium-text-size, $medium-text-bold);  
     }
-    &__text_block {
-        display: flex;
-        flex-direction: row; 
+    &__tx_block {
+        @include direct(row); 
         height: $input-height;
         width: inherit;
         background: $surface-color; 
@@ -33,15 +26,14 @@
         border-radius: $border-radius; 
     }
     &__feedback {
-        font-size: $small-text-size;
-        font-weight: $small-text-bold;
+        @include font($small-text-size, $small-text-bold);         
         color: $error-color;
         margin: 0;
     }
     &-inval {
-        @include setColor($error-color);          
+        @include clrBG_BR($error-color);          
     }
     &-val { 
-        @include setColor($success-color);          
+        @include clrBG_BR($success-color);          
     }
 }

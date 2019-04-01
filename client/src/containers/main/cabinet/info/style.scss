@@ -1,70 +1,57 @@
 @import '../../../../css/theme.scss';
+@import '../../../../css/extends.scss';
+@import '../../../../css/mixins.scss';
 
-%button-type {
-    user-select: none;
-    cursor: pointer; 
-}
-
-%patch-type {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-}
-
-#cabinet__info {
+.cabinet_info {
     @extend %main-card;
     padding: $medium-space;
-    button {
+    &__btn {
         @extend %main-button;
-    }
-    .avatar_loader {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: $medium-space;
-        .title {
-            font-weight: $large-text-bold;
-            font-size: $large-text-size;
-        }
-        .warning {
-            font-weight: $small-text-bold;
-            font-size: $small-text-size;
-            color: desaturate($on-surface-color,70%);
-        }
-        .upload {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;  
-            height: $avatar-height;
-            width: $avatar-width;     
-            @extend %button-type;
-            &:hover .actions {opacity: 0.7;}
-            &-error {
-                border: 1px solid $error-color;
-                border-radius: $border-radius;
-            }
-            .input {
-                @extend %patch-type;
-                @extend %button-type;              
-            }
-            .actions {
-                @extend %patch-type;
-                background: black;
-                border-radius: $border-radius;               
-                color: white;
-                @extend %button-type;    
-                display: flex;
-                .icon {
-                    margin: auto;
-                }    
-            }
-        }
-        .errors {
-            color: $error-color;
-            font-weight: $small-text-thin;
-            font-size: $small-text-size;
-        }
+        margin-bottom: $small-space;
     }
 }
+
+.avatar_loader {
+    @include direct(column);
+    margin-bottom: $medium-space;
+    &__t {
+        @include font($large-text-size, $large-text-bold);
+    }
+    &__upload {
+        position: relative;        
+        display: inline-block; 
+        overflow: hidden; 
+        height: $avatar-height;
+        width: $avatar-width;     
+        @extend %clickable;
+        &:hover .avatar_loader__act {opacity: 0.7;}
+    }
+    &__act {
+        display: flex;
+        @extend %patch-type;
+        background: black;
+        color: white;
+        border-radius: $border-radius; 
+        @extend %clickable;            
+    }
+    &__icon {
+        margin: auto;
+    }
+    &__file {
+        @extend %patch-type;
+        @extend %clickable; 
+    }
+    &__warn {
+        color: desaturate($on-surface-color,70%);
+        @include font($small-text-size, $small-text-bold);
+    }
+    &__err {
+        color: $error-color;
+        @include font($small-text-size, $small-text-thin);      
+    }
+    &-err {
+        border: 1px solid $error-color;
+        border-radius: $border-radius;
+    }
+}
+        

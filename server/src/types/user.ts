@@ -1,4 +1,5 @@
 import * as _t from './index'
+
 //TYPES
 export interface User {
     login: string
@@ -22,6 +23,7 @@ export interface Login {
     login: string
     password: string
 }
+
 //TYPE CHECKING
 export const isAddUser = (data: any): data is AddUser => (
     (<AddUser>data) instanceof Object &&

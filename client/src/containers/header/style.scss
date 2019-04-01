@@ -1,7 +1,7 @@
 @import '../../css/theme.scss';
 @import '../../css/mixins.scss';
 
-.cnt_h {    
+.header {    
     @include direct(row);
     min-height: $header-height;
     margin-bottom: $large-space;

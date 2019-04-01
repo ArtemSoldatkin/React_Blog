@@ -1,94 +1,40 @@
 @import '../../../css/theme.scss';
+@import '../../../css/extends.scss';
+@import '../../../css/mixins.scss';
 
-%multiline-text {
-    display: block;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-@mixin multiline-text($height, $line-count, $font-size, $font-weight ) {
-    height: $height;
-    @extend %multiline-text;                       
-    -webkit-line-clamp: $line-count;  
-    line-height: $font-size;
-    font-size: $font-size; 
-    font-weight: $font-weight;
-}
-
-#articles { 
+.articles {
     display: grid;
     grid-column-gap: $large-space;
     grid-row-gap: $large-space;
     grid-template-columns: repeat(auto-fit, minmax($article-card-width, 1fr));
     grid: column 1fr / auto;
-    .article {   
-               
-        border: $border;
-        border-radius: $border-radius;
-        box-shadow: $box-shadow;
-        width: $article-card-width;
-        min-width: $article-card-width;
-        background: $surface-color;
-        header {
-            display: flex;
-            flex-direction: column;  
-            border-bottom: $border;
-            padding: $small-space;
-            .user {
-                display: flex;
-                flex-direction: row;            
-                .login {
-                    font-size: $large-text-size;
-                    font-weight: $large-text-bold;
-                    margin-left: $medium-space;
-                    vertical-align: bottom;
-                }
-            }
-            .title {
-                .text {
-                    word-break: break-word;  
-                    text-align: center;  
-                    @include multiline-text(
-                        $article-card-title-height,
-                        $article-card-title-line,
-                        $medium-text-size,
-                        $medium-text-bold
-                    );                  
-                }           
-            }
-        }
-        article {
-            border-bottom: $border;
-            .text {
-                word-break: break-word;  
-                padding: 0 $medium-space;
-                @include multiline-text(
-                        $article-card-description-height,
-                        $article-card-description-line,
-                        $medium-text-size,
-                        $medium-text-thin
-                );                    
-            }
-        }
-        footer {            
-            display: flex;
-            flex-direction: column; 
-            background: darken($surface-color, 10%);       
-            .info {  
-                align-self: flex-start;
-            }
-            .date {
-                align-self: flex-end;
-                text-align: right;
-                margin: auto 0 auto auto;
-                font-weight: $small-text-bold;
-                font-size:  $small-text-size;
-                .text {                
-                    margin-right: $small-space;
-                }
-            }
-        }
+}
+
+.article_card {
+    @extend %main-card;
+    width: $article-card-width;
+    min-width: $article-card-width;
+    overflow: hidden;
+    &__h {
+        @include direct(column);
+        padding: $small-space;
+        @extend %bottom-border;
+    }  
+    &__t {
+        word-break: break-word;  
+        text-align: center;  
+        @include multiline-text($article-card-title-height, $article-card-title-line);
+        @include font ($medium-text-size, $medium-text-bold);        
+    }  
+    &__b {
+        word-break: break-word;  
+        padding: 0 $medium-space;
+        @include multiline-text($article-card-description-height, $article-card-description-line);
+        @include font ($medium-text-size, $medium-text-thin);
     }
+    &__f {
+        @include direct(column);
+        padding: $small-space;        
+        background: darken($surface-color, 10%);
+    }    
 }

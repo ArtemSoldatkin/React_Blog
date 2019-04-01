@@ -1,4 +1,5 @@
 import Article from '../models/article'
+import {ApolloError} from 'apollo-server-express'
 import * as _a from '../types/article'
 import {Vote, NewVote, isNewVote, Context} from '../types'
 
@@ -15,22 +16,25 @@ const msg = (errorCode: number | null): string => {
 const articleResponse = (errorCode: number | null, article: _a.Article | null = null) => {
     const success = errorCode ? false : true
     const message = msg(errorCode)
+    if(!success) return new ApolloError(message, `${errorCode}`); 
     return {success, message, article}
 }
 const articlesResponse = (errorCode: number | null, articles: _a.Article[] | null = null) => {
     const success = errorCode ? false : true
     const message = msg(errorCode)
+    if(!success) return new ApolloError(message, `${errorCode}`); 
     return {success, message, articles}
 }
 const articleOperationsResponse = (errorCode: number | null, article: _a.Article | null = null) => {
     const success = errorCode ? false : true
     const message = msg(errorCode)
-    console.log(message, success )
+    if(!success) return new ApolloError(message, `${errorCode}`); 
     return {success, message, article}
 }
 const articleVoteResponse = (errorCode: number | null, votes: Vote[] | null = null) => {
     const success = errorCode ? false : true
-    const message = msg(errorCode)    
+    const message = msg(errorCode)  
+    if(!success) return new ApolloError(message, `${errorCode}`);   
     return {success, message, votes}
 }
 
@@ -49,7 +53,6 @@ export default ({
                 if(!article) return articleResponse(404)
                 return articleResponse(null, article)
             } catch (err) { 
-                console.log('err', err)
                 return articleResponse(500)
             }
         },
@@ -96,12 +99,11 @@ export default ({
                 const {id, title, description, body} = args
                 //WARN
                 interface EditData {title?: string, description?: string, body?: string, created: number, isEdited: boolean}
-                let data: EditData = {created: Date.now(), isEdited: true}
-                console.log('data1', data)
+                let data: EditData = {created: Date.now(), isEdited: true}                
                 for(let i in args) {                   
-                    if(i === 'title' || i === 'description' || i === 'body') data[i] = args[i]                   
-                }               
-                console.log('data', data)
+                    if((i === 'title' || i === 'description' || i === 'body')&& args[i] !== '') data[i] = args[i]                   
+                }   
+                console.log(data)
                 const article = await Article.findByIdAndUpdate(id, data, {new: true}).populate('user', ['_id', 'login', 'avatar'])
                 .populate({
                     path: 'reviews', 
@@ -141,9 +143,8 @@ export default ({
                 const savedArticle = await article.save()                
                 if(!savedArticle) return articleVoteResponse(500)                
                 return articleVoteResponse(null, savedArticle.votes)   
-            } catch (err) {     
-                console.error('setVoteArticle: ', err)          
-                 return articleVoteResponse(500)
+            } catch (err) { 
+                return articleVoteResponse(500)
             }
         }
     }

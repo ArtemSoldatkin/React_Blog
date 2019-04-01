@@ -1,9 +1,8 @@
 import React, {memo, useState, useEffect} from 'react'
-import Moment from 'react-moment';
 import {Review, InputData} from '../../../types'
 import UserAvatar from '../../../components/user-avatar'
-import Info from '../../../components/info'
-import CustomTextArea from '../../../components/text-area'
+import CustomTextArea from '../../../components/textarea'
+import CreatedDate from '../../../components/created-date'
 import VotesForm from '../votes'
 import ReviewActions from '../actions'
 
@@ -17,25 +16,21 @@ export default memo(({review, articleID}: CmpProps) => {
     const [data, setData] = useState<InputData>({})
     useEffect(() => {
         if(isEditing) setData({body: review.body})    
-    },[isEditing]) 
-    if(!review) return <Info type="error" />
+    },[isEditing])     
     return (
-    <div className="review-card">
+    <div className="review_card">
         <UserAvatar user={review.user} />  
-        <div className="review-body">
-            <div className="info">
-                <p className="login">{review.user.login}</p>
-                <div className="date">
-                    <p className="date__text">{review.isEdited ? "Отредактирована:" : "Создана:"}</p>
-                    <Moment format="DD.MM.YYYY HH:mm" date={Number(review.created)} />
-                </div>
+        <div className="review_card__body">
+            <div className="review_card__info">
+                <p className="review_card__log">{review.user.login}</p>
+                <CreatedDate isEdited={review.isEdited} created={review.created} />
             </div>
             {isEditing ? 
-                <div className="description">
+                <div className="review_card__descr">
                     <CustomTextArea onChange={body => setData({...data, body})} initialState={review.body} />
                 </div>
                 : 
-                <p className="description">{review.body}</p>
+                <div className="review_card__descr">{review.body}</div>
             } 
             <VotesForm id={review.id} type="Review" votes={review.votes} />
         </div>   

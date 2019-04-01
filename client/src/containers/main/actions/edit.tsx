@@ -15,7 +15,7 @@ interface CmpProps {
 export default memo(({ id, type, inputData, complete}: CmpProps) => {       
     if(type === 'Review') return (
       <EditReview mutation={EDIT_REVIEW} onCompleted={() => complete()}>
-        {(mtn, {data, loading, error}) => {
+        {(mtn) => {
           const save = () => {            
             const {body} = inputData
             mtn({variables:{id, body}})
@@ -26,10 +26,10 @@ export default memo(({ id, type, inputData, complete}: CmpProps) => {
     )
     return (
         <EditArticle mutation={EDIT_ARTICLE} onCompleted={() => complete()}>
-            {(mtn, {data, loading, error}) => {
+            {(mtn) => {
             const save = () => {               
-                const {title, description, body} = inputData  
-                if(!title && !description && !body) return
+                const {title, description, body} = inputData 
+                if(!title && !description) return
                 mtn({variables:{id, title, description, body}})
             } 
             return <ButtonWithConfirm icon={faSave} text="Сохранить" fnc={save} />
