@@ -14,7 +14,7 @@ interface CmpProps {
  
 export default memo(({ id, type, inputData, complete}: CmpProps) => {       
     if(type === 'Review') return (
-      <EditReview mutation={EDIT_REVIEW} onCompleted={() => complete()}>
+      <EditReview mutation={EDIT_REVIEW}>
         {(mtn) => {
           const save = () => {            
             const {body} = inputData

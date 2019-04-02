@@ -1,6 +1,24 @@
 import gql from 'graphql-tag';
-import {Query, Mutation} from 'react-apollo'
+import {Mutation} from 'react-apollo'
 import {Review, Reviews} from '../types'
+
+const reviewFR = gql`
+  fragment REVIEW on Review {    
+        id 
+        __typename
+        user {id login avatar} 
+        body 
+        votes{ userID value} 
+        created
+        isEdited    
+}
+` 
+export const ReviewsFR = gql`
+fragment Reviews on Article {
+    __typename
+    reviews {id}
+}
+` 
 
 interface T_AddReview {
     addReview: {reviews: Reviews}
@@ -11,16 +29,10 @@ export const ADD_REVIEW = gql`
         addReview(id: $id, body: $body) {
             success
             message
-            reviews {
-                id 
-                user {id login avatar} 
-                body 
-                votes{ userID value} 
-                created
-                isEdited
-            }
+            reviews{...REVIEW}
         }
     }
+    ${reviewFR}
 `
 
 interface T_EditReview {
@@ -36,43 +48,29 @@ export const EDIT_REVIEW = gql`
         editReview(id: $id, body: $body ){
             success
             message
-            reviews {
-                id 
-                user {id login avatar} 
-                body 
-                votes{ userID value} 
-                created
-                isEdited
-            }
+            reviews{...REVIEW}
         }
     }
+    ${reviewFR}
 `
+
 interface T_RemoveReview {
     removeReview: {
       success: boolean
       message: string     
     }
   }
-  
-
 export class RemoveReview extends Mutation<T_RemoveReview>{}
 export const REMOVE_REVIEW = gql`
     mutation RemoveReview($id: String!){
         removeReview(id: $id){
             success
             message
-            reviews {
-                id 
-                user {id login avatar} 
-                body 
-                votes{ userID value} 
-                created
-                isEdited
-            }
+            reviews{...REVIEW}
         }
     }
+    ${reviewFR}
 `
-
 
 export const SET_VOTE_REVIEW = gql`
     mutation SetVoteReview($id: String!, $vote: Boolean!){
@@ -83,10 +81,3 @@ export const SET_VOTE_REVIEW = gql`
         }
     }
 `
-
-
-export const ReviewsFR = gql`
-fragment Reviews on Article {
-    reviews {id}
-}
-` 

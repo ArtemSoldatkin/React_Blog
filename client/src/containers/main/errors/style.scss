@@ -1,0 +1,16 @@
+@import '../../../css/theme.scss';
+@import '../../../css/mixins.scss';
+@import '../../../css/extends.scss';
+
+.error_404 {
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    padding: 100px;
+    @extend %main-card;
+    color: $error-color;
+    @include font($large-text-size, $large-text-bold);
+    &__text {
+        margin-right: $large-space;
+    }
+}

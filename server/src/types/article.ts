@@ -32,6 +32,13 @@ export interface EditArticle {
 export interface RemoveArticle {
     id: string  
 }
+export interface EditData {
+    title?: string, 
+    description?: string, 
+    body?: string, 
+    created: number, 
+    isEdited: boolean
+}
 //TYPE CHECKING
 export const isGetArticle = (data: any): data is GetArticle => (
     (<GetArticle>data) instanceof Object &&

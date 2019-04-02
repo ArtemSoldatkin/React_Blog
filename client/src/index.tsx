@@ -11,6 +11,14 @@ import App from './App';
 import './index.scss'
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
+
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import introspectionQueryResultData from './fragmentTypes.json';
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
@@ -25,10 +33,14 @@ const authLink = setContext((_, { headers }) => {
 const httpLink = createHttpLink({
   uri: 'http://localhost:8000/graphql',
 });
-const cache = new InMemoryCache( );
+const cache = new InMemoryCache({
+  addTypename: true,
+  fragmentMatcher 
+} );
 const client = new ApolloClient({
   cache,  
   link: authLink.concat(httpLink),  
+  
 });
 
 

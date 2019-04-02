@@ -23,9 +23,8 @@ const server = new ApolloServer({
 
 const app = express();
 server.applyMiddleware({ app });
-
 mongoose.Promise = global.Promise;
-mongoose.connect(dbUrl, { useNewUrlParser: true });
+mongoose.connect(dbUrl, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true});
 //mongoose.connection.collections['articles'].drop(() => console.log('droped'))
 mongoose.connection.once('open', () => console.log(`Connected to mongo at ${dbUrl}`));
 

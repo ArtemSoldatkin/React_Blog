@@ -1,5 +1,5 @@
 import React, {memo} from 'react'
-import {createID, VotesFR as fragment, SetVote, T_SetVote} from '../../../queries'
+import {createID, VotesFR_A, VotesFR_R, SetVote, T_SetVote} from '../../../queries'
 import {SET_VOTE_ARTICLE} from '../../../queries/article'
 import {SET_VOTE_REVIEW} from '../../../queries/review'
 import { DocType, Votes } from '../../../types'
@@ -27,9 +27,10 @@ return (
     update={(cache, {data}) => {
         const _votes = getVotes(data)
         if(_votes){
-            const id = createID(_id, type)           
-            const _f = cache.readFragment({id, fragment})   
-            cache.writeFragment({id, fragment, data: {_f, votes:_votes }}) 
+            const id = createID(_id, type)  
+            const fragment = type === 'Article' ? VotesFR_A : VotesFR_R         
+            const _f = cache.readFragment({id, fragment})       
+            cache.writeFragment({id, fragment, data: {_f, votes:_votes, __typename: type }})             
         }        
     }} >
         {(fnc) => <VoteCard votes={votes} mtn={fnc} id={_id}/>}   

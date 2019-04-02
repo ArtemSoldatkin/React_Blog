@@ -2,6 +2,14 @@ import gql from 'graphql-tag';
 import {Query, Mutation} from 'react-apollo'
 import {User} from '../types'
 
+const userFragment = gql`
+  fragment USER on User {
+    id 
+    login 
+    avatar
+    __typename
+  }
+`
 
 interface T_GetUserID {
     user: null | {id: string }
@@ -18,11 +26,10 @@ export class IsLoggedIn extends Query<T_IsLoggedIn>{}
 export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     user @client(always: true) { 
-      id 
-      login 
-      avatar
+      ...USER
     }
   }
+  ${userFragment}
 `;
 
 
@@ -39,11 +46,12 @@ export const LOGIN_USER = gql`
 mutation login($login: String!, $password: String!) {
   login(login: $login, password: $password) {
     success
-            message
+    message
     token
-    user { id login avatar }
+    user { ...USER }
   }   
 }
+${userFragment}
 `;
 
 interface T_Registry {
@@ -60,10 +68,11 @@ export const REGISTRY_USER = gql`
         addUser(login: $login, password: $password) {
             success
             message
-                user {id login avatar }
+                user {...USER  }
             token
         }
-    }   
+    } 
+    ${userFragment}  
 `;
 
 interface T_EditUser {
@@ -79,7 +88,8 @@ export const EDIT_USER = gql`
     editUser(avatar: $avatar) {
       success
       message
-      user {id login avatar}
+      user {...USER }
     }
   }
+  ${userFragment}
 `

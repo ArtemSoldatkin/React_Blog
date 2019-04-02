@@ -3,8 +3,14 @@ import gql from 'graphql-tag'
 import {Votes} from '../types'
 
 export const createID = (id: string, type: string) => `${type}:${id}`
-export const VotesFR = gql`
-    fragment Votes on Articles {
+
+export const VotesFR_A = gql`
+    fragment VOTE_A on Article {
+        votes {userID, value}
+    }            
+`
+export const VotesFR_R = gql`
+    fragment VOTE_R on Review {
         votes {userID, value}
     }            
 `

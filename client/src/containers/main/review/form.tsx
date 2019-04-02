@@ -24,7 +24,7 @@ export default memo((props: CmpProps) => {
                 const id = `Article:${props.articleID}`
                 const _r = cache.readFragment({fragment, id})
                 const {reviews} = data.addReview
-                cache.writeFragment({fragment, id, data: {_r, reviews}})     
+                cache.writeFragment({fragment, id, data: {_r, reviews, __typename: 'Article'}})     
                 setBody('')      
             }
         }}>

@@ -16,65 +16,62 @@ const msg = (errorCode: number | null): string => {
         default: return "Успешно!"
     }
 }
-const userResponse = (errorCode: number | null, user: _u.ResponseUser | null = null, token: string | null = null ) => {
+const userRes = (errorCode: number | null, user: _u.ResponseUser | null = null, token: string | null = null ) => {
     const success = errorCode ? false : true
     const message = msg(errorCode)
     if(!success) return new ApolloError(message, `${errorCode}`); 
     return {success, message, user, token}
 }
-const userOperationsResponse = (errorCode: number | null, user: _u.ResponseUser | null = null) => {
+const userOpRes = (errorCode: number | null, user: _u.ResponseUser | null = null) => {
     const success = errorCode ? false : true
     const message = msg(errorCode)
     if(!success) return new ApolloError(message, `${errorCode}`); 
     return {success, message, user}
 }
 
-
 export default ({    
     Mutation: {
         addUser: async(_: any, args: _u.AddUser) => {
             try {     
-                if(!_u.isAddUser(args)) return userResponse(400) 
+                if(!_u.isAddUser(args)) return userRes(400) 
                 args.password = await bcrypt.hash(args.password, 8)   
-                if(!args.password) return userResponse(500) 
+                if(!args.password) return userRes(500) 
                 const user = await User.create(args) 
-                if(!user) return userResponse(500)
+                if(!user) return userRes(500)
                 const token = await jwt.sign({ id: user._id }, secret, { expiresIn: 86400 }); 
-                if(!token) return userResponse(500)
+                if(!token) return userRes(500)
                 const {_id: id, login, avatar} = user
-                return userResponse(null, {id, login, avatar}, token)    
+                return userRes(null, {id, login, avatar}, token)    
             } catch (err) { 
-                if(err && err.name === "ValidationError") return userResponse(409)
-                return userResponse(500)
+                if(err && err.name === "ValidationError") return userRes(409)
+                return userRes(500)
             }
         },
         editUser: async(_: any, args: _u.EditUser, {userID}: Context) => {
             try {    
-                if(!userID) return userOperationsResponse(401)
-                console.log(userID)
-                if(!_u.isEditUser(args)) return userOperationsResponse(400)
-                const user = await User.findByIdAndUpdate(userID, args, {new: true})
-                console.log('u', user && user.login)
-                if(!user) return userOperationsResponse(404)
+                if(!userID) return userOpRes(401)               
+                if(!_u.isEditUser(args)) return userOpRes(400)
+                const user = await User.findByIdAndUpdate(userID, args, {new: true})                
+                if(!user) return userOpRes(404)
                 const {_id: id, login, avatar} = user
-                return userOperationsResponse(null, {id, login, avatar})          
+                return userOpRes(null, {id, login, avatar})          
             } catch (err) { 
-                return userOperationsResponse(500) 
+                return userOpRes(500) 
             }
         },
         login: async(_: any, args: _u.Login) => {
             try {
-                if(!_u.isLogin(args)) return new ApolloError("Даныне заполнены не верно!", "400");
+                if(!_u.isLogin(args)) return userRes(400);
                 const user = await User.findOne({login: args.login})
-                if(!user) return new ApolloError("Даныне заполнены не верно!", "404");              
+                if(!user) return userRes(404);              
                 const res = await bcrypt.compare(args.password, user.password)                   
-                if(!res) return userResponse(400) 
+                if(!res) return userRes(400) 
                 const token = await jwt.sign({ id: user._id }, secret, { expiresIn: 86400 });               
-                if(!token) return userResponse(500)
+                if(!token) return userRes(500)
                 const {_id: id, login, avatar} = user                
-                return userResponse(null, {id, login, avatar}, token)
+                return userRes(null, {id, login, avatar}, token)
             } catch (err) {
-                return userResponse(500) 
+                return userRes(500) 
             }
         }
     }

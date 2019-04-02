@@ -5,6 +5,7 @@ import Article from './article'
 import Cabinet from './cabinet'
 import NewArticle from './cabinet/new-article'
 import UserInfo from './cabinet/info'
+import Error404 from './errors/error404'
 import './style.scss'
 
 export default () => (
@@ -16,6 +17,7 @@ export default () => (
             <Route path="/cabinet/new-article" component={NewArticle}/>
             <Route path="/article/:id" component={Article}/>
             <Route path="/user/:id" component={Articles}/>
+            <Route exact path="*" component={Error404}/>
         </Switch>
     </div>
 )

@@ -20,7 +20,7 @@ export default withRouter(memo((props: CmpProps) => {
             const id = `Article:${props.articleID}`
             const _r:any = cache.readFragment({fragment, id})
             const reviews = _r.reviews.filter((review: any) => review.id !== props.id)            
-            cache.writeFragment({fragment, id, data: {_r, reviews}})           
+            cache.writeFragment({fragment, id, data: {_r, reviews, __typename: 'Article'}})           
         }
     }}>
         {(mtn) => {
