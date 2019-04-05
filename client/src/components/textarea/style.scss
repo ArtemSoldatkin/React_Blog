@@ -4,7 +4,7 @@
 
 .cmp_itx {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     color: inherit;
     background: inherit;
     width: 100%;
@@ -12,18 +12,17 @@
         font-size: $medium-text-size;
         font-weight: $medium-text-bold;
     }
-    &__input {       
+    &__input {
         border-radius: $border-radius;
         background: none;
-        margin: 0; 
+        margin: 0;
         width: 100%;
-        @extend %bottom-border;       
+        @extend %bottom-border;
     }
     &__counter {
         font-size: $small-text-size;
         font-weight: $small-text-bold;
         margin: 0;
-       
     }
     &__err {
         margin: 0;
@@ -31,8 +30,16 @@
         font-weight: $small-text-bold;
         color: $error-color;
     }
-    &-inp_inval { @include setBorder($error-color); }
-    &-inp_val { @include setBorder($success-color); }
-    &-cnt_inval {  color: $error-color; }
-    &-cnt_val { color: $success-color; }
+    &-inp_inval {
+        @include setBorder($error-color);
+    }
+    &-inp_val {
+        @include setBorder($success-color);
+    }
+    &-cnt_inval {
+        color: $error-color;
+    }
+    &-cnt_val {
+        color: $success-color;
+    }
 }

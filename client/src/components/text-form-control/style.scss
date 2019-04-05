@@ -5,35 +5,35 @@
     @include direct(column);
     &__lbl {
         margin: $medium-space 0;
-        @include font($medium-text-size, $medium-text-bold);  
+        @include font($medium-text-size, $medium-text-bold);
     }
     &__tx_block {
-        @include direct(row); 
+        @include direct(row);
         height: $input-height;
         width: inherit;
-        background: $surface-color; 
-        color: $on-surface-color;  
-        border: $border;      
-        border-radius: $border-radius; 
-    }   
+        background: $surface-color;
+        color: $on-surface-color;
+        border: $border;
+        border-radius: $border-radius;
+    }
     &__input {
-        height: 100%; 
-        width: 100%;  
+        height: 100%;
+        width: 100%;
         background: none;
         padding: $small-space;
         margin: 0;
         border: none;
-        border-radius: $border-radius; 
+        border-radius: $border-radius;
     }
     &__feedback {
-        @include font($small-text-size, $small-text-bold);         
+        @include font($small-text-size, $small-text-bold);
         color: $error-color;
         margin: 0;
     }
     &-inval {
-        @include clrBG_BR($error-color);          
+        @include clrBG_BR($error-color);
     }
-    &-val { 
-        @include clrBG_BR($success-color);          
+    &-val {
+        @include clrBG_BR($success-color);
     }
 }

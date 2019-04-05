@@ -5,8 +5,8 @@
     align-self: flex-end;
     text-align: right;
     margin: auto 0 auto auto;
-    @include font($small-text-size, $small-text-bold);    
-    &__tx {                
+    @include font($small-text-size, $small-text-bold);
+    &__tx {
         margin-right: $small-space;
     }
 }

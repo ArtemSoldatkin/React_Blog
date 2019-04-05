@@ -3,14 +3,14 @@
 
 .user_info {
     @include direct(row);
-    &__name {  
-        margin: auto 0 0 $medium-space;   
+    &__name {
+        margin: auto 0 0 $medium-space;
         vertical-align: bottom;
         @include font($large-text-size, $large-text-bold);
         max-width: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        display: inline-block;        
+        display: inline-block;
     }
 }

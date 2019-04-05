@@ -4,7 +4,7 @@
 
 .new_article {
     @extend %main-card;
-    padding: $medium-space; 
+    padding: $medium-space;
     &__form {
         margin-bottom: $medium-space;
     }
@@ -23,7 +23,7 @@
     &__err {
         margin: 0;
         color: $error-color;
-        @include font($small-text-size, $small-text-bold);                  
+        @include font($small-text-size, $small-text-bold);
     }
     &__btn {
         margin-top: $medium-space;

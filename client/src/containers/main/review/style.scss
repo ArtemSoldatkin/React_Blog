@@ -2,54 +2,54 @@
 @import '../../../css/mixins.scss';
 @import '../../../css/extends.scss';
 
-.reviews {  
-    @extend %main-card;   
+.reviews {
+    @extend %main-card;
     @include direct(column);
-    padding: $medium-space;  
+    padding: $medium-space;
 }
 
 .new_review {
     @include direct(row);
     margin-bottom: $large-space;
-    &__form{
+    &__form {
         @include direct(column);
         width: 100%;
-        margin-left: $medium-space;            
+        margin-left: $medium-space;
     }
     &__itx {
-        @extend %bottom-border;               
+        @extend %bottom-border;
     }
     &__btn {
         align-self: flex-end;
-        margin-top: $small-space;                
+        margin-top: $small-space;
         @extend %main-button;
-    }        
-}  
+    }
+}
 
-.review_card {        
+.review_card {
     @include direct(row);
     margin-bottom: $large-space;
     &__body {
         @include direct(column);
         width: 100%;
-        margin-left: $medium-space; 
-    }    
+        margin-left: $medium-space;
+    }
     &__info {
         @include direct(row);
         height: $medium-text-size;
         margin: 0;
         padding: 0;
-        @include font ($medium-text-size, $medium-text-bold);               
-    }   
+        @include font($medium-text-size, $medium-text-bold);
+    }
     &__log {
         margin-right: $medium-space;
     }
-    &__date {                  
+    &__date {
         color: desaturate($on-surface-color, 80%);
-        @include font ($small-text-size, $small-text-bold);
-    }          
+        @include font($small-text-size, $small-text-bold);
+    }
     &__descr {
         word-break: break-word;
-        @include font ($medium-text-size, $medium-text-thin); 
-    }            
+        @include font($medium-text-size, $medium-text-thin);
+    }
 }

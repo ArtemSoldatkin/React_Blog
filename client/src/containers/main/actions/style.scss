@@ -1,21 +1,20 @@
 @import '../../../css/theme.scss';
 @import '../../../css/mixins.scss';
 @import '../../../css/extends.scss';
-//---
+
 .acts {
     @extend %button-type;
     &__btn {
         padding: 0 $medium-space;
-    }    
+    }
 }
-//---
 
 .acts_pop {
     &__cnt {
-        @include direct(column);        
+        @include direct(column);
         background: $surface-color;
         color: $on-surface-color;
-        @include font ($small-text-size, $small-text-size);
+        @include font($small-text-size, $small-text-size);
         @extend %clickable;
     }
     &__btn {
@@ -28,9 +27,6 @@
         margin-left: $small-space;
     }
 }
-
-
-
 
 %button-type {
     cursor: pointer;
@@ -55,27 +51,35 @@
         font-weight: $small-text-bold;
         .button {
             @extend %button-type;
-            &:hover { color: $primary-color; }
-            .text { margin-left: $small-space; }
+            &:hover {
+                color: $primary-color;
+            }
+            .text {
+                margin-left: $small-space;
+            }
         }
     }
     &__popover_confirm {
-        background: $surface-color;        
-        @extend %button-type;  
+        background: $surface-color;
+        @extend %button-type;
         .popover-body {
             text-align: center;
             .button {
                 display: inline-block;
-                border-radius: $border-radius; 
-                margin: 2px;  
-                padding: 2px; 
+                border-radius: $border-radius;
+                margin: 2px;
+                padding: 2px;
                 font-size: $small-text-size;
                 font-weight: $small-text-bold;
-                width: ($small-text-size * 3 + 4);        
+                width: ($small-text-size * 3 + 4);
                 @extend %button-type;
-                &-ok {@include setColor($success-color, $on-success-color);}
-                &-cancel {@include setColor($error-color, $on-error-color);}
+                &-ok {
+                    @include setColor($success-color, $on-success-color);
+                }
+                &-cancel {
+                    @include setColor($error-color, $on-error-color);
+                }
             }
-        } 
+        }
     }
 }

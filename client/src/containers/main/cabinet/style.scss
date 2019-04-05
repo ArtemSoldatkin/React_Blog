@@ -6,17 +6,17 @@
     &__ac {
         @extend %main-card;
         @include direct(row);
-        margin-bottom: $large-space;        
+        margin-bottom: $large-space;
         padding: $medium-space;
     }
     &__tab {
         margin-right: $large-space;
-        @include font($large-text-size, $large-text-bold);       
+        @include font($large-text-size, $large-text-bold);
         &:hover {
             color: $primary-color;
-        }   
+        }
     }
     &__tx {
         margin-left: $small-space;
-    }  
+    }
 }

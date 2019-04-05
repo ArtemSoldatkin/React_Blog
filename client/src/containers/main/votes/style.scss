@@ -4,7 +4,7 @@
 
 .vote {
     margin-right: $small-space;
-    background: none;          
+    background: none;
     border: none;
     @include font($medium-text-size, $medium-text-bold);
     @extend %clickable;
@@ -12,9 +12,9 @@
         margin-left: $small-space;
     }
     &-like {
-        @include voteColor($success-color);           
+        @include voteColor($success-color);
     }
     &-dislike {
-        @include voteColor($error-color);          
-    }   
-} 
+        @include voteColor($error-color);
+    }
+}

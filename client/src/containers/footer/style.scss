@@ -1,19 +1,19 @@
 @import '../../css/theme.scss';
 @import '../../css/mixins.scss';
 
-.footer {    
+.footer {
     @include direct(row);
     flex: 0 0 auto;
     padding: $global-padding;
     margin-top: $large-space;
     background: $footer-color;
-    color: $on-footer-color;    
+    color: $on-footer-color;
     &__cnt {
         align-self: flex-end;
         padding: $medium-space 0;
-        margin-left: auto;  
+        margin-left: auto;
     }
     &__tx {
-        margin-left: $medium-space;        
+        margin-left: $medium-space;
     }
 }

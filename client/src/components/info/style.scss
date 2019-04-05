@@ -4,15 +4,15 @@
 .info_block {
     &__msg {
         padding: $small-space;
-        @include font($small-text-size,$small-text-bold);       
+        @include font($small-text-size, $small-text-bold);
         border-radius: $border-radius;
-    }  
-    &-success { 
+    }
+    &-success {
         background: $success-color;
-        color: $on-success-color;          
+        color: $on-success-color;
     }
     &-error {
         background: $error-color;
-        color: $on-error-color;                  
-    }    
+        color: $on-error-color;
+    }
 }

@@ -1,31 +1,33 @@
 import mongoose from 'mongoose';
-import {Review} from '../types/review'
+import { Review } from '../types/review';
 
 const reviewSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: 'User',
     },
     body: {
         type: String,
-        required: true
+        required: true,
     },
-    votes: [{
-        userID: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+    votes: [
+        {
+            userID: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+            value: Boolean,
         },
-        value: Boolean
-    }],
+    ],
     created: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     isEdited: {
         type: Boolean,
-        default: false
-    }
-})
+        default: false,
+    },
+});
 
 interface ReviewModel extends Review, mongoose.Document {}
-export default mongoose.model<ReviewModel>('Review', reviewSchema)
+export default mongoose.model<ReviewModel>('Review', reviewSchema);

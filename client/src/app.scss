@@ -2,7 +2,7 @@
 @import './css/mixins.scss';
 
 .app {
-    @include direct(column);    
+    @include direct(column);
     height: 100%;
     width: 100%;
     min-height: 100%;

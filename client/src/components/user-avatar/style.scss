@@ -6,11 +6,11 @@
     display: inline-block;
     @extend %avatar-size;
     background: $primary-color;
-    color: $on-primary-color; 
-    @include font($avatar-text-size, $avatar-text-weight);    
+    color: $on-primary-color;
+    @include font($avatar-text-size, $avatar-text-weight);
     &__avatar {
-        @extend %avatar-size;        
-        display: flex;       
+        @extend %avatar-size;
+        display: flex;
     }
     &__tx {
         margin: auto;

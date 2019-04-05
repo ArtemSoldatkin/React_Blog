@@ -10,10 +10,10 @@
     }
     &__login {
         margin: 0;
-        @include font($large-text-size, $large-text-bold);                                  
+        @include font($large-text-size, $large-text-bold);
     }
-}    
-    
+}
+
 .article {
     @extend %main-card;
     padding: $medium-space;
@@ -22,28 +22,27 @@
         @include direct(row);
         width: 100%;
         margin-bottom: $small-space;
-        @include font($large-text-size, $large-text-bold); 
-        text-align: center;          
+        @include font($large-text-size, $large-text-bold);
+        text-align: center;
     }
     &__t {
         width: 100%;
-        word-break: break-word;   
-    }  
+        word-break: break-word;
+    }
     &__b {
         @include direct(column);
-    }       
+    }
     &__info {
         @include direct(row);
-    }    
+    }
     &__descr {
         width: 100%;
-        word-break: break-word; 
-        @include font($medium-text-size, $medium-text-bold);       
+        word-break: break-word;
+        @include font($medium-text-size, $medium-text-bold);
         font-style: italic;
     }
     &__main {
-        word-break: break-word; 
-        @include font($medium-text-size, $medium-text-thin);         
+        word-break: break-word;
+        @include font($medium-text-size, $medium-text-thin);
     }
-}      
-  
+}

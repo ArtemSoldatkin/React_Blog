@@ -1,39 +1,41 @@
-@mixin direct ($type) {
+@mixin direct($type) {
     display: flex;
     flex-direction: $type;
 }
 
-@mixin font ($size, $weight) {
+@mixin font($size, $weight) {
     font-size: $size;
     font-weight: $weight;
     line-height: $size;
 }
 
-@mixin voteColor ($color) {
+@mixin voteColor($color) {
     color: desaturate($color, 20%);
-    &_my { color: $color; }
+    &_my {
+        color: $color;
+    }
 }
 
-@mixin multiline-text($height, $line-count ) {
+@mixin multiline-text($height, $line-count) {
     height: $height;
     display: block;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;                      
-    -webkit-line-clamp: $line-count;  
+    text-overflow: ellipsis;
+    -webkit-line-clamp: $line-count;
 }
 
-@mixin setColor($color, $on-color) {    
+@mixin setColor($color, $on-color) {
     background: $color;
     color: $on-color;
 }
 
-@mixin clrBG_BR($color) {    
+@mixin clrBG_BR($color) {
     color: $color;
     border: 1px solid $color;
 }
 
 @mixin setBorder($color) {
-    border:1px solid $color;
+    border: 1px solid $color;
 }

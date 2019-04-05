@@ -19,22 +19,22 @@
         @include direct(column);
         padding: $small-space;
         @extend %bottom-border;
-    }  
+    }
     &__t {
-        word-break: break-word;  
-        text-align: center;  
+        word-break: break-word;
+        text-align: center;
         @include multiline-text($article-card-title-height, $article-card-title-line);
-        @include font ($medium-text-size, $medium-text-bold);        
-    }  
+        @include font($medium-text-size, $medium-text-bold);
+    }
     &__b {
-        word-break: break-word;  
+        word-break: break-word;
         padding: 0 $medium-space;
         @include multiline-text($article-card-description-height, $article-card-description-line);
-        @include font ($medium-text-size, $medium-text-thin);
+        @include font($medium-text-size, $medium-text-thin);
     }
     &__f {
         @include direct(column);
-        padding: $small-space;        
+        padding: $small-space;
         background: darken($surface-color, 10%);
-    }    
+    }
 }
