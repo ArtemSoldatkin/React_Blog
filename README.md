@@ -1,4 +1,4 @@
-# The simple blog on React
+# The simple blog with React
 
 
 ## Client
