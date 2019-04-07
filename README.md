@@ -10,7 +10,7 @@ Client side is a React application with Apollo and Typescript
 
 ## Server
 
-Server side is a Node and Express application with Apollo and Typescript
+###Server side is a Node and Express application with Apollo and Typescript
 
 ###### For install dependencies: cd ...PATH.../server & npm i
 
